@@ -17,6 +17,7 @@ public class Ctsize implements java.io.Serializable{
 	private CtsizeId id;
 	private Size size;
 	private Mathang mathang;
+	private int soluong;
 	
 	public Ctsize(CtsizeId id, Size size, Mathang mathang) {
 		
@@ -26,6 +27,13 @@ public class Ctsize implements java.io.Serializable{
 	}
 	public Ctsize() {
 		
+	}
+	
+	public int getSoluong() {
+		return soluong;
+	}
+	public void setSoluong(int soluong) {
+		this.soluong = soluong;
 	}
 	@EmbeddedId
 	
@@ -59,6 +67,7 @@ public class Ctsize implements java.io.Serializable{
 	public void setMathang(Mathang mathang) {
 		this.mathang = mathang;
 	}
+	
 	
 	
 	
