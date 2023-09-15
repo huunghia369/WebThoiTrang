@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Cửa hàng bán mắt kính thời trang</title>
+<title>Cửa hàng thời trang</title>
 
 <%-- <link rel="stylesheet" href="<c:url value='/resources/assets/dist/css/bootstrap.min.css'/>" /> --%>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -13,7 +13,15 @@
     
     
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" integrity="sha512-rqQltXRuHxtPWhktpAZxLHUVJ3Eombn3hvk9PHjV/N5DMUYnzKPC1i3ub0mEXgFzsaZNeJcoE0YHq0j/GFsdGg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Template CSS -->
+  
+ <!-- css header -->
+ 
+	<link rel="stylesheet" href='<c:url value="/templates/user/header/1.css" />'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css" rel="stylesheet">
+	
+
+ <!-- Template CSS -->
 
 <link rel="stylesheet" href='<c:url value="/templates/user/assets/css/grid.css" />'>
 <link rel="stylesheet" href='<c:url value="/templates/user/assets/css/base.css" />'>
@@ -23,6 +31,7 @@
 
 <link rel="stylesheet" href='<c:url value="/templates/user/assets/css/profile.css" />'>
 <link rel="stylesheet" href='<c:url value="/templates/user/assets/css/changePass.css" />'>
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous" />
 

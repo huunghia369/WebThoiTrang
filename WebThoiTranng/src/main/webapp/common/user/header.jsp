@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/common/taglib.jsp"%>
-<nav style="padding: 1em 1.5em; font-size: 16px;"
+
+
+<%-- <nav style="padding: 1em 1.5em; font-size: 16px;"
 	class="navbar navbar-expand-lg navbar-dark bg-dark">
 
 	<a class="navbar-brand" href='<c:url value="/user/home"/>'><h1>Shop Linh Kiện Xe</h1></a>
@@ -42,9 +44,9 @@
 			<%
 			} else {
 			%>
-			<%--  <li class="nav-item">
+			 <li class="nav-item">
         <a class="nav-link" href="/WebBanKinh/user/profile"><i class="fas fa-user"></i><em> ${sessionScope.user.name}</em></a>
-    </li> --%>
+    </li>
 
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="userDropdown"
@@ -101,4 +103,34 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> --%>
+
+<!-- Header -->
+<header class="bg-dark text-white fixed-top ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div id="shop-name" class="display-4"> <i class="fas fa-dragon"></i> Urban Vogue</div>
+                
+                <p><span class="lead ml-4"><em>Thời trang - phong cách</em></span></p>
+
+                
+            </div>
+            <div class="col-md-5">
+           
+                <form class="form-inline mt-4" >
+                    <input class="form-control mr-2" style="width: 60%;" type="search" placeholder="Tìm kiếm">
+                    <button class="btn btn-outline-light" type="submit">Tìm kiếm</button>
+                </form>
+            </div>
+			<div class="col-md-3">
+				<a href="#" class="btn btn-outline-secondary mt-4 "><i
+					class="fas fa-user"></i> Đăng Nhập </a></a> <a href="#"
+					class="btn btn-outline-secondary ml-4 mt-4 "><i
+					class="fas fa-shopping-cart"></i> Giỏ hàng </a></a>
+
+			</div>
+
+		</div>
+    </div>
+</header>
