@@ -23,7 +23,7 @@ public class Taikhoan implements java.io.Serializable {
 	private Khachhang khachhang;
 	private Quyen quyen;
 	private String matkhau;
-	private String manv;
+	private Nhanvien manv;
 	private Set<Danhgia> danhgias = new HashSet<Danhgia>(0);
 
 	public Taikhoan() {
@@ -34,8 +34,11 @@ public class Taikhoan implements java.io.Serializable {
 		this.matkhau = matkhau;
 	}
 
-	public Taikhoan(String tentk, Khachhang khachhang, Quyen quyen, String matkhau, String manv,
+	
+
+	public Taikhoan(String tentk, Khachhang khachhang, Quyen quyen, String matkhau, Nhanvien manv,
 			Set<Danhgia> danhgias) {
+		super();
 		this.tentk = tentk;
 		this.khachhang = khachhang;
 		this.quyen = quyen;
@@ -64,12 +67,26 @@ public class Taikhoan implements java.io.Serializable {
 	public void setKhachhang(Khachhang khachhang) {
 		this.khachhang = khachhang;
 	}
+	public Nhanvien getManv() {
+		return manv;
+	}
+
+	//..........
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "MANV")
+	
+	
+	public void setManv(Nhanvien manv) {
+		this.manv = manv;
+	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MAQUYEN")
 	public Quyen getQuyen() {
 		return this.quyen;
 	}
+
+	
 
 	public void setQuyen(Quyen quyen) {
 		this.quyen = quyen;
@@ -84,14 +101,14 @@ public class Taikhoan implements java.io.Serializable {
 		this.matkhau = matkhau;
 	}
 
-	@Column(name = "MANV", length = 10)
-	public String getManv() {
-		return this.manv;
-	}
-
-	public void setManv(String manv) {
-		this.manv = manv;
-	}
+//	@Column(name = "MANV", length = 10)
+//	public String getManv() {
+//		return this.manv;
+//	}
+//
+//	public void setManv(String manv) {
+//		this.manv = manv;
+//	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "taikhoan")
 	public Set<Danhgia> getDanhgias() {

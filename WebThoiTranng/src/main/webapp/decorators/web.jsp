@@ -50,10 +50,17 @@
 </head>
 <body>
 	<div><%@ include file="/common/user/header.jsp"%></div>
-	<div class="main">
+	<div class="main " style="background-color: #f5f5f5;
+	
+	 background-image: url('https://images.unsplash.com/photo-1526289034009-0240ddb68ce3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1771&q=80'); /* Thay 'url_hinh_anh.jpg' bằng đường dẫn đến hình ảnh của bạn */
+    background-size: cover; /* Kéo căng hình ảnh để phù hợp với kích thước màn hình */
+    background-repeat: no-repeat; /* Không lặp lại hình ảnh */
+    background-attachment: fixed; /* Giữ hình nền cố định khi cuộn trang */
+}
+	">
 		<div class="grid wide">
 
-			<div class="content">
+			<div class="content" >
 				<div class="row">
 					
 					<decorator:body></decorator:body>
@@ -62,7 +69,10 @@
 			</div>
 
 			<%@ include file="/common/user/footer.jsp"%>
+			
+			
 		</div>
+		<div style="padding-bottom: 10px"></div>
 	</div>
 	
 	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>

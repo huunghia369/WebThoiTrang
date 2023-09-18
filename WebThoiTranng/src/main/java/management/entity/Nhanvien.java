@@ -35,6 +35,7 @@ public class Nhanvien implements java.io.Serializable {
 	private Set<Phieunhap> phieunhaps = new HashSet<Phieunhap>(0);
 	private Set<Phieudat> phieudats = new HashSet<Phieudat>(0);
 	private Set<Banggia> banggias = new HashSet<Banggia>(0);
+	private Set<Taikhoan> taikhoans = new  HashSet<Taikhoan>(0);
 	
 
 	public Nhanvien() {
@@ -188,6 +189,17 @@ public class Nhanvien implements java.io.Serializable {
 		this.banggias = banggias;
 	}
 
+	
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nhanvien")
+	
+	public Set<Taikhoan> getTaikhoans() {
+		return taikhoans;
+	}
+
+	public void setTaikhoans(Set<Taikhoan> taikhoans) {
+		this.taikhoans = taikhoans;
+	}
 	
 
 }
