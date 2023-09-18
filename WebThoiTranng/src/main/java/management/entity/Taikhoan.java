@@ -67,14 +67,14 @@ public class Taikhoan implements java.io.Serializable {
 	public void setKhachhang(Khachhang khachhang) {
 		this.khachhang = khachhang;
 	}
-	public Nhanvien getManv() {
-		return manv;
-	}
+	
 
 	//..........
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MANV")
-	
+	public Nhanvien getManv() {
+		return manv;
+	}
 	
 	public void setManv(Nhanvien manv) {
 		this.manv = manv;
