@@ -113,4 +113,4 @@ public class Taikhoan implements java.io.Serializable {
     public void setDanhgias(Set<Danhgia> danhgias) {
         this.danhgias = danhgias;
     }
-}
+
