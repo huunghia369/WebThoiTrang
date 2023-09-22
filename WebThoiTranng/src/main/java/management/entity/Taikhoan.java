@@ -16,101 +16,74 @@ import javax.persistence.Table;
 @Table(name = "taikhoan")
 public class Taikhoan implements java.io.Serializable {
 
-    @Id
-    @Column(name = "TENTK", unique = true, nullable = false, length = 50)
-    private String tentk;
+	@Id
+	@Column(name = "EMAIL", unique = true, nullable = false, length = 500)
+	private String email;
 
-    
-    
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "taikhoan")
-    private Khachhang khachhang;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MAQUYEN")
-    private Quyen quyen;
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "taikhoan")
+	private Khachhang khachhang;
 
-    @Column(name = "MATKHAU")
-    private String matkhau;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "MAQUYEN")
+	private Quyen quyen;
 
-    @Column(name = "MANV", length = 10)
-    private String manv;
+	@Column(name = "MATKHAU")
+	private String matkhau;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "taikhoan")
-    private Set<Danhgia> danhgias = new HashSet<Danhgia>(0);
-    
-   
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "taikhoan")
-    private Nhanvien nhanvien;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "taikhoan")
+	private Set<Danhgia> danhgias = new HashSet<Danhgia>(0);
 
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "taikhoan")
+	private Nhanvien nhanvien;
 
-    @Column(name = "EMAIL", unique = true, nullable = false, length = 500)
-    private String email;
+	public Taikhoan() {
+	}
 
-    public Taikhoan() {
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public Taikhoan(String tentk, String matkhau) {
-        this.tentk = tentk;
-        this.matkhau = matkhau;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public Taikhoan(String tentk, Khachhang khachhang, Quyen quyen, String matkhau, String manv,
-            Set<Danhgia> danhgias) {
-        this.tentk = tentk;
-        this.khachhang = khachhang;
-        this.quyen = quyen;
-        this.matkhau = matkhau;
-        this.manv = manv;
-        this.danhgias = danhgias;
-    }
+	public Nhanvien getNhanvien() {
+		return nhanvien;
+	}
 
-    // Getter và Setter cho các trường
+	public void setNhanvien(Nhanvien nhanvien) {
+		this.nhanvien = nhanvien;
+	}
 
-    public String getTentk() {
-        return this.tentk;
-    }
+	public Khachhang getKhachhang() {
+		return this.khachhang;
+	}
 
-    public void setTentk(String tentk) {
-        this.tentk = tentk;
-    }
+	public void setKhachhang(Khachhang khachhang) {
+		this.khachhang = khachhang;
+	}
 
-    public Khachhang getKhachhang() {
-        return this.khachhang;
-    }
+	public Quyen getQuyen() {
+		return this.quyen;
+	}
 
-    public void setKhachhang(Khachhang khachhang) {
-        this.khachhang = khachhang;
-    }
+	public void setQuyen(Quyen quyen) {
+		this.quyen = quyen;
+	}
 
-    public Quyen getQuyen() {
-        return this.quyen;
-    }
+	public String getMatkhau() {
+		return this.matkhau;
+	}
 
-    public void setQuyen(Quyen quyen) {
-        this.quyen = quyen;
-    }
+	public void setMatkhau(String matkhau) {
+		this.matkhau = matkhau;
+	}
 
-    public String getMatkhau() {
-        return this.matkhau;
-    }
+	public Set<Danhgia> getDanhgias() {
+		return this.danhgias;
+	}
 
-    public void setMatkhau(String matkhau) {
-        this.matkhau = matkhau;
-    }
-
-    public String getManv() {
-        return this.manv;
-    }
-
-    public void setManv(String manv) {
-        this.manv = manv;
-    }
-
-    public Set<Danhgia> getDanhgias() {
-        return this.danhgias;
-    }
-
-    public void setDanhgias(Set<Danhgia> danhgias) {
-        this.danhgias = danhgias;
-    }
+	public void setDanhgias(Set<Danhgia> danhgias) {
+		this.danhgias = danhgias;
+	}
 }

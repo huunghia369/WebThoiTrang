@@ -81,5 +81,93 @@ public class Khachhang implements java.io.Serializable {
         this.phieudats = phieudats;
     }
 
+	public String getMakh() {
+		return makh;
+	}
+
+	public void setMakh(String makh) {
+		this.makh = makh;
+	}
+
+	public String getHotenkh() {
+		return hotenkh;
+	}
+
+	public void setHotenkh(String hotenkh) {
+		this.hotenkh = hotenkh;
+	}
+
+	public String getSocmnd() {
+		return socmnd;
+	}
+
+	public void setSocmnd(String socmnd) {
+		this.socmnd = socmnd;
+	}
+
+	public Boolean getGioitinh() {
+		return gioitinh;
+	}
+
+	public void setGioitinh(Boolean gioitinh) {
+		this.gioitinh = gioitinh;
+	}
+
+	public Date getNgaysinh() {
+		return ngaysinh;
+	}
+
+	public void setNgaysinh(Date ngaysinh) {
+		this.ngaysinh = ngaysinh;
+	}
+
+	public String getDiachi() {
+		return diachi;
+	}
+
+	public void setDiachi(String diachi) {
+		this.diachi = diachi;
+	}
+
+	public String getSdt() {
+		return sdt;
+	}
+
+	public void setSdt(String sdt) {
+		this.sdt = sdt;
+	}
+
+	public String getMasothue() {
+		return masothue;
+	}
+
+	public void setMasothue(String masothue) {
+		this.masothue = masothue;
+	}
+
+	public Set<Hoadon> getHoadons() {
+		return hoadons;
+	}
+
+	public void setHoadons(Set<Hoadon> hoadons) {
+		this.hoadons = hoadons;
+	}
+
+	public Set<Phieudat> getPhieudats() {
+		return phieudats;
+	}
+
+	public void setPhieudats(Set<Phieudat> phieudats) {
+		this.phieudats = phieudats;
+	}
+
+	public Taikhoan getTaikhoan() {
+		return taikhoan;
+	}
+
+	public void setTaikhoan(Taikhoan taikhoan) {
+		this.taikhoan = taikhoan;
+	}
+
     // ... (các phương thức getter và setter cho taikhoan)
 }

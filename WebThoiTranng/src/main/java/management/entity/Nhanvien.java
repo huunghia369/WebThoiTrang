@@ -56,6 +56,70 @@ public class Nhanvien implements java.io.Serializable {
     public Nhanvien() {
     }
 
+	public String getManv() {
+		return manv;
+	}
+
+	public void setManv(String manv) {
+		this.manv = manv;
+	}
+
+	public String getTennv() {
+		return tennv;
+	}
+
+	public void setTennv(String tennv) {
+		this.tennv = tennv;
+	}
+
+	public Boolean getGioitinh() {
+		return gioitinh;
+	}
+
+	public void setGioitinh(Boolean gioitinh) {
+		this.gioitinh = gioitinh;
+	}
+
+	public Date getNgaysinh() {
+		return ngaysinh;
+	}
+
+	public void setNgaysinh(Date ngaysinh) {
+		this.ngaysinh = ngaysinh;
+	}
+
+	public String getDiachi() {
+		return diachi;
+	}
+
+	public void setDiachi(String diachi) {
+		this.diachi = diachi;
+	}
+
+	public String getSdt() {
+		return sdt;
+	}
+
+	public void setSdt(String sdt) {
+		this.sdt = sdt;
+	}
+
+	public Taikhoan getTaikhoan() {
+		return taikhoan;
+	}
+
+	public void setTaikhoan(Taikhoan taikhoan) {
+		this.taikhoan = taikhoan;
+	}
+
+	public Set<Dondathang> getDondathangs() {
+		return dondathangs;
+	}
+
+	public void setDondathangs(Set<Dondathang> dondathangs) {
+		this.dondathangs = dondathangs;
+	}
+
     
 
     // ...
