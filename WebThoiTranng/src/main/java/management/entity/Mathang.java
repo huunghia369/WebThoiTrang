@@ -19,6 +19,7 @@ import javax.persistence.Table;
 @Table(name = "mathang")
 public class Mathang implements java.io.Serializable {
 
+	
 	private String mamh;
 	private Chatlieu chatlieu;
 	
@@ -141,7 +142,7 @@ public class Mathang implements java.io.Serializable {
 	public void setNhan(String nhan) {
 		this.nhan = nhan;
 	}
-	@Column(name = "MOTA", nullable = true, columnDefinition = "nvarchar(5000)")
+	@Column(name = "MOTA", nullable = true, columnDefinition = "nvarchar(3000)")
 	public String getMota() {
 		return this.mota;
 	}
