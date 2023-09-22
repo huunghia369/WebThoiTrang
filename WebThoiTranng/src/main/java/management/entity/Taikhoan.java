@@ -16,6 +16,7 @@ import javax.persistence.Table;
 @Table(name = "taikhoan")
 public class Taikhoan implements java.io.Serializable {
 
+
 	@Id
 	@Column(name = "EMAIL", unique = true, nullable = false, length = 500)
 	private String email;
@@ -98,3 +99,4 @@ public class Taikhoan implements java.io.Serializable {
 	}
 	
 }
+
