@@ -55,7 +55,7 @@ public class Hinhanhmh implements java.io.Serializable {
 		this.mathang = mathang;
 	}
 
-	@Column(name = "DUONGDAN", length = 100)
+	@Column(name = "DUONGDAN", columnDefinition = "nvarchar(100)")
 	public String getDuongdan() {
 		return this.duongdan;
 	}

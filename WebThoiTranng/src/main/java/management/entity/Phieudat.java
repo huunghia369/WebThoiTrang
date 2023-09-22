@@ -101,7 +101,7 @@ public class Phieudat implements java.io.Serializable {
 		this.ngaydat = ngaydat;
 	}
 
-	@Column(name = "HOTENNGUOINHAN", nullable = true, length = 50)
+	@Column(name = "HOTENNGUOINHAN", nullable = true, columnDefinition = "nvarchar(100)")
 	public String getHotennguoinhan() {
 		return this.hotennguoinhan;
 	}
@@ -110,7 +110,7 @@ public class Phieudat implements java.io.Serializable {
 		this.hotennguoinhan = hotennguoinhan;
 	}
 
-	@Column(name = "DIACHI", nullable = true, length = 100)
+	@Column(name = "DIACHI", nullable = true, columnDefinition = "nvarchar(100)")
 	public String getDiachi() {
 		return this.diachi;
 	}

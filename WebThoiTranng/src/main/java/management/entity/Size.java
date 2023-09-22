@@ -49,7 +49,7 @@ public class Size implements java.io.Serializable {
 		this.masize = masize;
 	}
 
-	@Column(name = "TENSIZE", nullable = false, length = 255)
+	@Column(name = "TENSIZE", nullable = false, columnDefinition = "nvarchar(100)")
 	public String getTensize() {
 		return this.tensize;
 	}

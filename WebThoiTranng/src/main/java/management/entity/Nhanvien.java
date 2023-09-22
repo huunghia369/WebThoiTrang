@@ -26,7 +26,7 @@ public class Nhanvien implements java.io.Serializable {
     @Column(name = "MANV", unique = true, nullable = false, length = 10)
     private String manv;
 
-    @Column(name = "TENNV", nullable = false, length = 50)
+    @Column(name = "TENNV", nullable = false, columnDefinition = "nvarchar(100)")
     private String tennv;
 
     @Column(name = "GIOITINH")
@@ -36,7 +36,7 @@ public class Nhanvien implements java.io.Serializable {
     @Column(name = "NGAYSINH", nullable = false, length = 10)
     private Date ngaysinh;
 
-    @Column(name = "DIACHI", nullable = false, length = 100)
+    @Column(name = "DIACHI", nullable = false,columnDefinition = "nvarchar(200)")
     private String diachi;
 
     @Column(name = "SDT", unique = true, nullable = false, length = 15)

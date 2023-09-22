@@ -70,7 +70,7 @@ public class Dotkhuyenmai implements java.io.Serializable {
 		this.nhanvien = nhanvien;
 	}
 
-	@Column(name = "LYDOKM", nullable = false, length = 100)
+	@Column(name = "LYDOKM", nullable = false, columnDefinition = "nvarchar(100)")
 	public String getLydokm() {
 		return this.lydokm;
 	}
