@@ -125,7 +125,7 @@ public class Mathang implements java.io.Serializable {
 		this.nhanhieu = nhanhieu;
 	}
 
-	@Column(name = "TENMH", nullable = false, length = 500)
+	@Column(name = "TENMH", nullable = false, columnDefinition = "nvarchar(500)")
 	public String getTenmh() {
 		return this.tenmh;
 	}
@@ -141,7 +141,7 @@ public class Mathang implements java.io.Serializable {
 	public void setNhan(String nhan) {
 		this.nhan = nhan;
 	}
-	@Column(name = "MOTA", nullable = true, length = 500)
+	@Column(name = "MOTA", nullable = true, columnDefinition = "nvarchar(5000)")
 	public String getMota() {
 		return this.mota;
 	}

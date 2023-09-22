@@ -47,7 +47,7 @@ public class Chatlieu implements java.io.Serializable {
 		this.macl = macl;
 	}
 
-	@Column(name = "TENVAI", unique = true, nullable = false, length = 20)
+	@Column(name = "TENVAI", unique = true, nullable = false, columnDefinition = "nvarchar(100)")
 	public String getTenvai() {
 		return this.tenvai;
 	}

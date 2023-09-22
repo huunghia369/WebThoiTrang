@@ -47,7 +47,7 @@ public class Loaimh implements java.io.Serializable {
 		this.maloaimh = maloaimh;
 	}
 
-	@Column(name = "TENLOAIMH", unique = true, nullable = false, length = 20)
+	@Column(name = "TENLOAIMH", unique = true, nullable = false, columnDefinition = "nvarchar(100)")
 	public String getTenloaimh() {
 		return this.tenloaimh;
 	}
