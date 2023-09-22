@@ -29,6 +29,8 @@ public class Taikhoan implements java.io.Serializable {
 
 	@Column(name = "MATKHAU")
 	private String matkhau;
+	@Column(name = "TRANG THAI")
+	private int trangthai;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "taikhoan")
 	private Set<Danhgia> danhgias = new HashSet<Danhgia>(0);
@@ -86,4 +88,13 @@ public class Taikhoan implements java.io.Serializable {
 	public void setDanhgias(Set<Danhgia> danhgias) {
 		this.danhgias = danhgias;
 	}
+
+	public int getTrangthai() {
+		return trangthai;
+	}
+
+	public void setTrangthai(int trangthai) {
+		this.trangthai = trangthai;
+	}
+	
 }
