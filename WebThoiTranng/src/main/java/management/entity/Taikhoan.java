@@ -30,7 +30,7 @@ public class Taikhoan implements java.io.Serializable {
 
 	@Column(name = "MATKHAU")
 	private String matkhau;
-	@Column(name = "TRANG THAI")
+	@Column(name = "TRANGTHAI")
 	private int trangthai;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "taikhoan")
