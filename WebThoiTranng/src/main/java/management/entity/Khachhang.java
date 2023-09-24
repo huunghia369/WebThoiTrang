@@ -5,6 +5,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -27,8 +29,9 @@ import javax.persistence.UniqueConstraint;
 public class Khachhang implements java.io.Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Sử dụng AUTO_INCREMENT trong MySQL
     @Column(name = "MAKH", unique = true, nullable = false, length = 10)
-    private String makh;
+    private int makh;
 
     @Column(name = "HOTENKH", nullable = true, length = 50)
     private String hotenkh;
@@ -67,7 +70,7 @@ public class Khachhang implements java.io.Serializable {
 
     // ... (các phương thức getter và setter cho các trường)
 
-    public Khachhang(String makh, String hotenkh, String socmnd, Boolean gioitinh, Date ngaysinh,
+    public Khachhang(int makh, String hotenkh, String socmnd, Boolean gioitinh, Date ngaysinh,
             String diachi, String sdt, String masothue, Set<Hoadon> hoadons, Set<Phieudat> phieudats) {
         this.makh = makh;
         this.hotenkh = hotenkh;
@@ -81,5 +84,94 @@ public class Khachhang implements java.io.Serializable {
         this.phieudats = phieudats;
     }
 
+	public int getMakh() {
+		return makh;
+	}
+
+	public void setMakh(int makh) {
+		this.makh = makh;
+	}
+
+	public String getHotenkh() {
+		return hotenkh;
+	}
+
+	public void setHotenkh(String hotenkh) {
+		this.hotenkh = hotenkh;
+	}
+
+	public String getSocmnd() {
+		return socmnd;
+	}
+
+	public void setSocmnd(String socmnd) {
+		this.socmnd = socmnd;
+	}
+
+	public Boolean getGioitinh() {
+		return gioitinh;
+	}
+
+	public void setGioitinh(Boolean gioitinh) {
+		this.gioitinh = gioitinh;
+	}
+
+	public Date getNgaysinh() {
+		return ngaysinh;
+	}
+
+	public void setNgaysinh(Date ngaysinh) {
+		this.ngaysinh = ngaysinh;
+	}
+
+	public String getDiachi() {
+		return diachi;
+	}
+
+	public void setDiachi(String diachi) {
+		this.diachi = diachi;
+	}
+
+	public String getSdt() {
+		return sdt;
+	}
+
+	public void setSdt(String sdt) {
+		this.sdt = sdt;
+	}
+
+	public String getMasothue() {
+		return masothue;
+	}
+
+	public void setMasothue(String masothue) {
+		this.masothue = masothue;
+	}
+
+	public Set<Hoadon> getHoadons() {
+		return hoadons;
+	}
+
+	public void setHoadons(Set<Hoadon> hoadons) {
+		this.hoadons = hoadons;
+	}
+
+	public Set<Phieudat> getPhieudats() {
+		return phieudats;
+	}
+
+	public void setPhieudats(Set<Phieudat> phieudats) {
+		this.phieudats = phieudats;
+	}
+
+	public Taikhoan getTaikhoan() {
+		return taikhoan;
+	}
+
+	public void setTaikhoan(Taikhoan taikhoan) {
+		this.taikhoan = taikhoan;
+	}
+
     // ... (các phương thức getter và setter cho taikhoan)
+    
 }
