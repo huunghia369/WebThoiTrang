@@ -47,6 +47,7 @@ public class KhachHangimpl implements IKhachHangDAO {
 			HttpSession s = request.getSession();
 			String userEmail = (String) s.getAttribute("loggedInUserEmail");
 			//taikhoan.setTentk(userEmail);
+			taikhoan.setTrangthai(1);
 			taikhoan.setQuyen(quyen);
 			taikhoan.setEmail(userEmail);
 			
