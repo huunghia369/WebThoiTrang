@@ -46,7 +46,7 @@ public class Quyen implements java.io.Serializable {
 		this.maquyen = maquyen;
 	}
 
-	@Column(name = "TENQUYEN", nullable = false, length = 20)
+	@Column(name = "TENQUYEN", nullable = false, columnDefinition = "nvarchar(100)")
 	public String getTenquyen() {
 		return this.tenquyen;
 	}

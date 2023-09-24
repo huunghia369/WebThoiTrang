@@ -58,7 +58,7 @@ public class Nhacungcap implements java.io.Serializable {
 		this.mancc = mancc;
 	}
 
-	@Column(name = "TENNCC", nullable = false, length = 50)
+	@Column(name = "TENNCC", nullable = false, columnDefinition = "nvarchar(100)")
 	public String getTenncc() {
 		return this.tenncc;
 	}
@@ -67,7 +67,7 @@ public class Nhacungcap implements java.io.Serializable {
 		this.tenncc = tenncc;
 	}
 
-	@Column(name = "DIACHI", nullable = false, length = 100)
+	@Column(name = "DIACHI", nullable = false, columnDefinition = "nvarchar(100)")
 	public String getDiachi() {
 		return this.diachi;
 	}

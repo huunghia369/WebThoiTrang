@@ -33,7 +33,7 @@ public class Khachhang implements java.io.Serializable {
     @Column(name = "MAKH", unique = true, nullable = false)
     private int makh;
 
-    @Column(name = "HOTENKH", nullable = true, length = 50)
+    @Column(name = "HOTENKH", nullable = true, columnDefinition = "nvarchar(100)")
     private String hotenkh;
 
    
@@ -45,7 +45,7 @@ public class Khachhang implements java.io.Serializable {
     @Column(name = "NGAYSINH", nullable = true, length = 10)
     private Date ngaysinh;
 
-    @Column(name = "DIACHI", nullable = true, length = 100)
+    @Column(name = "DIACHI", nullable = true, columnDefinition = "nvarchar(100)")
     private String diachi;
 
     @Column(name = "SDT", unique = true, nullable = true, length = 15)
@@ -138,7 +138,7 @@ public class Khachhang implements java.io.Serializable {
 		this.taikhoan = taikhoan;
 	}
 
-    
-   
+
     
 }
+

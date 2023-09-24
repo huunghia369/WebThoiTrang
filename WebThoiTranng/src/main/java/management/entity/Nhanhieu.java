@@ -47,7 +47,7 @@ public class Nhanhieu implements java.io.Serializable {
 		this.manh = manh;
 	}
 
-	@Column(name = "TENNH", unique = true, nullable = false, length = 100)
+	@Column(name = "TENNH", unique = true, nullable = false, columnDefinition = "nvarchar(100)")
 	public String getTennh() {
 		return this.tennh;
 	}
