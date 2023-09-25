@@ -38,15 +38,15 @@ public class Ctsize implements java.io.Serializable{
 	@EmbeddedId
 	
 	@AttributeOverrides({
-			@AttributeOverride(name = "masize", column = @Column(name = "MASIZE", nullable = false, length = 10)),
-			@AttributeOverride(name = "mamh", column = @Column(name = "MAMH", nullable = false, length = 10)) })
+			@AttributeOverride(name = "masize", column = @Column(name = "MASIZE", nullable = false)),
+			@AttributeOverride(name = "mamh", column = @Column(name = "MAMH", nullable = false)) })
 	public CtsizeId getId() {
 		return this.id;
 	}
 	public void setId(CtsizeId id) {
 		this.id = id;
 	}
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MASIZE", nullable = false, insertable = false, updatable = false)
 	public Size getSize() {
 		return size;
@@ -55,9 +55,9 @@ public class Ctsize implements java.io.Serializable{
 		this.size = size;
 	}
 	
+		
 	
-	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MAMH", nullable = false, insertable = false, updatable = false)
 	
 	
