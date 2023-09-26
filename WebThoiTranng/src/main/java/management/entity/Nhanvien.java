@@ -119,7 +119,7 @@ public class Nhanvien implements java.io.Serializable {
 	public void setDondathangs(Set<Dondathang> dondathangs) {
 		this.dondathangs = dondathangs;
 	}
-
+}
     
 
 

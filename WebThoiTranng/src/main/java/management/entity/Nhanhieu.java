@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,19 +20,19 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "nhanhieu",  uniqueConstraints = @UniqueConstraint(columnNames = "TENNH"))
 public class Nhanhieu implements java.io.Serializable {
 
-	private String manh;
+	private int manh;
 	private String tennh;
 	private Set<Mathang> mathangs = new HashSet<Mathang>(0);
 
 	public Nhanhieu() {
 	}
 
-	public Nhanhieu(String manh, String tennh) {
+	public Nhanhieu(int manh, String tennh) {
 		this.manh = manh;
 		this.tennh = tennh;
 	}
 
-	public Nhanhieu(String manh, String tennh, Set<Mathang> mathangs) {
+	public Nhanhieu(int manh, String tennh, Set<Mathang> mathangs) {
 		this.manh = manh;
 		this.tennh = tennh;
 		this.mathangs = mathangs;
@@ -38,12 +40,13 @@ public class Nhanhieu implements java.io.Serializable {
 
 	@Id
 
-	@Column(name = "MANH", unique = true, nullable = false, length = 10)
-	public String getManh() {
+	@Column(name = "MANH", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int getManh() {
 		return this.manh;
 	}
 
-	public void setManh(String manh) {
+	public void setManh(int manh) {
 		this.manh = manh;
 	}
 
@@ -56,7 +59,7 @@ public class Nhanhieu implements java.io.Serializable {
 		this.tennh = tennh;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nhanhieu")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "nhanhieu")
 	public Set<Mathang> getMathangs() {
 		return this.mathangs;
 	}
