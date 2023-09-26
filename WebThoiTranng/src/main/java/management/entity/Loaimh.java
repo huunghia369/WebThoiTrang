@@ -22,6 +22,9 @@ public class Loaimh implements java.io.Serializable {
 
 	private int maloaimh;
 	private String tenloaimh;
+	private String slug;
+	
+	
 	private Set<Mathang> mathangs = new HashSet<Mathang>(0);
 
 	public Loaimh() {
@@ -58,12 +61,22 @@ public class Loaimh implements java.io.Serializable {
 	public void setTenloaimh(String tenloaimh) {
 		this.tenloaimh = tenloaimh;
 	}
+	@Column(name = "SLUG", unique = true, nullable = false, columnDefinition = "varchar(100)")
+	public String getSlug() {
+		return slug;
+	}
+
+	public void setSlug(String slug) {
+		this.slug = slug;
+	}
+
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "loaimh")
 	public Set<Mathang> getMathangs() {
 		return this.mathangs;
 	}
 
+	
 	public void setMathangs(Set<Mathang> mathangs) {
 		this.mathangs = mathangs;
 	}
