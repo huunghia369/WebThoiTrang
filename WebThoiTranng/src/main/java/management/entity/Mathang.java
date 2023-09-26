@@ -21,6 +21,7 @@ public class Mathang implements java.io.Serializable {
 
 	
 	private String mamh;
+	
 	private Chatlieu chatlieu;
 	
 	private Loaimh loaimh;
@@ -29,7 +30,8 @@ public class Mathang implements java.io.Serializable {
 	private String mota;
 	private int trangthai;
 	private Integer cachlam;
-
+	private String slug;
+	
 	private Set<Hinhanhmh> hinhanhmhs = new HashSet<Hinhanhmh>(0);
 	private Set<Banggia> banggias = new HashSet<Banggia>(0);
 	private Set<Ctpn> ctpns = new HashSet<Ctpn>(0);
@@ -116,7 +118,7 @@ public class Mathang implements java.io.Serializable {
 		this.loaimh = loaimh;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MANH", nullable = true)
 	public Nhanhieu getNhanhieu() {
 		return this.nhanhieu;
@@ -130,15 +132,27 @@ public class Mathang implements java.io.Serializable {
 	public String getTenmh() {
 		return this.tenmh;
 	}
-
 	public void setTenmh(String tenmh) {
 		this.tenmh = tenmh;
 	}
+	@Column(name = "SLUG", nullable = false, columnDefinition = "varchar(500)")
+	
+	public String getSlug() {
+		return slug;
+	}
+
+	public void setSlug(String slug) {
+		this.slug = slug;
+	}
+
+
+	
 	@Column(name = "NHAN", nullable = true)
 	public String getNhan() {
 		return nhan;
 	}
 
+	
 	public void setNhan(String nhan) {
 		this.nhan = nhan;
 	}
