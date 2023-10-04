@@ -38,8 +38,8 @@ public class Ctpn implements java.io.Serializable {
 	@EmbeddedId
 
 	@AttributeOverrides({
-			@AttributeOverride(name = "mapn", column = @Column(name = "MAPN", nullable = false, length = 10)),
-			@AttributeOverride(name = "mamh", column = @Column(name = "MAMH", nullable = false, length = 10)) })
+			@AttributeOverride(name = "mapn", column = @Column(name = "MAPN", nullable = false)),
+			@AttributeOverride(name = "mamh", column = @Column(name = "MAMH", nullable = false)) })
 	public CtpnId getId() {
 		return this.id;
 	}

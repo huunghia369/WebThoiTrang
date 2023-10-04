@@ -27,18 +27,15 @@ public class Size implements java.io.Serializable {
 	public Size() {
 	}
 
+
 	
 	public Size(int masize, String tensize, Set<Ctsize> ctsizes) {
 		
+
 		this.masize = masize;
 		this.tensize = tensize;
 		this.ctsizes = ctsizes;
 	}
-
-
-
-
-
 
 	@Id
 

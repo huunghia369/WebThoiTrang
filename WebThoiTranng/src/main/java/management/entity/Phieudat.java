@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,7 +24,7 @@ import javax.persistence.TemporalType;
 @Table(name = "phieudat")
 public class Phieudat implements java.io.Serializable {
 
-	private String mapd;
+	private int mapd;
 	private Khachhang khachhang;
 	private Nhanvien nhanvien;
 	private Date ngaydat;
@@ -30,13 +32,14 @@ public class Phieudat implements java.io.Serializable {
 	private String diachi;
 	private String sdt;
 	private Date ngaygiogiao;
+	private int trangthai;
 	private Set<Hoadon> hoadons = new HashSet<Hoadon>(0);
 	private Set<Ctpd> ctpds = new HashSet<Ctpd>(0);
 
 	public Phieudat() {
 	}
 
-	public Phieudat(String mapd, Khachhang khachhang, Nhanvien nhanvien, String hotennguoinhan, String diachi,
+	public Phieudat(int mapd, Khachhang khachhang, Nhanvien nhanvien, String hotennguoinhan, String diachi,
 			String sdt) {
 		this.mapd = mapd;
 		this.khachhang = khachhang;
@@ -46,7 +49,7 @@ public class Phieudat implements java.io.Serializable {
 		this.sdt = sdt;
 	}
 
-	public Phieudat(String mapd, Khachhang khachhang, Nhanvien nhanvien, Date ngaydat, String hotennguoinhan,
+	public Phieudat(int mapd, Khachhang khachhang, Nhanvien nhanvien, Date ngaydat, String hotennguoinhan,
 			String diachi, String sdt, Date ngaygiogiao, Set<Hoadon> hoadons, Set<Ctpd> ctpds) {
 		this.mapd = mapd;
 		this.khachhang = khachhang;
@@ -62,12 +65,13 @@ public class Phieudat implements java.io.Serializable {
 
 	@Id
 
-	@Column(name = "MAPD", unique = true, nullable = false, length = 10)
-	public String getMapd() {
+	@Column(name = "MAPD", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int getMapd() {
 		return this.mapd;
 	}
 
-	public void setMapd(String mapd) {
+	public void setMapd(int mapd) {
 		this.mapd = mapd;
 	}
 
@@ -154,6 +158,17 @@ public class Phieudat implements java.io.Serializable {
 
 	public void setCtpds(Set<Ctpd> ctpds) {
 		this.ctpds = ctpds;
+	}
+
+	
+	
+	@Column(name = "TRANGTHAI", nullable = true)
+	public int getTrangthai() {
+		return trangthai;
+	}
+
+	public void setTrangthai(int trangthai) {
+		this.trangthai = trangthai;
 	}
 
 }

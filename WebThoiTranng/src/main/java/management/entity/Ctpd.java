@@ -22,6 +22,15 @@ public class Ctpd implements java.io.Serializable {
 	private Mathang mathang;
 	private Phieudat phieudat;
 	private int soluong;
+	private String size;
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
 
 	public Ctpd() {
 	}
@@ -36,8 +45,8 @@ public class Ctpd implements java.io.Serializable {
 	@EmbeddedId
 
 	@AttributeOverrides({
-			@AttributeOverride(name = "mapd", column = @Column(name = "MAPD", nullable = false, length = 10)),
-			@AttributeOverride(name = "mamh", column = @Column(name = "MAMH", nullable = false, length = 10)) })
+			@AttributeOverride(name = "mapd", column = @Column(name = "MAPD", nullable = false)),
+			@AttributeOverride(name = "mamh", column = @Column(name = "MAMH", nullable = false)) })
 	public CtpdId getId() {
 		return this.id;
 	}

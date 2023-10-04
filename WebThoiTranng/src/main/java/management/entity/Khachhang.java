@@ -138,4 +138,6 @@ public class Khachhang implements java.io.Serializable {
 		this.taikhoan = taikhoan;
 	}
 
+
+
 }

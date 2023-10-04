@@ -32,38 +32,42 @@ public class Mathang implements java.io.Serializable {
 	private String tenmh;
 	private String mota;
 	private int trangthai;
-	private Integer cachlam;
-	private String slug;
+	
+	
 	
 	private Set<Hinhanhmh> hinhanhmhs = new HashSet<Hinhanhmh>(0);
 	private Set<Banggia> banggias = new HashSet<Banggia>(0);
 	private Set<Ctpn> ctpns = new HashSet<Ctpn>(0);
 	private Set<Cthd> cthds = new HashSet<Cthd>(0);
-	private Set<Ctddh> ctddhs = new HashSet<Ctddh>(0);
+	
 	private Set<Ctdkm> ctdkms = new HashSet<Ctdkm>(0);
 	private Set<Ctpd> ctpds = new HashSet<Ctpd>(0);
 	private Set<Ctsize> ctsizes = new HashSet<Ctsize>(0);
 	
 	private Set<Danhgia> danhgias = new HashSet<Danhgia>(0);
-    private String nhan;
+   
 	public Mathang() {
 	}
    
-	public Mathang(int mamh, Nhanhieu nhanhieu, String tenmh, String mota, int trangthai,String nhan) {
+
+	public Mathang(int mamh, Nhanhieu nhanhieu, String tenmh, String mota, int trangthai) {
+
 		this.mamh = mamh;
 		this.nhanhieu = nhanhieu;
 		this.tenmh = tenmh;
 		this.mota = mota;
 		this.trangthai = trangthai;
-		this.nhan=nhan;
+		
 	}
 	public Mathang(int mamh,String tenmh) {
 		this.mamh = mamh;
 		this.tenmh = tenmh;
 	}
 	public Mathang(int mamh, Chatlieu chatlieu, Loaimh loaimh, Nhanhieu nhanhieu, String tenmh,
-			String mota, int trangthai, Integer cachlam, Set<Hinhanhmh> hinhanhmhs,
-			Set<Banggia> banggias, Set<Ctpn> ctpns, Set<Cthd> cthds, Set<Ctddh> ctddhs,Set<Ctsize> ctsizes, Set<Ctdkm> ctdkms,
+
+			String mota, int trangthai,  Set<Hinhanhmh> hinhanhmhs,
+			Set<Banggia> banggias, Set<Ctpn> ctpns, Set<Cthd> cthds, Set<Ctsize> ctsizes, Set<Ctdkm> ctdkms,
+
 			Set<Ctpd> ctpds, Set<Danhgia> danhgias) {
 		this.mamh = mamh;
 		this.chatlieu = chatlieu;
@@ -73,13 +77,13 @@ public class Mathang implements java.io.Serializable {
 		this.tenmh = tenmh;
 		this.mota = mota;
 		this.trangthai = trangthai;
-		this.cachlam = cachlam;
+		
 		
 		this.hinhanhmhs = hinhanhmhs;
 		this.banggias = banggias;
 		this.ctpns = ctpns;
 		this.cthds = cthds;
-		this.ctddhs = ctddhs;
+		
 		this.ctdkms = ctdkms;
 		this.ctpds = ctpds;
 		this.ctsizes = ctsizes;
@@ -139,27 +143,10 @@ public class Mathang implements java.io.Serializable {
 	public void setTenmh(String tenmh) {
 		this.tenmh = tenmh;
 	}
-	@Column(name = "SLUG", nullable = false, columnDefinition = "varchar(500)")
 	
-	public String getSlug() {
-		return slug;
-	}
-
-	public void setSlug(String slug) {
-		this.slug = slug;
-	}
-
 
 	
-	@Column(name = "NHAN", nullable = true)
-	public String getNhan() {
-		return nhan;
-	}
-
 	
-	public void setNhan(String nhan) {
-		this.nhan = nhan;
-	}
 	@Column(name = "MOTA", nullable = true, columnDefinition = "nvarchar(3000)")
 	public String getMota() {
 		return this.mota;
@@ -180,15 +167,7 @@ public class Mathang implements java.io.Serializable {
 		this.trangthai = trangthai;
 	}
 
-	@Column(name = "CACHLAM")
-	public Integer getCachlam() {
-		return this.cachlam;
-	}
-
-	public void setCachlam(Integer cachlam) {
-		this.cachlam = cachlam;
-	}
-
+	
 	
 
 	
@@ -241,14 +220,8 @@ public class Mathang implements java.io.Serializable {
 		this.cthds = cthds;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mathang")
-	public Set<Ctddh> getCtddhs() {
-		return this.ctddhs;
-	}
 
-	public void setCtddhs(Set<Ctddh> ctddhs) {
-		this.ctddhs = ctddhs;
-	}
+  
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mathang")
 	public Set<Ctdkm> getCtdkms() {

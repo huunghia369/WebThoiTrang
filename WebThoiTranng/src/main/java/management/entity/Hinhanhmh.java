@@ -4,6 +4,8 @@ package management.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,19 +18,19 @@ import javax.persistence.Table;
 @Table(name = "hinhanhmh")
 public class Hinhanhmh implements java.io.Serializable {
 
-	private String maha;
+	private int maha;
 	private Mathang mathang;
 	private String duongdan;
 
 	public Hinhanhmh() {
 	}
 
-	public Hinhanhmh(String maha, Mathang mathang) {
+	public Hinhanhmh(int maha, Mathang mathang) {
 		this.maha = maha;
 		this.mathang = mathang;
 	}
 
-	public Hinhanhmh(String maha, Mathang mathang, String duongdan) {
+	public Hinhanhmh(int maha, Mathang mathang, String duongdan) {
 		this.maha = maha;
 		this.mathang = mathang;
 		this.duongdan = duongdan;
@@ -36,12 +38,13 @@ public class Hinhanhmh implements java.io.Serializable {
 
 	@Id
 
-	@Column(name = "MAHA", unique = true, nullable = false, length = 10)
-	public String getMaha() {
+	@Column(name = "MAHA", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int getMaha() {
 		return this.maha;
 	}
 
-	public void setMaha(String maha) {
+	public void setMaha(int maha) {
 		this.maha = maha;
 	}
 
@@ -55,7 +58,7 @@ public class Hinhanhmh implements java.io.Serializable {
 		this.mathang = mathang;
 	}
 
-	@Column(name = "DUONGDAN", columnDefinition = "nvarchar(100)")
+	@Column(name = "DUONGDAN", columnDefinition = "varchar(500)")
 	public String getDuongdan() {
 		return this.duongdan;
 	}

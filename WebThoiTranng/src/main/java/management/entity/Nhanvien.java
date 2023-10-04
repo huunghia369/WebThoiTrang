@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,8 +25,9 @@ import javax.persistence.UniqueConstraint;
 public class Nhanvien implements java.io.Serializable {
 
     @Id
-    @Column(name = "MANV", unique = true, nullable = false, length = 10)
-    private String manv;
+    @Column(name = "MANV", unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int manv;
 
     @Column(name = "TENNV", nullable = false, columnDefinition = "nvarchar(100)")
     private String tennv;
@@ -47,20 +50,16 @@ public class Nhanvien implements java.io.Serializable {
     private Taikhoan taikhoan;
 
    
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "nhanvien")
-    private Set<Dondathang> dondathangs = new HashSet<Dondathang>(0);
-
-    // Các getter và setter
-    // ...
+   
 
     public Nhanvien() {
     }
 
-	public String getManv() {
+	public int getManv() {
 		return manv;
 	}
 
-	public void setManv(String manv) {
+	public void setManv(int manv) {
 		this.manv = manv;
 	}
 
@@ -112,14 +111,7 @@ public class Nhanvien implements java.io.Serializable {
 		this.taikhoan = taikhoan;
 	}
 
-	public Set<Dondathang> getDondathangs() {
-		return dondathangs;
-	}
-
-	public void setDondathangs(Set<Dondathang> dondathangs) {
-		this.dondathangs = dondathangs;
-	}
+	
+  
 }
-    
-
 

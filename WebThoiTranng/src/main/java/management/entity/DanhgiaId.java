@@ -11,17 +11,20 @@ import javax.persistence.Embeddable;
 public class DanhgiaId implements java.io.Serializable {
 
 	private String tentk;
-	private String mamh;
+	private int mamh;
 
 	public DanhgiaId() {
 	}
 
-	public DanhgiaId(String tentk, String mamh) {
+	
+	public DanhgiaId(String tentk, int mamh) {
+		super();
 		this.tentk = tentk;
 		this.mamh = mamh;
 	}
 
-	@Column(name = "TENTK", nullable = false, length = 50)
+
+	@Column(name = "TENTK", nullable = false, length =500)
 	public String getTentk() {
 		return this.tentk;
 	}
@@ -30,36 +33,15 @@ public class DanhgiaId implements java.io.Serializable {
 		this.tentk = tentk;
 	}
 
-	@Column(name = "MAMH", nullable = false, length = 10)
-	public String getMamh() {
+	@Column(name = "MAMH", nullable = false)
+	public int getMamh() {
 		return this.mamh;
 	}
 
-	public void setMamh(String mamh) {
+	public void setMamh(int mamh) {
 		this.mamh = mamh;
 	}
 
-	public boolean equals(Object other) {
-		if ((this == other))
-			return true;
-		if ((other == null))
-			return false;
-		if (!(other instanceof DanhgiaId))
-			return false;
-		DanhgiaId castOther = (DanhgiaId) other;
-
-		return ((this.getTentk() == castOther.getTentk()) || (this.getTentk() != null && castOther.getTentk() != null
-				&& this.getTentk().equals(castOther.getTentk())))
-				&& ((this.getMamh() == castOther.getMamh()) || (this.getMamh() != null && castOther.getMamh() != null
-						&& this.getMamh().equals(castOther.getMamh())));
-	}
-
-	public int hashCode() {
-		int result = 17;
-
-		result = 37 * result + (getTentk() == null ? 0 : this.getTentk().hashCode());
-		result = 37 * result + (getMamh() == null ? 0 : this.getMamh().hashCode());
-		return result;
-	}
+	
 
 }

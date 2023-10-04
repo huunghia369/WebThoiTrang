@@ -28,18 +28,16 @@ public class Chatlieu implements java.io.Serializable {
 	}
 
 	public Chatlieu(int macl, String tenvai) {
+
 		this.macl = macl;
 		this.tenvai = tenvai;
+	
 	}
 
-	public Chatlieu(int macl, String tenvai, Set<Mathang> mathangs) {
-		this.macl = macl;
-		this.tenvai = tenvai;
-		this.mathangs = mathangs;
-	}
 
 	@Id
-	@Column(name = "MACL", unique = true, nullable = false, length = 10)
+	@Column(name = "MACL", unique = true, nullable = false)
+
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getMacl() {
 		return this.macl;

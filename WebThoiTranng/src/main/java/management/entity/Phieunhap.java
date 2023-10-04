@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,9 +24,9 @@ import javax.persistence.TemporalType;
 @Table(name = "phieunhap")
 public class Phieunhap implements java.io.Serializable {
 
-	private String mapn;
-	private Dondathang dondathang;
+	private int mapn;
 	
+	private Nhacungcap nhacungcap;
 	private Nhanvien nhanvien;
 	private Date ngaynhap;
 	private Set<Ctpn> ctpns = new HashSet<Ctpn>(0);
@@ -32,16 +34,17 @@ public class Phieunhap implements java.io.Serializable {
 	public Phieunhap() {
 	}
 
-	public Phieunhap(String mapn, Dondathang dondathang, Nhanvien nhanvien) {
+	public Phieunhap(int mapn,  Nhanvien nhanvien) {
 		this.mapn = mapn;
-		this.dondathang = dondathang;
+		
 		
 		this.nhanvien = nhanvien;
 	}
+	
 
-	public Phieunhap(String mapn, Dondathang dondathang, Nhanvien nhanvien, Date ngaynhap, Set<Ctpn> ctpns) {
+	public Phieunhap(int mapn, Nhanvien nhanvien, Date ngaynhap, Set<Ctpn> ctpns) {
 		this.mapn = mapn;
-		this.dondathang = dondathang;
+	
 		
 		this.nhanvien = nhanvien;
 		this.ngaynhap = ngaynhap;
@@ -50,23 +53,14 @@ public class Phieunhap implements java.io.Serializable {
 
 	@Id
 
-	@Column(name = "MAPN", unique = true, nullable = false, length = 10)
-	public String getMapn() {
+	@Column(name = "MAPN", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int getMapn() {
 		return this.mapn;
 	}
 
-	public void setMapn(String mapn) {
+	public void setMapn(int mapn) {
 		this.mapn = mapn;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "MADDH", nullable = false)
-	public Dondathang getDondathang() {
-		return this.dondathang;
-	}
-
-	public void setDondathang(Dondathang dondathang) {
-		this.dondathang = dondathang;
 	}
 
 	
@@ -97,6 +91,15 @@ public class Phieunhap implements java.io.Serializable {
 
 	public void setCtpns(Set<Ctpn> ctpns) {
 		this.ctpns = ctpns;
+	}
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "MANCC", nullable = false)
+	public Nhacungcap getNhacungcap() {
+		return this.nhacungcap;
+	}
+
+	public void setNhacungcap(Nhacungcap nhacungcap) {
+		this.nhacungcap = nhacungcap;
 	}
 
 }

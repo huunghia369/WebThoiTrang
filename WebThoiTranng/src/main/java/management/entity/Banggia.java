@@ -36,8 +36,8 @@ public class Banggia implements java.io.Serializable {
 	@EmbeddedId
 
 	@AttributeOverrides({
-			@AttributeOverride(name = "mamh", column = @Column(name = "MAMH", nullable = false, length = 10)),
-			@AttributeOverride(name = "manv", column = @Column(name = "MANV", nullable = false, length = 10)),
+			@AttributeOverride(name = "mamh", column = @Column(name = "MAMH", nullable = false)),
+			@AttributeOverride(name = "manv", column = @Column(name = "MANV", nullable = false)),
 			@AttributeOverride(name = "ngayapdung", column = @Column(name = "NGAYAPDUNG", nullable = false, length = 10)) })
 	public BanggiaId getId() {
 		return this.id;

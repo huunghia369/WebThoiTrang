@@ -19,17 +19,17 @@ import javax.persistence.UniqueConstraint;
 		@UniqueConstraint(columnNames = "SDT") })
 public class Nhacungcap implements java.io.Serializable {
 
-	private String mancc;
+	private int mancc;
 	private String tenncc;
 	private String diachi;
 	private String email;
 	private String sdt;
-	private Set<Dondathang> dondathangs = new HashSet<Dondathang>(0);
+	private Set<Phieunhap> phieunhaps = new HashSet<Phieunhap>(0);
 
 	public Nhacungcap() {
 	}
 
-	public Nhacungcap(String mancc, String tenncc, String diachi, String email, String sdt) {
+	public Nhacungcap(int mancc, String tenncc, String diachi, String email, String sdt) {
 		this.mancc = mancc;
 		this.tenncc = tenncc;
 		this.diachi = diachi;
@@ -37,24 +37,24 @@ public class Nhacungcap implements java.io.Serializable {
 		this.sdt = sdt;
 	}
 
-	public Nhacungcap(String mancc, String tenncc, String diachi, String email, String sdt,
-			Set<Dondathang> dondathangs) {
+	public Nhacungcap(int mancc, String tenncc, String diachi, String email, String sdt,
+			Set<Phieunhap> phieunhaps) {
 		this.mancc = mancc;
 		this.tenncc = tenncc;
 		this.diachi = diachi;
 		this.email = email;
 		this.sdt = sdt;
-		this.dondathangs = dondathangs;
+		this.phieunhaps = phieunhaps;
 	}
 
 	@Id
 
 	@Column(name = "MANCC", unique = true, nullable = false, length = 10)
-	public String getMancc() {
+	public int getMancc() {
 		return this.mancc;
 	}
 
-	public void setMancc(String mancc) {
+	public void setMancc(int mancc) {
 		this.mancc = mancc;
 	}
 
@@ -76,7 +76,7 @@ public class Nhacungcap implements java.io.Serializable {
 		this.diachi = diachi;
 	}
 
-	@Column(name = "EMAIL", unique = true, nullable = false, length = 50)
+	@Column(name = "EMAIL", unique = true, nullable = false, length = 500)
 	public String getEmail() {
 		return this.email;
 	}
@@ -95,12 +95,12 @@ public class Nhacungcap implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nhacungcap")
-	public Set<Dondathang> getDondathangs() {
-		return this.dondathangs;
+	public Set<Phieunhap> getphieunhaps() {
+		return this.phieunhaps;
 	}
 
-	public void setDondathangs(Set<Dondathang> dondathangs) {
-		this.dondathangs = dondathangs;
+	public void setphieunhaps(Set<Phieunhap> phieunhaps) {
+		this.phieunhaps = phieunhaps;
 	}
 
 }
