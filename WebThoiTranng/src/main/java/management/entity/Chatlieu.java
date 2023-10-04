@@ -27,24 +27,17 @@ public class Chatlieu implements java.io.Serializable {
 	public Chatlieu() {
 	}
 
-	
-	public Chatlieu(int macl, String tenvai, Set<Mathang> mathangs) {
-		super();
-		this.macl = macl;
-		this.tenvai = tenvai;
-		this.mathangs = mathangs;
-	}
-
-
 	public Chatlieu(int macl, String tenvai) {
-		super();
+
 		this.macl = macl;
 		this.tenvai = tenvai;
+	
 	}
 
 
 	@Id
 	@Column(name = "MACL", unique = true, nullable = false)
+
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getMacl() {
 		return this.macl;
@@ -63,7 +56,7 @@ public class Chatlieu implements java.io.Serializable {
 		this.tenvai = tenvai;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "chatlieu")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "chatlieu")
 	public Set<Mathang> getMathangs() {
 		return this.mathangs;
 	}

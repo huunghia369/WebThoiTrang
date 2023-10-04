@@ -46,7 +46,7 @@ public class Ctsize implements java.io.Serializable{
 	public void setId(CtsizeId id) {
 		this.id = id;
 	}
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MASIZE", nullable = false, insertable = false, updatable = false)
 	public Size getSize() {
 		return size;
@@ -55,9 +55,9 @@ public class Ctsize implements java.io.Serializable{
 		this.size = size;
 	}
 	
+		
 	
-	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MAMH", nullable = false, insertable = false, updatable = false)
 	
 	

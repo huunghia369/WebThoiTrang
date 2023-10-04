@@ -49,7 +49,9 @@ public class Mathang implements java.io.Serializable {
 	public Mathang() {
 	}
    
+
 	public Mathang(int mamh, Nhanhieu nhanhieu, String tenmh, String mota, int trangthai) {
+
 		this.mamh = mamh;
 		this.nhanhieu = nhanhieu;
 		this.tenmh = tenmh;
@@ -62,8 +64,10 @@ public class Mathang implements java.io.Serializable {
 		this.tenmh = tenmh;
 	}
 	public Mathang(int mamh, Chatlieu chatlieu, Loaimh loaimh, Nhanhieu nhanhieu, String tenmh,
+
 			String mota, int trangthai,  Set<Hinhanhmh> hinhanhmhs,
 			Set<Banggia> banggias, Set<Ctpn> ctpns, Set<Cthd> cthds, Set<Ctsize> ctsizes, Set<Ctdkm> ctdkms,
+
 			Set<Ctpd> ctpds, Set<Danhgia> danhgias) {
 		this.mamh = mamh;
 		this.chatlieu = chatlieu;
@@ -216,7 +220,8 @@ public class Mathang implements java.io.Serializable {
 		this.cthds = cthds;
 	}
 
-	
+
+  
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mathang")
 	public Set<Ctdkm> getCtdkms() {

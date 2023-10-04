@@ -71,7 +71,7 @@ public class Loaimh implements java.io.Serializable {
 	}
 
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "loaimh")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "loaimh")
 	public Set<Mathang> getMathangs() {
 		return this.mathangs;
 	}

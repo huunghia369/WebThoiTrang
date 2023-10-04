@@ -1,5 +1,7 @@
 package management.entity;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
@@ -12,10 +14,8 @@ public class CtsizeId implements java.io.Serializable {
 	public CtsizeId() {
 	}
 
-	
-
 	public CtsizeId(int masize, int mamh) {
-		super();
+
 		this.masize = masize;
 		this.mamh = mamh;
 	}
@@ -32,6 +32,7 @@ public class CtsizeId implements java.io.Serializable {
 	}
 
 	@Column(name = "MAMH", nullable = false)
+
 	public int getMamh() {
 		return this.mamh;
 	}
@@ -43,5 +44,6 @@ public class CtsizeId implements java.io.Serializable {
 	}
 
 	
+
 }
 

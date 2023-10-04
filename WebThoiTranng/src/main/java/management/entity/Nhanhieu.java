@@ -59,7 +59,7 @@ public class Nhanhieu implements java.io.Serializable {
 		this.tennh = tennh;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nhanhieu")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "nhanhieu")
 	public Set<Mathang> getMathangs() {
 		return this.mathangs;
 	}
