@@ -10,56 +10,34 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class CthdId implements java.io.Serializable {
 
-	private String sohd;
-	private String mamh;
+	private int sohd;
+	private int mamh;
 
 	public CthdId() {
 	}
 
-	public CthdId(String sohd, String mamh) {
+	public CthdId(int sohd, int mamh) {
 		this.sohd = sohd;
 		this.mamh = mamh;
 	}
 
-	@Column(name = "SOHD", nullable = false, length = 10)
-	public String getSohd() {
+	@Column(name = "SOHD", nullable = false)
+	public int getSohd() {
 		return this.sohd;
 	}
 
-	public void setSohd(String sohd) {
+	public void setSohd(int sohd) {
 		this.sohd = sohd;
 	}
 
-	@Column(name = "MAMH", nullable = false, length = 10)
-	public String getMamh() {
+	@Column(name = "MAMH", nullable = false)
+	public int getMamh() {
 		return this.mamh;
 	}
 
-	public void setMamh(String mamh) {
+	public void setMamh(int mamh) {
 		this.mamh = mamh;
 	}
 
-	public boolean equals(Object other) {
-		if ((this == other))
-			return true;
-		if ((other == null))
-			return false;
-		if (!(other instanceof CthdId))
-			return false;
-		CthdId castOther = (CthdId) other;
-
-		return ((this.getSohd() == castOther.getSohd()) || (this.getSohd() != null && castOther.getSohd() != null
-				&& this.getSohd().equals(castOther.getSohd())))
-				&& ((this.getMamh() == castOther.getMamh()) || (this.getMamh() != null && castOther.getMamh() != null
-						&& this.getMamh().equals(castOther.getMamh())));
-	}
-
-	public int hashCode() {
-		int result = 17;
-
-		result = 37 * result + (getSohd() == null ? 0 : this.getSohd().hashCode());
-		result = 37 * result + (getMamh() == null ? 0 : this.getMamh().hashCode());
-		return result;
-	}
-
+	
 }

@@ -5,6 +5,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -19,22 +21,22 @@ import javax.persistence.UniqueConstraint;
     name = "khachhang",
     uniqueConstraints = {
         @UniqueConstraint(columnNames = "EMAIL"),
-        @UniqueConstraint(columnNames = "MASOTHUE"),
-        @UniqueConstraint(columnNames = "SDT"),
-        @UniqueConstraint(columnNames = "SOCMND")
+        
+        @UniqueConstraint(columnNames = "SDT")
+       
     }
 )
 public class Khachhang implements java.io.Serializable {
 
     @Id
-    @Column(name = "MAKH", unique = true, nullable = false, length = 10)
-    private String makh;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MAKH", unique = true, nullable = false)
+    private int makh;
 
     @Column(name = "HOTENKH", nullable = true, columnDefinition = "nvarchar(100)")
     private String hotenkh;
 
-    @Column(name = "SOCMND", unique = true, nullable = true, length = 15)
-    private String socmnd;
+   
 
     @Column(name = "GIOITINH")
     private Boolean gioitinh;
@@ -49,8 +51,7 @@ public class Khachhang implements java.io.Serializable {
     @Column(name = "SDT", unique = true, nullable = true, length = 15)
     private String sdt;
 
-    @Column(name = "MASOTHUE", unique = true, nullable = true, length = 15)
-    private String masothue;
+    
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "khachhang")
     private Set<Hoadon> hoadons = new HashSet<Hoadon>(0);
@@ -65,27 +66,11 @@ public class Khachhang implements java.io.Serializable {
     public Khachhang() {
     }
 
-    // ... (các phương thức getter và setter cho các trường)
-
-    public Khachhang(String makh, String hotenkh, String socmnd, Boolean gioitinh, Date ngaysinh,
-            String diachi, String sdt, String masothue, Set<Hoadon> hoadons, Set<Phieudat> phieudats) {
-        this.makh = makh;
-        this.hotenkh = hotenkh;
-        this.socmnd = socmnd;
-        this.gioitinh = gioitinh;
-        this.ngaysinh = ngaysinh;
-        this.diachi = diachi;
-        this.sdt = sdt;
-        this.masothue = masothue;
-        this.hoadons = hoadons;
-        this.phieudats = phieudats;
-    }
-
-	public String getMakh() {
+	public int getMakh() {
 		return makh;
 	}
 
-	public void setMakh(String makh) {
+	public void setMakh(int makh) {
 		this.makh = makh;
 	}
 
@@ -95,14 +80,6 @@ public class Khachhang implements java.io.Serializable {
 
 	public void setHotenkh(String hotenkh) {
 		this.hotenkh = hotenkh;
-	}
-
-	public String getSocmnd() {
-		return socmnd;
-	}
-
-	public void setSocmnd(String socmnd) {
-		this.socmnd = socmnd;
 	}
 
 	public Boolean getGioitinh() {
@@ -137,14 +114,6 @@ public class Khachhang implements java.io.Serializable {
 		this.sdt = sdt;
 	}
 
-	public String getMasothue() {
-		return masothue;
-	}
-
-	public void setMasothue(String masothue) {
-		this.masothue = masothue;
-	}
-
 	public Set<Hoadon> getHoadons() {
 		return hoadons;
 	}
@@ -169,5 +138,5 @@ public class Khachhang implements java.io.Serializable {
 		this.taikhoan = taikhoan;
 	}
 
-    // ... (các phương thức getter và setter cho taikhoan)
+
 }

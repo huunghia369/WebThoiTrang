@@ -11,34 +11,34 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class BanggiaId implements java.io.Serializable {
 
-	private String mamh;
-	private String manv;
+	private int mamh;
+	private int manv;
 	private Date ngayapdung;
 
 	public BanggiaId() {
 	}
 
-	public BanggiaId(String mamh, String manv, Date ngayapdung) {
-		this.mamh = mamh;
-		this.manv = manv;
-		this.ngayapdung = ngayapdung;
-	}
+	
 
-	@Column(name = "MAMH", nullable = false, length = 10)
-	public String getMamh() {
+	@Column(name = "MAMH", nullable = false)
+	public int getMamh() {
 		return this.mamh;
 	}
 
-	public void setMamh(String mamh) {
+	
+
+	public void setMamh(int mamh) {
 		this.mamh = mamh;
 	}
 
-	@Column(name = "MANV", nullable = false, length = 10)
-	public String getManv() {
+
+
+	@Column(name = "MANV", nullable = false)
+	public int getManv() {
 		return this.manv;
 	}
 
-	public void setManv(String manv) {
+	public void setManv(int manv) {
 		this.manv = manv;
 	}
 
@@ -51,31 +51,5 @@ public class BanggiaId implements java.io.Serializable {
 		this.ngayapdung = ngayapdung;
 	}
 
-	public boolean equals(Object other) {
-		if ((this == other))
-			return true;
-		if ((other == null))
-			return false;
-		if (!(other instanceof BanggiaId))
-			return false;
-		BanggiaId castOther = (BanggiaId) other;
-
-		return ((this.getMamh() == castOther.getMamh()) || (this.getMamh() != null && castOther.getMamh() != null
-				&& this.getMamh().equals(castOther.getMamh())))
-				&& ((this.getManv() == castOther.getManv()) || (this.getManv() != null && castOther.getManv() != null
-						&& this.getManv().equals(castOther.getManv())))
-				&& ((this.getNgayapdung() == castOther.getNgayapdung())
-						|| (this.getNgayapdung() != null && castOther.getNgayapdung() != null
-								&& this.getNgayapdung().equals(castOther.getNgayapdung())));
-	}
-
-	public int hashCode() {
-		int result = 17;
-
-		result = 37 * result + (getMamh() == null ? 0 : this.getMamh().hashCode());
-		result = 37 * result + (getManv() == null ? 0 : this.getManv().hashCode());
-		result = 37 * result + (getNgayapdung() == null ? 0 : this.getNgayapdung().hashCode());
-		return result;
-	}
-
+	
 }

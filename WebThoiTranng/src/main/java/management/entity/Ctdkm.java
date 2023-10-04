@@ -36,8 +36,8 @@ public class Ctdkm implements java.io.Serializable {
 	@EmbeddedId
 
 	@AttributeOverrides({
-			@AttributeOverride(name = "madkm", column = @Column(name = "MADKM", nullable = false, length = 10)),
-			@AttributeOverride(name = "mamh", column = @Column(name = "MAMH", nullable = false, length = 10)) })
+			@AttributeOverride(name = "madkm", column = @Column(name = "MADKM", nullable = false)),
+			@AttributeOverride(name = "mamh", column = @Column(name = "MAMH", nullable = false)) })
 	public CtdkmId getId() {
 		return this.id;
 	}

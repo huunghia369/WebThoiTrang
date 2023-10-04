@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,7 +24,7 @@ import javax.persistence.TemporalType;
 @Table(name = "dotkhuyenmai")
 public class Dotkhuyenmai implements java.io.Serializable {
 
-	private String madkm;
+	private int madkm;
 	private Nhanvien nhanvien;
 	private String lydokm;
 	private Date ngaybd;
@@ -32,7 +34,10 @@ public class Dotkhuyenmai implements java.io.Serializable {
 	public Dotkhuyenmai() {
 	}
 
-	public Dotkhuyenmai(String madkm, Nhanvien nhanvien, String lydokm, Date ngaybd, Date ngaykt) {
+	
+
+	public Dotkhuyenmai(int madkm, Nhanvien nhanvien, String lydokm, Date ngaybd, Date ngaykt) {
+		super();
 		this.madkm = madkm;
 		this.nhanvien = nhanvien;
 		this.lydokm = lydokm;
@@ -40,7 +45,10 @@ public class Dotkhuyenmai implements java.io.Serializable {
 		this.ngaykt = ngaykt;
 	}
 
-	public Dotkhuyenmai(String madkm, Nhanvien nhanvien, String lydokm, Date ngaybd, Date ngaykt, Set<Ctdkm> ctdkms) {
+
+
+	public Dotkhuyenmai(int madkm, Nhanvien nhanvien, String lydokm, Date ngaybd, Date ngaykt, Set<Ctdkm> ctdkms) {
+		super();
 		this.madkm = madkm;
 		this.nhanvien = nhanvien;
 		this.lydokm = lydokm;
@@ -49,14 +57,16 @@ public class Dotkhuyenmai implements java.io.Serializable {
 		this.ctdkms = ctdkms;
 	}
 
+
 	@Id
 
-	@Column(name = "MADKM", unique = true, nullable = false, length = 10)
-	public String getMadkm() {
+	@Column(name = "MADKM", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int getMadkm() {
 		return this.madkm;
 	}
 
-	public void setMadkm(String madkm) {
+	public void setMadkm(int madkm) {
 		this.madkm = madkm;
 	}
 
@@ -70,7 +80,7 @@ public class Dotkhuyenmai implements java.io.Serializable {
 		this.nhanvien = nhanvien;
 	}
 
-	@Column(name = "LYDOKM", nullable = false, columnDefinition = "nvarchar(100)")
+	@Column(name = "LYDOKM", columnDefinition = "nvarchar(100)")
 	public String getLydokm() {
 		return this.lydokm;
 	}

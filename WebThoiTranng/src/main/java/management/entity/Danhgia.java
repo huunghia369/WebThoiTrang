@@ -36,8 +36,8 @@ public class Danhgia implements java.io.Serializable {
 	@EmbeddedId
 
 	@AttributeOverrides({
-			@AttributeOverride(name = "tentk", column = @Column(name = "TENTK", nullable = false, length = 50)),
-			@AttributeOverride(name = "mamh", column = @Column(name = "MAMH", nullable = false, length = 10)) })
+			@AttributeOverride(name = "tentk", column = @Column(name = "TENTK", nullable = false, length = 500)),
+			@AttributeOverride(name = "mamh", column = @Column(name = "MAMH", nullable = false)) })
 	public DanhgiaId getId() {
 		return this.id;
 	}

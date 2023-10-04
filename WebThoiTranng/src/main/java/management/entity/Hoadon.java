@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,7 +25,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "hoadon", uniqueConstraints = @UniqueConstraint(columnNames = "MAPD"))
 public class Hoadon implements java.io.Serializable {
 
-	private String sohd;
+	private int sohd;
 	private Khachhang khachhang;
 	private Nhanvien nhanvien;
 	private Phieudat phieudat;
@@ -33,12 +35,12 @@ public class Hoadon implements java.io.Serializable {
 	public Hoadon() {
 	}
 
-	public Hoadon(String sohd, Nhanvien nhanvien) {
+	public Hoadon(int sohd, Nhanvien nhanvien) {
 		this.sohd = sohd;
 		this.nhanvien = nhanvien;
 	}
 
-	public Hoadon(String sohd, Khachhang khachhang, Nhanvien nhanvien, Phieudat phieudat, Date ngayin,
+	public Hoadon(int sohd, Khachhang khachhang, Nhanvien nhanvien, Phieudat phieudat, Date ngayin,
 			Set<Cthd> cthds) {
 		this.sohd = sohd;
 		this.khachhang = khachhang;
@@ -50,17 +52,18 @@ public class Hoadon implements java.io.Serializable {
 
 	@Id
 
-	@Column(name = "SOHD", unique = true, nullable = false, length = 10)
-	public String getSohd() {
+	@Column(name = "SOHD", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int getSohd() {
 		return this.sohd;
 	}
 
-	public void setSohd(String sohd) {
+	public void setSohd(int sohd) {
 		this.sohd = sohd;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "MASOTHUEKH")
+	@JoinColumn(name = "MAKH")
 	public Khachhang getKhachhang() {
 		return this.khachhang;
 	}

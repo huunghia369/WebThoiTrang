@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,8 +22,9 @@ import javax.persistence.Table;
 public class Mathang implements java.io.Serializable {
 
 	
-	private String mamh;
-	
+
+	private int mamh;
+
 	private Chatlieu chatlieu;
 	
 	private Loaimh loaimh;
@@ -29,38 +32,38 @@ public class Mathang implements java.io.Serializable {
 	private String tenmh;
 	private String mota;
 	private int trangthai;
-	private Integer cachlam;
-	private String slug;
+	
+	
 	
 	private Set<Hinhanhmh> hinhanhmhs = new HashSet<Hinhanhmh>(0);
 	private Set<Banggia> banggias = new HashSet<Banggia>(0);
 	private Set<Ctpn> ctpns = new HashSet<Ctpn>(0);
 	private Set<Cthd> cthds = new HashSet<Cthd>(0);
-	private Set<Ctddh> ctddhs = new HashSet<Ctddh>(0);
+	
 	private Set<Ctdkm> ctdkms = new HashSet<Ctdkm>(0);
 	private Set<Ctpd> ctpds = new HashSet<Ctpd>(0);
 	private Set<Ctsize> ctsizes = new HashSet<Ctsize>(0);
 	
 	private Set<Danhgia> danhgias = new HashSet<Danhgia>(0);
-    private String nhan;
+   
 	public Mathang() {
 	}
    
-	public Mathang(String mamh, Nhanhieu nhanhieu, String tenmh, String mota, int trangthai,String nhan) {
+	public Mathang(int mamh, Nhanhieu nhanhieu, String tenmh, String mota, int trangthai) {
 		this.mamh = mamh;
 		this.nhanhieu = nhanhieu;
 		this.tenmh = tenmh;
 		this.mota = mota;
 		this.trangthai = trangthai;
-		this.nhan=nhan;
+		
 	}
-	public Mathang(String mamh,String tenmh) {
+	public Mathang(int mamh,String tenmh) {
 		this.mamh = mamh;
 		this.tenmh = tenmh;
 	}
-	public Mathang(String mamh, Chatlieu chatlieu, Loaimh loaimh, Nhanhieu nhanhieu, String tenmh,
-			String mota, int trangthai, Integer cachlam, Set<Hinhanhmh> hinhanhmhs,
-			Set<Banggia> banggias, Set<Ctpn> ctpns, Set<Cthd> cthds, Set<Ctddh> ctddhs,Set<Ctsize> ctsizes, Set<Ctdkm> ctdkms,
+	public Mathang(int mamh, Chatlieu chatlieu, Loaimh loaimh, Nhanhieu nhanhieu, String tenmh,
+			String mota, int trangthai,  Set<Hinhanhmh> hinhanhmhs,
+			Set<Banggia> banggias, Set<Ctpn> ctpns, Set<Cthd> cthds, Set<Ctsize> ctsizes, Set<Ctdkm> ctdkms,
 			Set<Ctpd> ctpds, Set<Danhgia> danhgias) {
 		this.mamh = mamh;
 		this.chatlieu = chatlieu;
@@ -70,13 +73,13 @@ public class Mathang implements java.io.Serializable {
 		this.tenmh = tenmh;
 		this.mota = mota;
 		this.trangthai = trangthai;
-		this.cachlam = cachlam;
+		
 		
 		this.hinhanhmhs = hinhanhmhs;
 		this.banggias = banggias;
 		this.ctpns = ctpns;
 		this.cthds = cthds;
-		this.ctddhs = ctddhs;
+		
 		this.ctdkms = ctdkms;
 		this.ctpds = ctpds;
 		this.ctsizes = ctsizes;
@@ -86,17 +89,18 @@ public class Mathang implements java.io.Serializable {
 	}
 
 	@Id
-
-	@Column(name = "MAMH", unique = true, nullable = false, length = 10)
-	public String getMamh() {
+	
+	@Column(name = "MAMH", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int getMamh() {
 		return this.mamh;
 	}
 
-	public void setMamh(String mamh) {
+	public void setMamh(int mamh) {
 		this.mamh = mamh;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MACL")
 	public Chatlieu getChatlieu() {
 		return this.chatlieu;
@@ -108,7 +112,7 @@ public class Mathang implements java.io.Serializable {
 
 	
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MALOAIMH")
 	public Loaimh getLoaimh() {
 		return this.loaimh;
@@ -135,27 +139,10 @@ public class Mathang implements java.io.Serializable {
 	public void setTenmh(String tenmh) {
 		this.tenmh = tenmh;
 	}
-	@Column(name = "SLUG", nullable = false, columnDefinition = "varchar(500)")
 	
-	public String getSlug() {
-		return slug;
-	}
-
-	public void setSlug(String slug) {
-		this.slug = slug;
-	}
-
 
 	
-	@Column(name = "NHAN", nullable = true)
-	public String getNhan() {
-		return nhan;
-	}
-
 	
-	public void setNhan(String nhan) {
-		this.nhan = nhan;
-	}
 	@Column(name = "MOTA", nullable = true, columnDefinition = "nvarchar(3000)")
 	public String getMota() {
 		return this.mota;
@@ -176,19 +163,11 @@ public class Mathang implements java.io.Serializable {
 		this.trangthai = trangthai;
 	}
 
-	@Column(name = "CACHLAM")
-	public Integer getCachlam() {
-		return this.cachlam;
-	}
-
-	public void setCachlam(Integer cachlam) {
-		this.cachlam = cachlam;
-	}
-
+	
 	
 
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mathang")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mathang")
 	public Set<Hinhanhmh> getHinhanhmhs() {
 		return this.hinhanhmhs;
 	}
@@ -197,7 +176,7 @@ public class Mathang implements java.io.Serializable {
 		this.hinhanhmhs = hinhanhmhs;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mathang")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mathang")
 	public Set<Banggia> getBanggias() {
 		return this.banggias;
 	}
@@ -206,7 +185,7 @@ public class Mathang implements java.io.Serializable {
 		this.banggias = banggias;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mathang")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mathang")
 	public Set<Ctpn> getCtpns() {
 		return this.ctpns;
 	}
@@ -217,7 +196,7 @@ public class Mathang implements java.io.Serializable {
 	///--------
 	
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mathang")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mathang")
 	
 	public Set<Ctsize> getCtsizes() {
 		return ctsizes;
@@ -226,7 +205,7 @@ public class Mathang implements java.io.Serializable {
 	public void setCtsizes(Set<Ctsize> ctsizes) {
 		this.ctsizes = ctsizes;
 	}
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mathang")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mathang")
 	public Set<Cthd> getCthds() {
 		return this.cthds;
 	}
@@ -237,16 +216,9 @@ public class Mathang implements java.io.Serializable {
 		this.cthds = cthds;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mathang")
-	public Set<Ctddh> getCtddhs() {
-		return this.ctddhs;
-	}
+	
 
-	public void setCtddhs(Set<Ctddh> ctddhs) {
-		this.ctddhs = ctddhs;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mathang")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mathang")
 	public Set<Ctdkm> getCtdkms() {
 		return this.ctdkms;
 	}
@@ -255,7 +227,7 @@ public class Mathang implements java.io.Serializable {
 		this.ctdkms = ctdkms;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mathang")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mathang")
 	public Set<Ctpd> getCtpds() {
 		return this.ctpds;
 	}
@@ -266,7 +238,7 @@ public class Mathang implements java.io.Serializable {
 
 	
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mathang")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mathang")
 	public Set<Danhgia> getDanhgias() {
 		return this.danhgias;
 	}

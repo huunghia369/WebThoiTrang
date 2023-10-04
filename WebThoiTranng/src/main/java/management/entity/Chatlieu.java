@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,32 +20,37 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "chatlieu", uniqueConstraints = @UniqueConstraint(columnNames = "TENVAI"))
 public class Chatlieu implements java.io.Serializable {
 
-	private String macl;
+	private int macl;
 	private String tenvai;
 	private Set<Mathang> mathangs = new HashSet<Mathang>(0);
 
 	public Chatlieu() {
 	}
 
-	public Chatlieu(String macl, String tenvai) {
-		this.macl = macl;
-		this.tenvai = tenvai;
-	}
-
-	public Chatlieu(String macl, String tenvai, Set<Mathang> mathangs) {
+	
+	public Chatlieu(int macl, String tenvai, Set<Mathang> mathangs) {
+		super();
 		this.macl = macl;
 		this.tenvai = tenvai;
 		this.mathangs = mathangs;
 	}
 
-	@Id
 
-	@Column(name = "MACL", unique = true, nullable = false, length = 10)
-	public String getMacl() {
+	public Chatlieu(int macl, String tenvai) {
+		super();
+		this.macl = macl;
+		this.tenvai = tenvai;
+	}
+
+
+	@Id
+	@Column(name = "MACL", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int getMacl() {
 		return this.macl;
 	}
 
-	public void setMacl(String macl) {
+	public void setMacl(int macl) {
 		this.macl = macl;
 	}
 

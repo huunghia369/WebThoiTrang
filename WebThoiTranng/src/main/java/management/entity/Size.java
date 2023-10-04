@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -17,7 +19,7 @@ import javax.persistence.Table;
 @Table(name = "size")
 public class Size implements java.io.Serializable {
 
-	private String masize;
+	private int masize;
 	private String tensize;
 	private Set<Ctsize> ctsizes = new HashSet<Ctsize>(0);
 	
@@ -25,27 +27,22 @@ public class Size implements java.io.Serializable {
 	public Size() {
 	}
 
-	
-	public Size(String masize, String tensize, Set<Ctsize> ctsizes) {
-		
+	public Size(int masize, String tensize, Set<Ctsize> ctsizes) {
+		super();
 		this.masize = masize;
 		this.tensize = tensize;
 		this.ctsizes = ctsizes;
 	}
 
-
-
-
-
-
 	@Id
 
-	@Column(name = "MASIZE", unique = true, nullable = false,length = 10)
-	public String getMasize() {
+	@Column(name = "MASIZE", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int getMasize() {
 		return this.masize;
 	}
 
-	public void setMasize(String masize) {
+	public void setMasize(int masize) {
 		this.masize = masize;
 	}
 

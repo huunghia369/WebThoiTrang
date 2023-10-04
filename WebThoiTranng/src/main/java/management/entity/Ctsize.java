@@ -38,8 +38,8 @@ public class Ctsize implements java.io.Serializable{
 	@EmbeddedId
 	
 	@AttributeOverrides({
-			@AttributeOverride(name = "masize", column = @Column(name = "MASIZE", nullable = false, length = 10)),
-			@AttributeOverride(name = "mamh", column = @Column(name = "MAMH", nullable = false, length = 10)) })
+			@AttributeOverride(name = "masize", column = @Column(name = "MASIZE", nullable = false)),
+			@AttributeOverride(name = "mamh", column = @Column(name = "MAMH", nullable = false)) })
 	public CtsizeId getId() {
 		return this.id;
 	}

@@ -36,8 +36,8 @@ public class Cthd implements java.io.Serializable {
 	@EmbeddedId
 
 	@AttributeOverrides({
-			@AttributeOverride(name = "sohd", column = @Column(name = "SOHD", nullable = false, length = 10)),
-			@AttributeOverride(name = "mamh", column = @Column(name = "MAMH", nullable = false, length = 10)) })
+			@AttributeOverride(name = "sohd", column = @Column(name = "SOHD", nullable = false)),
+			@AttributeOverride(name = "mamh", column = @Column(name = "MAMH", nullable = false)) })
 	public CthdId getId() {
 		return this.id;
 	}
