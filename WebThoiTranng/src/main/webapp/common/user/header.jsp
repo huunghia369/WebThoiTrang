@@ -107,30 +107,121 @@
 
 <!-- Header -->
 <header class="bg-dark text-white fixed-top ">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <div id="shop-name" class="display-4"> <i class="fas fa-dragon"></i> Urban Vogue</div>
-                
-                <p><span class="lead ml-4"><em>Thời trang - phong cách</em></span></p>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+			<a href="/user/index">
+				<div id="shop-name" class="display-4">
+					<i class="fas fa-dragon"></i> Urban Vogue
+				</div>
+			</a>
+				<p>
+			
+					<span class="lead ml-4"><em>Thời trang - phong cách</em></span>
+				</p>
 
-                
-            </div>
-            <div class="col-md-5">
-           
-                <form class="form-inline mt-4" >
-                    <input class="form-control mr-2" style="width: 60%;" type="search" placeholder="Tìm kiếm">
-                    <button class="btn btn-outline-light" type="submit">Tìm kiếm</button>
-                </form>
-            </div>
+
+			</div>
+			<div class="col-md-5">
+
+				<form class="form-inline mt-4" id="searchForm"
+					action="/product/search/" style="display: none">
+					<input class="form-control mr-2" style="width: 60%;" type="search"
+						placeholder="Tìm kiếm" name="search"> 
+					<button class="btn btn-outline-light" type="submit">Tìm
+						kiếm</button>
+				</form>
+				 
+				<div id="searchHistory">
+
+					<ul id="searchHistoryList">
+						<!-- Danh sách lịch sử tìm kiếm sẽ được hiển thị ở đây -->
+					</ul>
+				</div>
+
+			</div>
 			<div class="col-md-3">
+				
 				<a href="#" class="btn btn-outline-secondary mt-4 "><i
-					class="fas fa-user"></i> Đăng Nhập </a></a> <a href="#"
+					class="fas fa-user"></i> Đăng Nhập </a>
+			    <a href="#"
 					class="btn btn-outline-secondary ml-4 mt-4 "><i
-					class="fas fa-shopping-cart"></i> Giỏ hàng </a></a>
+					class="fas fa-shopping-cart"></i> Giỏ hàng </a>
+					
+				<i id="searchIcon" class="fas fa-search ml-4 mt-2" style="font-size: 36px;"></i> <!-- Biểu tượng kính lúp -->
+
 
 			</div>
 
 		</div>
-    </div>
+	</div>
+
+	<script>
+        // Lấy giá trị name từ thẻ input
+        const input = document.querySelector("input[name='search']");
+        const nameValue = input.getAttribute("name");
+
+        // Lấy giá trị action từ thẻ form
+        const form = document.getElementById("searchForm");
+        const action = form.getAttribute("action");
+
+        // Thay thế {} trong action bằng giá trị name
+        const newAction = action.replace("{}", nameValue);
+
+        // Cập nhật giá trị action của form
+        form.setAttribute("action", newAction);
+        
+        
+        
+        /* // Gắn sự kiện tìm kiếm
+        document.getElementById("searchForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Ngăn chặn gửi biểu mẫu
+            var keyword = document.querySelector("input[name='search']").value;
+            searchHistory.push(keyword); // Thêm từ khóa tìm kiếm vào lịch sử
+            localStorage.setItem("searchHistory", JSON.stringify(searchHistory)); // Lưu vào Local Storage
+            updateSearchHistoryList(); // Cập nhật danh sách lịch sử tìm kiếm
+        });
+
+        // Lịch sử tìm kiếm
+        var searchHistory = [];
+        var storedSearchHistory = localStorage.getItem("searchHistory");
+        if (storedSearchHistory) {
+            searchHistory = JSON.parse(storedSearchHistory);
+        }
+
+        // Hiển thị lịch sử tìm kiếm trên trang
+        var searchHistoryList = document.getElementById("searchHistoryList");
+        searchHistoryList.innerHTML = "";
+
+        function updateSearchHistoryList() {
+            searchHistoryList.innerHTML = "";
+            for (var i = 0; i < searchHistory.length; i++) {
+                var listItem = document.createElement("li");
+                listItem.textContent = searchHistory[i];
+                searchHistoryList.appendChild(listItem);
+            }
+        }
+
+        // Gọi hàm cập nhật lịch sử tìm kiếm ban đầu
+        updateSearchHistoryList(); */
+
+        
+     // Lấy thẻ biểu tượng và thanh tìm kiếm
+        var searchIcon = document.getElementById("searchIcon");
+        var searchForm = document.getElementById("searchForm");
+
+        // Thêm sự kiện click vào biểu tượng
+        searchIcon.addEventListener("click", function() {
+          // Toggle hiển thị/ẩn thanh tìm kiếm
+          if (searchForm.style.display === "none" || searchForm.style.display === "") {
+            searchForm.style.display = "block";
+          } else {
+            searchForm.style.display = "none";
+          }
+        });
+
+
+
+    </script>
+
 </header>
