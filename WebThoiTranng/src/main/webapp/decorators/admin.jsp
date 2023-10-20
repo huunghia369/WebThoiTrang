@@ -33,6 +33,7 @@
     <!-- css laoding -->	
 	<link rel="stylesheet" href='<c:url value="/templates/user/home/loading.css" />'>
     
+    <decorator:head></decorator:head>
     
 </head>
 <body class="sidebar-mini sidebar-closed sidebar-collapse">

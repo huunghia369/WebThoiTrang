@@ -33,13 +33,13 @@ public class MatHangDaoImpl implements IMatHangDao {
 
 		Session session = sessionFactory.openSession();
 		List<Mathang> list = null;
-		String hgl = "FROM Mathang";
+		int status=1;
+		String hgl = "FROM Mathang where trangthai = ? ";
 		Query query = session.createQuery(hgl);
+		query.setParameter(0, status);
 		list = query.list();
 
-		for (Mathang mathang : list) {
-			System.out.println(mathang.getTenmh());
-		}
+		
 		return list;
 
 	}
@@ -54,9 +54,7 @@ public class MatHangDaoImpl implements IMatHangDao {
 
 		list = query.list();
 
-		for (Mathang mathang : list) {
-			System.out.println(mathang.getTenmh());
-		}
+		
 		return list;
 	}
 
@@ -69,9 +67,7 @@ public class MatHangDaoImpl implements IMatHangDao {
 		query.setParameter("slug", slugNameCategory);
 
 		list = query.list();
-		for (Mathang mathang : list) {
-			System.out.println(mathang.getTenmh());
-		}
+		
 
 		return list;
 	}
@@ -110,14 +106,7 @@ public class MatHangDaoImpl implements IMatHangDao {
 
 		List<Mathang> resultList = query.list();
 
-		System.out.println(resultList.size());
-
-		for (Mathang row : resultList) {
-
-			System.out.println("Total Soluong: " + row.getTenmh());
-
-		}
-
+		
 		session.close();
 		return resultList;
 	}

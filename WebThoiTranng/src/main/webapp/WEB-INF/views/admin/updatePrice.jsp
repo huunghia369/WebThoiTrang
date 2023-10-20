@@ -8,11 +8,6 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Cập nhật giá sản phẩm</title>
 
-            <!-- Include Bootstrap CSS -->
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-            <!-- Include Select2 CSS -->
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
-
             <!-- Custom CSS -->
             <style>
                 body {
@@ -75,7 +70,8 @@
                         <form id="updatePriceForm" action="/admin/update/price/successful" method="post">
                             <div class="form-group ">
                                 <div>*</div>
-                                <label for="productID ">Sản phẩm:</label> <select class="form-control" id="productID"
+                                <label for="productID ">Sản phẩm:</label>
+                                 <select class="form-control" id="productID"
                                     name="productID" multiple="multiple" placeholder="Nhập giá mới" required>
 
 
@@ -109,7 +105,9 @@
                             <div class="form-group">
                                 <div>*</div>
                                 <label for="productList">Danh sách sản phẩm (theo danh
-                                    mục)</label> <select class="form-control" id="productList" name="productList"
+                                    mục)</label> 
+                                    
+                                    <select class="form-control" id="productList" name="productList"
                                     multiple="multiple" placeholder="Nhập danh sách sản phẩm" required>
                                     <c:forEach var="category" items="${listCategory}">
                                         <option value="${category.maloaimh}">
