@@ -36,6 +36,9 @@ public class UpdatePriceController {
 	IDanhMucDao danhMucDao;
 	
 	
+	
+	
+	
 	public List<ProductWithDiscount> listPro() {
 
 		List<Mathang> listProduct = matHangDao.getAllMathang();

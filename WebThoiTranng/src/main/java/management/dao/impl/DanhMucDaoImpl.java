@@ -30,9 +30,7 @@ public class DanhMucDaoImpl implements IDanhMucDao {
 		Query query = session.createQuery(hgl);
 		list = query.list();
 
-		for (Loaimh Loaimh : list) {
-			System.out.println(Loaimh.getTenloaimh());
-		}
+		
 		return list;
 	}
 

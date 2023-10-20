@@ -7,9 +7,7 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Cửa hàng thời trang</title>
-            <!-- Bootstrap CSS -->
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+          
             <style>
                 .custom-padding {
                     padding-left: 30px;
@@ -20,6 +18,11 @@
                 
 			   
             </style>
+            
+            
+            <script src="<c:url value='/templates/user/product/product.js'/>"></script>
+			<script src="<c:url value='/templates/user/product/productDiscount.js'/>"></script>
+			<script src="<c:url value='/templates/user/product/productCategory.js'/>"></script>
         </head>
 
         <body>
