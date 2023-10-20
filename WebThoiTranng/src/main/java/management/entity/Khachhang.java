@@ -51,20 +51,32 @@ public class Khachhang implements java.io.Serializable {
     @Column(name = "SDT", unique = true, nullable = true, length = 15)
     private String sdt;
 
-    
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "khachhang")
-    private Set<Hoadon> hoadons = new HashSet<Hoadon>(0);
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "khachhang")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "khachhang")
     private Set<Phieudat> phieudats = new HashSet<Phieudat>(0);
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "EMAIL", referencedColumnName = "EMAIL", nullable = false)
     private Taikhoan taikhoan;
 
     public Khachhang() {
     }
+
+    
+    
+	public Khachhang(int makh, String hotenkh, Boolean gioitinh, Date ngaysinh, String diachi, String sdt,
+			Set<Phieudat> phieudats, Taikhoan taikhoan) {
+		super();
+		this.makh = makh;
+		this.hotenkh = hotenkh;
+		this.gioitinh = gioitinh;
+		this.ngaysinh = ngaysinh;
+		this.diachi = diachi;
+		this.sdt = sdt;
+		this.phieudats = phieudats;
+		this.taikhoan = taikhoan;
+	}
+
+
 
 	public int getMakh() {
 		return makh;
@@ -114,13 +126,6 @@ public class Khachhang implements java.io.Serializable {
 		this.sdt = sdt;
 	}
 
-	public Set<Hoadon> getHoadons() {
-		return hoadons;
-	}
-
-	public void setHoadons(Set<Hoadon> hoadons) {
-		this.hoadons = hoadons;
-	}
 
 	public Set<Phieudat> getPhieudats() {
 		return phieudats;

@@ -2,12 +2,13 @@ package management.entity;
 
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class CtsizeId implements java.io.Serializable {
 
+
+	private static final long serialVersionUID = 1L;
 	private int masize;
 	private int mamh;
 
@@ -21,8 +22,6 @@ public class CtsizeId implements java.io.Serializable {
 	}
 
 
-
-	@Column(name = "SIZE", nullable = false, length = 10)
 	public int getMasize() {
 		return masize;
 	}
@@ -31,16 +30,29 @@ public class CtsizeId implements java.io.Serializable {
 		this.masize = masize;
 	}
 
-	@Column(name = "MAMH", nullable = false)
-
 	public int getMamh() {
 		return this.mamh;
 	}
 
-	
-
 	public void setMamh(int mamh) {
 		this.mamh = mamh;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(mamh, masize);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CtsizeId other = (CtsizeId) obj;
+		return mamh == other.mamh && masize == other.masize;
 	}
 
 	

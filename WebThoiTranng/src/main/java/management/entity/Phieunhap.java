@@ -64,7 +64,7 @@ public class Phieunhap implements java.io.Serializable {
 	}
 
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MANV", nullable = false)
 	public Nhanvien getNhanvien() {
 		return this.nhanvien;
@@ -84,7 +84,7 @@ public class Phieunhap implements java.io.Serializable {
 		this.ngaynhap = ngaynhap;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "phieunhap")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "phieunhap")
 	public Set<Ctpn> getCtpns() {
 		return this.ctpns;
 	}
@@ -92,7 +92,7 @@ public class Phieunhap implements java.io.Serializable {
 	public void setCtpns(Set<Ctpn> ctpns) {
 		this.ctpns = ctpns;
 	}
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MANCC", nullable = false)
 	public Nhacungcap getNhacungcap() {
 		return this.nhacungcap;
