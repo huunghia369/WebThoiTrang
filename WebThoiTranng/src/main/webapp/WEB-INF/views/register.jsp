@@ -33,6 +33,11 @@
 .icon {
 	color: #fff;
 }
+.login-header {
+    text-align: center; /* Căn giữa ngang */
+    line-height: 100px; /* Căn giữa theo chiều dọc - điều chỉnh giá trị này để căn giữa theo ý muốn */
+}
+
 </style>
 
 </head>
@@ -43,9 +48,9 @@
 	<div class="wrap">
 		<div class="login" style="margin-top: 20%;">
 			<!--<i class="fa-solid fa-xmark iconclose1"></i>-->
-			<h2 class="login-header">Thêm thông tin của bạn</h2>
+			<h2 class="login-header">Cập nhật thông tin</h2>
 			<form:form class="login-form" method="POST"
-				action="/WebThoiTranng/register/insert" modelAttribute="KhachHang">
+				action="insert" modelAttribute="KhachHang">
 
 
 				<div class="input-container">
@@ -230,7 +235,7 @@
 					</select>
 				</div>
 				<div class="submit-row">
-					<button type="submit" class="btn-submit">Đăng kí</button>
+					<button type="submit" class="btn-submit">Xác Nhận</button>
 					<!--<div class="term-policy-container"> By signing up, you agree to our&nbsp; <a href="#" class="link">
 							Terms of Use </a> &nbsp;and&nbsp; <a href="#" class="link">
 							Privacy Policy </a>
