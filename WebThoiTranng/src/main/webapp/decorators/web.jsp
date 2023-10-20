@@ -19,7 +19,13 @@
 	<link rel="stylesheet" href='<c:url value="/templates/user/header/1.css" />'>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css" rel="stylesheet">
-	
+
+<!-- css home -->	
+
+	<link rel="stylesheet" href='<c:url value="/templates/user/home/home.css" />'>
+<!-- css laoding -->	
+	<link rel="stylesheet" href='<c:url value="/templates/user/home/loading.css" />'>
+
 
  <!-- Template CSS -->
 
@@ -44,9 +50,17 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
+  
+  
+ <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
 
 <script src="<c:url value='/templates/admin/paging/jquery.twbsPagination.js'/>"></script>
+<script src="<c:url value='/templates/user/product/setting.js'/>"></script>
+
+ 
+ <decorator:head></decorator:head>
+    
 </head>
 <body>
 	<div><%@ include file="/common/user/header.jsp"%></div>
@@ -77,5 +91,7 @@
 	
 	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="<c:url value='/templates/user/assets/js/handlePageHome.js'/>"></script>
+
+	 
 </body>
 </html>
