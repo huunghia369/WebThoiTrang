@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo4.entity.Ctdkm;
-
 import management.bean.ProductWithDiscount;
 import management.bean.RemoveDiacritics;
 import management.dao.IDanhMucDao;
