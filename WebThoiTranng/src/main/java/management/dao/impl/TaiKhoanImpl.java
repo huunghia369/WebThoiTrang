@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import management.dao.ITaiKhoanDAO;
+import management.entity.Nhanvien;
 import management.entity.Quyen;
 import management.entity.Taikhoan;
 
@@ -73,10 +74,10 @@ public class TaiKhoanImpl implements ITaiKhoanDAO{
 	        ss.getTransaction().commit(); // Xác nhận giao dịch
 	       
 	       
-	        System.out.println("them tk thanh cong");
+	        
 	        
 	    } catch (Exception e) {
-	    	System.out.println("that bai tk");
+	    	
 	        if (ss.getTransaction() != null) {
 	            ss.getTransaction().rollback(); // Rollback nếu xảy ra lỗi
 	        }
@@ -88,7 +89,22 @@ public class TaiKhoanImpl implements ITaiKhoanDAO{
 	        }
 	        
 	    }
-	    return taikhoan;
-	    
+	    return taikhoan;	    
+	}
+	@Override
+	public Nhanvien getNhanVien_byEmail(String email)
+	{
+		Nhanvien nhanvien = new Nhanvien();
+		Session s = sessionFactory.openSession();
+		String hql = "from Nhanvien nv  where nv.taikhoan.email = :email";
+		Query query = s.createQuery(hql);
+		try {
+			query.setParameter("email", email);
+			
+			nhanvien = (Nhanvien) query.uniqueResult();
+		} finally {
+			s.close();
+		}
+		return nhanvien;
 	}
 }

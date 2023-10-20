@@ -59,7 +59,7 @@ public class KhachHangimpl implements IKhachHangDAO {
 			if (transaction != null) {
 				transaction.rollback();
 			}
-			System.out.println("Loi tao tai khoan - KhachHangimpl");
+			
 			e.printStackTrace();
 		} finally {
 			session.close();

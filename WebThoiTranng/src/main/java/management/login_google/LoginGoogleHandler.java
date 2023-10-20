@@ -48,7 +48,7 @@ public class LoginGoogleHandler extends HttpServlet {
 		String accessToken = getToken(code);
 		 UserGoogleDto user = getUserInfo(accessToken);
 		
-		System.out.println(user);
+		
 		// Lưu email vào session
 		// Lấy đối tượng HttpSession từ request
 		HttpSession session = request.getSession();
@@ -63,9 +63,9 @@ public class LoginGoogleHandler extends HttpServlet {
 	    response.sendRedirect(request.getContextPath() + "/register/insert");
 		
 //		if (taiKhoanDAO != null) {
-//	        System.out.println("Bean taiKhoanDAO đã được tiêm vào.");
+//	        ("Bean taiKhoanDAO đã được tiêm vào.");
 //	    } else {
-//	        System.out.println("Bean taiKhoanDAO chưa được tiêm vào.");
+//	        ("Bean taiKhoanDAO chưa được tiêm vào.");
 //	    }
 		// Ktra neu email chua ton tai thi chuyen huong den trang dang ki tai khoan
 //		if(iTaiKhoanDAO.check_MailExist(userEmail)==false)
