@@ -13,9 +13,9 @@
                     padding-left: 30px;
                     padding-right: 30px;
                     width: 200px;
-                    /* Đặt chiều dài tùy chỉnh tại đây */
+               
                 }
-                
+                 
 			   
             </style>
             
@@ -23,6 +23,7 @@
             <script src="<c:url value='/templates/user/product/product.js'/>"></script>
 			<script src="<c:url value='/templates/user/product/productDiscount.js'/>"></script>
 			<script src="<c:url value='/templates/user/product/productCategory.js'/>"></script>
+			<script src="<c:url value='/templates/user/product/ProductSlide.js'/>"></script>
         </head>
 
         <body>
@@ -37,31 +38,33 @@
 
                         <div class="row">
                             <div class="col-md-12">
-
+					
+					
                                 <div id="productSlide" class="carousel slide " data-ride="carousel">
                                     <div class="carousel-inner ">
-                                        <div class="carousel-item  active ">
-                                            <img src="https://images.unsplash.com/photo-1523779105320-d1cd346ff52b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1773&q=80"
-                                                class="d-block mx-auto" alt="Sản phẩm 1"
-                                                style="max-width: 100%; height: auto;">
+								
+								<div class="carousel-item active">
+                                           <div id="firebase-image-slide1" ></div>
+										<script>
+											displayFirebaseImageSlide("1");
+										</script>
+                                 </div>
+                                        
+								<c:forEach var="i" begin="2" end="4">
+									<div class="carousel-item ">
 
-                                        </div>
-                                        <div class="carousel-item ">
-                                            <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
-                                                class="d-block w-100 mx-auto" alt="Sản phẩm 2"
-                                                style="max-width: 100%; height: auto;">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1972&q=80"
-                                                class="d-block w-100 mx-auto" alt="Sản phẩm 3"
-                                                style="max-width: 100%; height: auto;">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="https://plus.unsplash.com/premium_photo-1663100940306-d9d419fe7cfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1764&q=80"
-                                                class="d-block w-100 mx-auto" alt="Sản phẩm 4"
-                                                style="max-width: 100%; height: auto;">
-                                        </div>
-                                    </div>
+										<div id="firebase-image-slide${i}" ></div>
+										<script>
+											displayFirebaseImageSlide("${i}");
+										</script>
+
+									</div>
+
+
+
+
+								</c:forEach>
+							</div>
                                     <a class="carousel-control-prev" href="#productSlide" role="button"
                                         data-slide="prev"> <span class="carousel-control-prev-icon"
                                             aria-hidden="true"></span> <span class="sr-only">Previous</span>
