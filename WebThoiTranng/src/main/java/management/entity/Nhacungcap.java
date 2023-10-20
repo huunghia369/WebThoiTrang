@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -50,6 +52,7 @@ public class Nhacungcap implements java.io.Serializable {
 	@Id
 
 	@Column(name = "MANCC", unique = true, nullable = false, length = 10)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getMancc() {
 		return this.mancc;
 	}
@@ -94,7 +97,7 @@ public class Nhacungcap implements java.io.Serializable {
 		this.sdt = sdt;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nhacungcap")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "nhacungcap")
 	public Set<Phieunhap> getphieunhaps() {
 		return this.phieunhaps;
 	}

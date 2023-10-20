@@ -46,7 +46,7 @@ public class Ctdkm implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MADKM", nullable = false, insertable = false, updatable = false)
 	public Dotkhuyenmai getDotkhuyenmai() {
 		return this.dotkhuyenmai;
@@ -56,7 +56,7 @@ public class Ctdkm implements java.io.Serializable {
 		this.dotkhuyenmai = dotkhuyenmai;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MAMH", nullable = false, insertable = false, updatable = false)
 	public Mathang getMathang() {
 		return this.mathang;

@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -38,6 +40,7 @@ public class Quyen implements java.io.Serializable {
 	@Id
 
 	@Column(name = "MAQUYEN", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getMaquyen() {
 		return this.maquyen;
 	}
@@ -55,7 +58,7 @@ public class Quyen implements java.io.Serializable {
 		this.tenquyen = tenquyen;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quyen")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "quyen")
 	public Set<Taikhoan> getTaikhoans() {
 		return this.taikhoans;
 	}

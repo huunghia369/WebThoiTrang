@@ -47,7 +47,7 @@ public class Banggia implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MAMH", nullable = false, insertable = false, updatable = false)
 	public Mathang getMathang() {
 		return this.mathang;
@@ -57,7 +57,7 @@ public class Banggia implements java.io.Serializable {
 		this.mathang = mathang;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MANV", nullable = false, insertable = false, updatable = false)
 	public Nhanvien getNhanvien() {
 		return this.nhanvien;

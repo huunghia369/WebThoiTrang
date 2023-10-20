@@ -48,7 +48,7 @@ public class Hinhanhmh implements java.io.Serializable {
 		this.maha = maha;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MAMH", nullable = false)
 	public Mathang getMathang() {
 		return this.mathang;
