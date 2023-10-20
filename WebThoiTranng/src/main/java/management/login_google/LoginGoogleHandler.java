@@ -58,7 +58,8 @@ public class LoginGoogleHandler extends HttpServlet {
 
 		// Lưu email vào session với một tên key cụ thể (ví dụ: "loggedInUserEmail")
 		session.setAttribute("loggedInUserEmail", userEmail);
-		
+		if(userEmail !=null) session.setAttribute("login", true);
+		else session.setAttribute("login", false);
 		// Sau khi lưu email vào session, chuyển hướng đến controller TaiKhoanController
 	    response.sendRedirect(request.getContextPath() + "/register/insert");
 		

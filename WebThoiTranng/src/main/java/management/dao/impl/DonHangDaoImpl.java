@@ -51,8 +51,8 @@ public class DonHangDaoImpl implements IDonHangDao {
             Query query = session.createQuery(hql);
             Date currentDate = new Date();  // Ngày hiện tại
             query.setParameter("currentDate", currentDate);
-            String id = String.valueOf(id1);
-            query.setParameter("id", id);
+           
+            query.setParameter("id", id1);
 
             query.setMaxResults(1);  // Lấy bản ghi đầu tiên (ngày gần nhất)
 

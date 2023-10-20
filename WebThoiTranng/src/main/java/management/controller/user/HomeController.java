@@ -4,6 +4,9 @@ package management.controller.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo4.entity.Ctdkm;
+
 
 import management.bean.ProductWithDiscount;
 import management.bean.RemoveDiacritics;
@@ -37,10 +40,12 @@ public class HomeController {
 	
 
 	@GetMapping("/index")
-	public ModelAndView home(ModelMap model) {
+	public ModelAndView home(ModelMap model,HttpServletRequest request) {
 		
-		
-		
+		HttpSession session = request.getSession();
+		 Boolean loginValue = (Boolean) session.getAttribute("login");
+		   // boolean isLoggedin = loginValue != null && loginValue.booleanValue();
+		 System.out.println(loginValue);
 		List<Loaimh> listCategory=danhMucDao.getAllDanhMuc();
 		
 		List<Mathang>listtmp=matHangDao.getMathangAndTotalSoluongTop(6);
@@ -87,7 +92,19 @@ public class HomeController {
 		return modelAndView;
 	}
 	
-	
+	@RequestMapping("log-out")
+	public String logOut(HttpServletRequest request )
+	{
+		HttpSession session = request.getSession();
+		Boolean userEmail = (Boolean) session.getAttribute("login");
+		
+		if (userEmail != null) {
+			
+	        // Nếu userEmail là null, bạn có thể xóa nó khỏi session như sau:
+	        session.setAttribute("login", false);
+	    }
+		return "redirect:/user/index";
+	}
 
 	
 }
