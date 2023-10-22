@@ -1,0 +1,46 @@
+/* Đảm bảo HTML và BODY chiếm toàn bộ chiều cao màn hình */
+
+
+
+.khung{
+	padding-left: 10%;
+	padding-right: 10%;
+	
+}
+
+.khung_anh{
+	border-bottom-left-radius: 10%;
+	border-top-right-radius: 10%;
+	position: sticky;
+	
+}
+.khung_inf{
+	padding-bottom: 1%;
+	font-size: 22px;
+	border-bottom-left-radius: 10%;
+	border-top-right-radius: 10%;
+	/* #f0d4d4 */
+}
+
+
+
+.header{
+	color: white;
+	margin-left: 12%;
+	margin-top: 10px;
+	font-size: 33px;
+}
+
+
+.lg{
+	font-size: 22px;
+}
+.rating {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.star {
+	color: gold;
+	font-size: 20px;
+}

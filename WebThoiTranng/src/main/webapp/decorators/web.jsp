@@ -57,7 +57,7 @@
 
 <script src="<c:url value='/templates/admin/paging/jquery.twbsPagination.js'/>"></script>
 <script src="<c:url value='/templates/user/product/setting.js'/>"></script>
-
+<script src="<c:url value='/templates/user/product/product-order.js'/>"></script>
  
  <decorator:head></decorator:head>
     
