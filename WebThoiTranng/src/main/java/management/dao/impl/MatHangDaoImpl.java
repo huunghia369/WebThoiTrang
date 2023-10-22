@@ -1,6 +1,7 @@
 package management.dao.impl;
 
 import java.math.BigInteger;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -121,14 +122,22 @@ public class MatHangDaoImpl implements IMatHangDao {
 			Date currentDate = new Date();
 
 			// Sử dụng câu truy vấn HQL để lấy danh sách Mathang có trong Ctdkm
-			String hql = "SELECT M FROM Mathang M " + "INNER JOIN M.ctdkms C " + "INNER JOIN C.dotkhuyenmai D "
-					+ "WHERE D.ngaykt >= :currentDate ORDER BY RAND()";
+			String hql = "SELECT DISTINCT M FROM Mathang M " +
+		             "INNER JOIN M.ctdkms C " +
+		             "INNER JOIN C.dotkhuyenmai D " +
+		             "WHERE D.ngaykt >= :currentDate";
 
 			Query query = session.createQuery(hql);
 			query.setParameter("currentDate", currentDate);
 			query.setMaxResults(top); // Giới hạn số lượng sản phẩm trả về là 8
-
+			
+			
 			list = query.list();
+		
+
+			Collections.shuffle(list); // Xáo trộn danh sách
+			
+		
 		} catch (Exception e) {
 			// Xử lý exception nếu có
 			e.printStackTrace();
@@ -167,7 +176,7 @@ public class MatHangDaoImpl implements IMatHangDao {
 		Session session = sessionFactory.openSession();
 		Date currentDate = new Date();
 
-		String hql = "SELECT c.mucgiamgia FROM Ctdkm c WHERE c.mathang.mamh = :mamh AND c.mucgiamgia > 0 AND c.dotkhuyenmai.ngaykt >= :currentDate ";
+		String hql = "SELECT MAX(c.mucgiamgia) FROM Ctdkm c WHERE c.mathang.mamh = :mamh AND c.mucgiamgia > 0 AND c.dotkhuyenmai.ngaykt >= :currentDate";
 		Query query = session.createQuery(hql);
 		query.setParameter("mamh", mamhToSearch.getMamh());
 		query.setParameter("currentDate", currentDate);
