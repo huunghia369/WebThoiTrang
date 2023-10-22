@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.ProcessBuilder.Redirect;
 
 import org.hibernate.jpa.criteria.predicate.ImplicitNumericExpressionTypeDeterminer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +71,7 @@ public class TaiKhoanController {
 			return "register";
 		}
 		// return "redirect:/register/cookie";
-		return "home";
+		return "redirect:/user/index";
 	}
 
 	// Method Post để xử lý dữ liệu của view "register" từ biểu mẫu
@@ -123,7 +124,7 @@ public class TaiKhoanController {
 		Taikhoan taikhoan = new Taikhoan();
 		iKhachHangDAO.createCustomer(khachHang, taikhoan, request);
 
-		return "home";
+		return "redirect:/user/index";
 	}
 
 }

@@ -105,6 +105,9 @@
 	</div>
 </div> --%>
 
+
+
+
 <!-- Header -->
 <header class="bg-dark text-white fixed-top ">
 	<div class="container">
@@ -141,12 +144,78 @@
 
 			</div>
 			<div class="col-md-3">
+				 
 				
-				<a href="#" class="btn btn-outline-secondary mt-4 "><i
+				<!-- Đoạn code mới để giao diện đăng nhập -->
+				
+				<div class="d-flex align-items-center">
+    <a id="loginButton" href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&hl=vi&redirect_uri=http://localhost:8080/login_google/LoginGoogleHandler&response_type=code&client_id=242828357380-bmi9embekgk0pqkcl14jqt35g80letup.apps.googleusercontent.com&approval_prompt=force" class="btn btn-outline-secondary">
+    <i class="fas fa-user"></i> Đăng Nhập
+</a>
+    <a id="cartButton" href="/user/cart/giohang" class="btn btn-outline-secondary ml-4"><i class="fas fa-shopping-cart"></i> Giỏ hàng</a>
+    <a id="settingButton" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <i class="fas fa-bars"></i>
+</a>
+<div class="dropdown-menu" style="font-size:18px;">
+  <!-- Các mục trong danh sách -->
+  <a class="dropdown-item bg-light" href="/user/profile">Thông tin cá nhân</a>
+ 
+  <a class="dropdown-item bg-light" href="/user/history">Xem lịch sử đơn đặt hàng</a>
+ 
+  <a class="dropdown-item bg-light" href="/user/log-out">Đăng xuất</a>
+
+  <!-- ...Thêm mục khác nếu cần -->
+</div>
+
+
+
+    
+</div>
+
+<script>
+  const dropdownToggle = document.querySelector('.nav-link.dropdown-toggle');
+  const dropdownMenu = document.querySelector('.dropdown-menu');
+
+  dropdownToggle.addEventListener('click', function(event) {
+    event.preventDefault(); // Ngăn chặn mặc định chuyển hướng liên kết
+    dropdownMenu.classList.toggle('show'); // Hiển thị/ẩn dropdown menu
+  });
+ </script>
+
+
+
+
+   <script>
+    // Lấy các phần tử nút
+    const loginButton = document.getElementById("loginButton");
+    const settingButton = document.getElementById("settingButton");
+    
+    // Kiểm tra trạng thái đăng nhập
+    const isLoggedIn = ${sessionScope.login} ;
+	console.log(isLoggedIn);
+    if (isLoggedIn) {
+        // Người dùng chưa đăng nhập, hiện nút "Đăng nhập" và ẩn nút "Profile"
+        loginButton.style.display = "none"; // Hiện nút đăng nhập
+        settingButton.style.display = "block"; // Ẩn nút profile
+    } else {
+        // Người dùng đã đăng nhập, ẩn nút "Đăng nhập" và hiện nút "Profile"
+        loginButton.style.display = "block"; // Ẩn nút đăng nhập
+        settingButton.style.display = "none"; // Hiện nút profile
+    }
+</script>
+
+
+    
+		<!-- kết thúc ở đây --> 
+		   
+				<!-- <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&hl=vi&redirect_uri=http://localhost:8080/login_google/LoginGoogleHandler&response_type=code
+		   &client_id=242828357380-bmi9embekgk0pqkcl14jqt35g80letup.apps.googleusercontent.com&approval_prompt=force" class="btn btn-outline-secondary mt-4 "><i
 					class="fas fa-user"></i> Đăng Nhập </a>
 			    <a href="#"
 					class="btn btn-outline-secondary ml-4 mt-4 "><i
 					class="fas fa-shopping-cart"></i> Giỏ hàng </a>
+				<button>Profile</button>	 -->
+					
 					
 				<i id="searchIcon" class="fas fa-search ml-4 mt-2" style="font-size: 36px;"></i> <!-- Biểu tượng kính lúp -->
 
@@ -154,7 +223,10 @@
 			</div>
 
 		</div>
-	</div>
+	
+
+
+
 
 	<script>
         // Lấy giá trị name từ thẻ input
