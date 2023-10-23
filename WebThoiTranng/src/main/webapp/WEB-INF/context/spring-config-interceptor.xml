@@ -15,17 +15,18 @@
 			http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<!-- Cấu hình interceptor -->
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/user/*" />
-			<!-- <mvc:exclude-mapping path="/home"/> -->
-			<bean class="management.interceptor.UserInterceptor" />
-		</mvc:interceptor>
-	</mvc:interceptors>
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/admin/*" />
-			<bean class="management.interceptor.AdminInterceptor" />
-		</mvc:interceptor>
-	</mvc:interceptors>
+	
+<mvc:interceptors>
+    <mvc:interceptor>
+        <mvc:mapping path="/admin/**" />
+        <bean class="management.interceptor.AdminInterceptor" />
+    </mvc:interceptor>
+    
+    <mvc:interceptor>
+        <mvc:mapping path="/user/**" />
+        <bean class="management.interceptor.UserInterceptor" />
+    </mvc:interceptor>
+</mvc:interceptors>
+
+	
 </beans>
