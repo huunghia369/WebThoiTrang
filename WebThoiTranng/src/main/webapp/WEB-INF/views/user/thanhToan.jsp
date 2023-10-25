@@ -30,7 +30,7 @@
 						<!-- Mỗi sản phẩm nằm trong một thẻ riêng biệt -->
 						<input name ='dsspJson' value="${dsspJson}" type="hidden" >
 						
-						<input name ='diaChi' value="" type="hidden">
+						<input name ='diaChi' id = "diaChi" value="" type="hidden">
 						<c:forEach items="${dssp}" var="sp" varStatus="loop">
 							<div class="product-card">
 								<img
@@ -311,14 +311,20 @@ thanhTienElement.forEach((e) => {
 
 	$("#province").change(() => {
 	    callApiDistrict(host + "p/" + $("#province").val() + "?depth=2");
-	    printResult();
 	});
+	
 	$("#district").change(() => {
 	    callApiWard(host + "d/" + $("#district").val() + "?depth=2");
-	    printResult();
+	    
 	});
 
-	
+	$("#ward").change(() => {
+		$('#diaChi').val($('#ward option:selected').text() + ', ' 
+				+ $('#district option:selected').text() + ', ' 
+				+ $('#province option:selected').text());
+	    console.log($('#diaChi').val());
+	});
+
 	
 	</script>
 	<script

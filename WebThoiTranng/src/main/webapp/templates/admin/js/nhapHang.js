@@ -1,12 +1,17 @@
 $(document).ready(() => {
 
-
 	/*$('#saveProductBtn').click(function() {
 		console.log('đã nhấn2');
 		$('#addProductModal').modal('hide');
 	});*/
 
 
+	//Nút mớ modal thêm sp mới
+	$('#openAddProductModal').click(() => {
+		$('#addProductModal').modal('show');
+	});
+	
+	//Xử lí nút lưu sản phẩm mới 
 	$("#formThemSPMoi").submit(function(e) {
 		e.preventDefault(); // Ngăn chặn nộp lại trang
 
@@ -21,9 +26,9 @@ $(document).ready(() => {
 			success: function(response) {
 				// Xử lý phản hồi thành công ở đây\
 				$('#addProductModal').modal('hide');
-				
+
 				console.log(response);
-				
+
 				Swal.fire({
 					title: 'Thêm thành công',
 					text: 'Sản phẩm ' + response,
@@ -33,15 +38,15 @@ $(document).ready(() => {
 					timerProgressBar: true,
 					allowEnterKey: false
 				});
-				
+
 				//Tách id và tên sản phẩm mới từ rp
 				let sp = response.split('_')
 				console.log(sp);
 				//Tạo một option mới để thêm vào ds Sản Phẩm
-				const option = new Option(sp[0] + '_ ' + sp[1], sp[0]);
+				const option = new Option('Mã SP: ' + sp[0] + '_ ' + sp[1], sp[0]);
 				// Thêm option vào phần tử select
 				$('#productName').append(option);
-				
+
 			},
 			error: function() {
 				// Xử lý lỗi ở đây
@@ -50,14 +55,57 @@ $(document).ready(() => {
 		});
 	});
 
-
-
-	$('#openAddProductModal').click(() => {
-		$('#addProductModal').modal('show');
-	});
-
 	// Xử lý modal thêm size mới
+	
+	$('#openAddSizeModal').click(()=>{
+		$('#addSizeModal').modal('show');
+	})
 
+
+	$("#formThemSizeMoi").submit(function(e) {
+		e.preventDefault(); // Ngăn chặn nộp lại trang
+
+		// Lấy dữ liệu từ biểu mẫu
+		var formData = $(this).serialize();
+
+		// Gửi dữ liệu bằng AJAX
+		$.ajax({
+			type: "POST", // Phương thức gửi dữ liệu
+			url: "/admin/them-size-moi", // URL của API endpoint
+			data: formData, // Dữ liệu để gửi
+			success: function(response) {
+				// Xử lý phản hồi thành công ở đây\
+				$('#addProductModal').modal('hide');
+
+				console.log(response);
+
+				Swal.fire({
+					title: 'Thêm thành công',
+					text: 'Size mới ' + response,
+					icon: 'success',
+					showConfirmButton: false,
+					timer: 2000,
+					timerProgressBar: true,
+					allowEnterKey: false
+				});
+
+				//Tách id và tên size mới từ rp
+				let sp = response.split('_')
+				console.log(sp);
+				//Tạo một option mới để thêm vào ds Sản Phẩm
+				const option = new Option(sp[1], sp[0]);
+				// Thêm option vào phần tử select
+				$('#productSize').append(option);
+
+			},
+			error: function() {
+				// Xử lý lỗi ở đây
+				console.log("Lỗi xảy ra khi gửi biểu mẫu.");
+			},
+		});
+	});
+	
+	
 
 	// Lấy nút "Thêm Sản Phẩm"
 	const openModalBtn = document.getElementById("openModalBtn");
