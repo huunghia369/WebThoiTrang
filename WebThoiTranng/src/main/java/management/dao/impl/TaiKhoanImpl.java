@@ -107,4 +107,24 @@ public class TaiKhoanImpl implements ITaiKhoanDAO{
 		}
 		return nhanvien;
 	}
+
+
+
+	@Override
+	public int get_MaQuyen_by_email(String email) {
+		int maquyen = 0;
+		Session session= sessionFactory.openSession();
+		String hql = "select maquyen from Taikhoan  where email = :email and trangthai = 1";
+		Query query=session.createSQLQuery(hql);
+		try {
+			query.setParameter("email", email);
+			
+			maquyen = (Integer) query.uniqueResult();
+		} finally {
+			session.close();
+		}
+		return maquyen;
+	}
+	
+	
 }

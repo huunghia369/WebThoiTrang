@@ -36,7 +36,7 @@ import management.dao.IGioHangDAO;
 import management.entity.Mathang;
 
 @Controller
-@RequestMapping("user/cart/")
+@RequestMapping("user/")
 public class GioHangController {
 
 	@Autowired
@@ -45,114 +45,88 @@ public class GioHangController {
 	@Autowired
 	IDonHangDao donHangDao;
 
-	@RequestMapping("/chi-tiet-sp/{id}")
-	public ModelAndView CTSP(@PathVariable("id") int id) throws ServletException, IOException {
-		ModelAndView mav = new ModelAndView("chiTietSP");
-		Mathang mh = donHangDao.layMatHangTheoID(id);
-		int gia = donHangDao.LayGiaSP(id);
-		mav.addObject("gia", gia);
-		
-		mav.addObject("mh", mh);
-
-		return mav;
-	}
-
-	@PostMapping("/chi-tiet-sp/them")
-	public void themSanPhamVaoGioHang(Model model, @RequestParam("id") int id, @RequestParam("size") String size,
-			HttpServletResponse response) {
-		// Đoạn mã xử lý thêm sản phẩm vào giỏ hàng ở đây
-		String maSPTmp = "productID" + String.valueOf(id) + "+" + size;
-
-		Cookie cookie = new Cookie(maSPTmp, "1");
-		// Đặt path của cookie
-		cookie.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		response.addCookie(cookie);
-
-		cookie.setMaxAge(60 * 60 * 24 * 30); // 1 tháng
-
-	}
-
-	@RequestMapping("products")
-	protected String doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Tạo các cookie
-		Cookie cookie1 = new Cookie("productID1+S", "1");
-		Cookie cookie2 = new Cookie("productID1+M", "1");
-		Cookie cookie3 = new Cookie("productID1+L", "1");
-		Cookie cookie4 = new Cookie("productID1+XL", "1");
-		Cookie cookie5 = new Cookie("productID2+S", "1");
-		Cookie cookie6 = new Cookie("productID2+M", "1");
-		Cookie cookie7 = new Cookie("productID2+L", "1");
-		Cookie cookie8 = new Cookie("productID2+XL", "1");
-		Cookie cookie9 = new Cookie("productID3+S", "1");
-		Cookie cookie10 = new Cookie("productID3+M", "1");
-		Cookie cookie11= new Cookie("productID3+L", "1");
-		Cookie cookie12 = new Cookie("productID3+XL", "1");
-		Cookie cookie13 = new Cookie("productID4+S", "1");
-		Cookie cookie14 = new Cookie("productID4+M", "1");
-		Cookie cookie15 = new Cookie("productID4+L", "1");
-		Cookie cookie16 = new Cookie("productID4+XL", "1");
-		cookie1.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		cookie2.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		cookie3.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		cookie4.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		cookie5.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		cookie6.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		cookie7.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		cookie8.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		cookie9.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		cookie10.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		cookie11.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		cookie12.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		cookie13.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		cookie14.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		cookie15.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		cookie16.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
-		
-		
-		// Đặt thời gian sống cho các cookie (tùy chọn)
-
-		
-		cookie1.setMaxAge(60 * 60 * 24);
-		cookie2.setMaxAge(60 * 60 * 24);
-		cookie3.setMaxAge(60 * 60 * 24);
-		cookie4.setMaxAge(60 * 60 * 24);
-		cookie5.setMaxAge(60 * 60 * 24);
-		cookie6.setMaxAge(60 * 60 * 24);
-		cookie7.setMaxAge(60 * 60 * 24);
-		cookie8.setMaxAge(60 * 60 * 24);
-		cookie9.setMaxAge(60 * 60 * 24);
-		cookie10.setMaxAge(60 * 60 * 24);
-		cookie11.setMaxAge(60 * 60 * 24);
-		cookie12.setMaxAge(60 * 60 * 24);
-		cookie13.setMaxAge(60 * 60 * 24);
-		cookie14.setMaxAge(60 * 60 * 24);
-		cookie15.setMaxAge(60 * 60 * 24);
-		cookie16.setMaxAge(60 * 60 * 24);
-		response.addCookie(cookie1);
-		response.addCookie(cookie2);
-		response.addCookie(cookie3);
-		response.addCookie(cookie4);
-		response.addCookie(cookie5);
-		response.addCookie(cookie6);
-		response.addCookie(cookie7);
-		response.addCookie(cookie8);
-		response.addCookie(cookie9);
-		response.addCookie(cookie10);
-		response.addCookie(cookie11);
-		response.addCookie(cookie12);
-		response.addCookie(cookie13);
-		response.addCookie(cookie14);
-		response.addCookie(cookie15);
-		response.addCookie(cookie16);
-		
-		
-
-		// Gửi thông báo thành công
-		response.getWriter().write("Các cookie đã được tạo thành công!");
-
-		return "redirect:giohang";
-	}
+	/*
+	 * @RequestMapping("/chi-tiet-sp/{id}") public ModelAndView
+	 * CTSP(@PathVariable("id") int id) throws ServletException, IOException {
+	 * ModelAndView mav = new ModelAndView("user/chiTietSP"); Mathang mh =
+	 * donHangDao.layMatHangTheoID(id); int gia = donHangDao.LayGiaSP(id);
+	 * mav.addObject("gia", gia);
+	 * 
+	 * mav.addObject("mh", mh);
+	 * 
+	 * return mav; }
+	 * 
+	 * @PostMapping("/chi-tiet-sp/them") public void themSanPhamVaoGioHang(Model
+	 * model, @RequestParam("id") int id, @RequestParam("size") String size,
+	 * HttpServletResponse response) { // Đoạn mã xử lý thêm sản phẩm vào giỏ hàng ở
+	 * đây String maSPTmp = "productID" + String.valueOf(id) + "+" + size;
+	 * 
+	 * Cookie cookie = new Cookie(maSPTmp, "1"); // Đặt path của cookie
+	 * cookie.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
+	 * response.addCookie(cookie);
+	 * 
+	 * cookie.setMaxAge(60 * 60 * 24 * 30); // 1 tháng
+	 * 
+	 * }
+	 * 
+	 * @RequestMapping("products") protected String doGet(HttpServletRequest
+	 * request, HttpServletResponse response) throws ServletException, IOException {
+	 * // Tạo các cookie Cookie cookie1 = new Cookie("productID1+S", "1"); Cookie
+	 * cookie2 = new Cookie("productID1+M", "1"); Cookie cookie3 = new
+	 * Cookie("productID1+L", "1"); Cookie cookie4 = new Cookie("productID1+XL",
+	 * "1"); Cookie cookie5 = new Cookie("productID2+S", "1"); Cookie cookie6 = new
+	 * Cookie("productID2+M", "1"); Cookie cookie7 = new Cookie("productID2+L",
+	 * "1"); Cookie cookie8 = new Cookie("productID2+XL", "1"); Cookie cookie9 = new
+	 * Cookie("productID3+S", "1"); Cookie cookie10 = new Cookie("productID3+M",
+	 * "1"); Cookie cookie11= new Cookie("productID3+L", "1"); Cookie cookie12 = new
+	 * Cookie("productID3+XL", "1"); Cookie cookie13 = new Cookie("productID4+S",
+	 * "1"); Cookie cookie14 = new Cookie("productID4+M", "1"); Cookie cookie15 =
+	 * new Cookie("productID4+L", "1"); Cookie cookie16 = new
+	 * Cookie("productID4+XL", "1"); cookie1.setPath("/"); // Đặt path chung cho tất
+	 * cả các đường dẫn cookie2.setPath("/"); // Đặt path chung cho tất cả các đường
+	 * dẫn cookie3.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
+	 * cookie4.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
+	 * cookie5.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
+	 * cookie6.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
+	 * cookie7.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
+	 * cookie8.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
+	 * cookie9.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
+	 * cookie10.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
+	 * cookie11.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
+	 * cookie12.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
+	 * cookie13.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
+	 * cookie14.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
+	 * cookie15.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
+	 * cookie16.setPath("/"); // Đặt path chung cho tất cả các đường dẫn
+	 * 
+	 * 
+	 * // Đặt thời gian sống cho các cookie (tùy chọn)
+	 * 
+	 * 
+	 * cookie1.setMaxAge(60 * 60 * 24); cookie2.setMaxAge(60 * 60 * 24);
+	 * cookie3.setMaxAge(60 * 60 * 24); cookie4.setMaxAge(60 * 60 * 24);
+	 * cookie5.setMaxAge(60 * 60 * 24); cookie6.setMaxAge(60 * 60 * 24);
+	 * cookie7.setMaxAge(60 * 60 * 24); cookie8.setMaxAge(60 * 60 * 24);
+	 * cookie9.setMaxAge(60 * 60 * 24); cookie10.setMaxAge(60 * 60 * 24);
+	 * cookie11.setMaxAge(60 * 60 * 24); cookie12.setMaxAge(60 * 60 * 24);
+	 * cookie13.setMaxAge(60 * 60 * 24); cookie14.setMaxAge(60 * 60 * 24);
+	 * cookie15.setMaxAge(60 * 60 * 24); cookie16.setMaxAge(60 * 60 * 24);
+	 * response.addCookie(cookie1); response.addCookie(cookie2);
+	 * response.addCookie(cookie3); response.addCookie(cookie4);
+	 * response.addCookie(cookie5); response.addCookie(cookie6);
+	 * response.addCookie(cookie7); response.addCookie(cookie8);
+	 * response.addCookie(cookie9); response.addCookie(cookie10);
+	 * response.addCookie(cookie11); response.addCookie(cookie12);
+	 * response.addCookie(cookie13); response.addCookie(cookie14);
+	 * response.addCookie(cookie15); response.addCookie(cookie16);
+	 * 
+	 * 
+	 * 
+	 * // Gửi thông báo thành công
+	 * response.getWriter().write("Các cookie đã được tạo thành công!");
+	 * 
+	 * return "redirect:giohang"; }
+	 */
 
 	@RequestMapping("giohang")
 	public ModelAndView createGioHangDto(HttpServletRequest request, HttpServletResponse response) {
@@ -311,12 +285,6 @@ public class GioHangController {
 ////        }
 //		return"home";
 //}
-	@PostMapping("paying")
-	public String handlePayment(@RequestBody List<Product_Paying> selectedProducts) {
-		for (Product_Paying product : selectedProducts) {
-           
-        }
-        return "home"; //  Ví dụ chuyển hướng đến trang thành công
-    }
+	
 
 }
