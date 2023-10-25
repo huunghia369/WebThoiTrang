@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,12 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import management.DTO.SPNhapDto;
+import management.bean.ProductWithDiscount;
+import management.dao.IMatHangDao;
 import management.dao.INhapHangDao;
 
 import management.entity.Chatlieu;
 
 import management.dao.IThanhToanDAO;
+
 import management.DTO.SPNhapDto;
+
 
 import management.entity.Ctpn;
 import management.entity.CtpnId;
@@ -36,7 +42,35 @@ public class AdminController {
 	
 	@Autowired
 	private INhapHangDao nhapHangDao;
+
+	@Autowired
+	private IMatHangDao matHangDao;
+	
+	
+	@GetMapping("/")
+	public ModelAndView showhome(ModelMap model) {
+		List<Mathang>listtmp=matHangDao.getMathangAndTotalSoluongTop(6);
+		List<ProductWithDiscount>list_P_Sale=new ArrayList<>();
 		
+		for(Mathang mh: listtmp) {
+			
+			ProductWithDiscount tmp = new ProductWithDiscount();
+			tmp.setMucgiamgia((int)matHangDao.getDiscount_Product(mh));
+			
+			tmp.setMathang(mh);
+			tmp.setGia(matHangDao.getPrice_Product(mh));
+			
+			
+			
+			list_P_Sale.add(tmp);
+			
+		}
+		
+		model.addAttribute("listProductSale", list_P_Sale);
+		ModelAndView mav = new ModelAndView("admin/home");
+		return mav;
+	}
+
 	@GetMapping("/nhap-hang")
 	public ModelAndView show() {
 		ModelAndView mav = new ModelAndView("admin/nhapHang");
