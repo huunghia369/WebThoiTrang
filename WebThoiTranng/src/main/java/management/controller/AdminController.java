@@ -146,6 +146,25 @@ public class AdminController {
 		return ResponseEntity.ok(rp);
 	}
 	
+	@PostMapping("them-size-moi")
+	public ResponseEntity<String> themSizeMoi(
+			@RequestParam("sizeMoi") String sizeMoi){
+
+		System.out.println(sizeMoi);
+		
+		Size size = new Size();
+	
+		size.setTensize(sizeMoi);
+		
+		nhapHangDao.themSizeMoi(size);
+		
+		String rp = size.getMasize()+ "_ "+ size.getTensize();
+		System.out.println(rp);
+		System.out.println(size.toString());
+		
+		return ResponseEntity.ok(rp);
+	}
+	
 	@GetMapping("/tmp")
 	public ModelAndView tmp() {
 		return new ModelAndView("/admin/tmp");

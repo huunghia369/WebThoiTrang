@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import management.dao.IDonHangDao;
-
 import management.entity.Mathang;
+import management.entity.Size;
 
 @Repository
 @Transactional
@@ -66,6 +66,24 @@ public class DonHangDaoImpl implements IDonHangDao {
             // Đóng SessionFactory khi ứng dụng kết thúc
           
         }
+	}
+	
+	@Override
+	public Size laySize(int maSize) {
+		Session session = sessionFactory.openSession();
+		try {
+			String hql = "FROM Size where masize = :id";
+			Query query = session.createQuery(hql);
+			query.setParameter("id", maSize);
+			Size mh = (Size) query.uniqueResult();
+			return mh;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			session.close();
+		}
 	}
 
 }

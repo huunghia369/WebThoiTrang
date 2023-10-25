@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -37,6 +38,8 @@ import management.dto.Product_Paying;
 import management.entity.Ctpd;
 import management.entity.CtpdId;
 import management.entity.Ctsize;
+import management.entity.CtsizeId;
+import management.entity.Danhgia;
 import management.entity.Khachhang;
 import management.entity.Mathang;
 import management.entity.Phieudat;
@@ -57,21 +60,35 @@ public class UserController {
 
 	@RequestMapping("/chi-tiet-sp/{id}")
 	public ModelAndView CTSP(@PathVariable("id") int id) throws ServletException, IOException {
+		
 		ModelAndView mav = new ModelAndView("user/chiTietSP");
+		
 		Mathang mh = donHangDao.layMatHangTheoID(id);
+		
 		int gia = donHangDao.LayGiaSP(id);
-		mav.addObject("gia", gia);
+		
 		System.out.println(mh.getCtsizes());
-		mav.addObject("mh", mh);
 
+		float tongDanhGia = 0;
+		for (Danhgia dg :mh.getDanhgias()) {
+			tongDanhGia += dg.getDanhgia();
+		}
+		float danhGia = tongDanhGia/mh.getDanhgias().size();
+		System.out.println(tongDanhGia);
+		System.out.println(danhGia);
+		
+		mav.addObject("gia", gia);
+		mav.addObject("mh", mh);
+		mav.addObject("danhGia", danhGia);
+		
 		return mav;
 	}
 
 	@PostMapping("/chi-tiet-sp/them")
-	public void themSanPhamVaoGioHang(Model model, @RequestParam("id") int id, @RequestParam("size") String size,
+	public void themSanPhamVaoGioHang(Model model, @RequestParam("id") int id, @RequestParam("size") int masize,
 			HttpServletResponse response) {
 		// Đoạn mã xử lý thêm sản phẩm vào giỏ hàng ở đây
-		String maSPTmp = "productID" + String.valueOf(id) + "+" + size;
+		String maSPTmp = "productID" + String.valueOf(id) + "+" + donHangDao.laySize(masize).getTensize();
 
 		Cookie cookie = new Cookie(maSPTmp, "1");
 		// Đặt path của cookie
@@ -195,6 +212,7 @@ public class UserController {
 
 				dsspJson = URLEncoder.encode(dsspJson, "UTF-8");
 				System.out.println("Show json luc moi chuyen doi: " + dsspJson);
+				
 				mav.addObject("dsspJson", dsspJson);
 				mav.addObject("dssp", DSSP);
 				mav.addObject("tongTien", tongTien);
@@ -211,33 +229,72 @@ public class UserController {
 		return mav;
 	}
 
+	@GetMapping("mua-ngay")
+	public ModelAndView muaNgay(
+			@RequestParam("mamh") int mamh,
+			@RequestParam("masize") int masize,
+			@RequestParam("soLuong") int soLuong
+			) throws JsonProcessingException {
+		ModelAndView mav = new ModelAndView("user/thanhToan");
+		try {
+		
+		List<ThanhToanDto> DSSP = new ArrayList<ThanhToanDto>();
+	
+		ThanhToanDto sp = new ThanhToanDto();
+		sp.setCtSize(thanhToanDAO.layCtSize(new CtsizeId(masize, mamh)));
+		sp.setDonGia(donHangDao.LayGiaSP(mamh));
+		sp.setDonGiaKM(0);
+		sp.setSoLuong(soLuong);
+		
+		DSSP.add(sp);
+		
+		ObjectMapper o = new ObjectMapper();
+		String dsspJson = o.writeValueAsString(DSSP);
+		dsspJson = URLEncoder.encode(dsspJson, "UTF-8");
+		
+		int tongTien = soLuong * sp.getDonGia();
+		int soLuongSP = soLuong;
+		
+		mav.addObject("dssp", DSSP);
+		mav.addObject("dsspJson", dsspJson);
+		mav.addObject("tongTien", tongTien);
+		mav.addObject("soLuongSP", soLuongSP);
+		
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	
 	@PostMapping("/thanhToan")
 	public ModelAndView thanhToan(@RequestParam("dsspJson") String dsspJson, @RequestParam("hoTen") String hoTen,
-			@RequestParam("sdt") String sdt, @RequestParam("province") String province,
-			@RequestParam("district") String district, @RequestParam("ward") String ward,
-			@RequestParam("tongTien") int tongTien, HttpServletResponse response) throws JsonProcessingException {
+			@RequestParam("sdt") String sdt, @RequestParam("tongTien") int tongTien,
+			HttpServletRequest request, @RequestParam("diaChi") String diaChi,
+			HttpServletResponse response) throws JsonProcessingException {
 
 		ModelAndView mav = new ModelAndView("redirect:/user/giohang");
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		try {
-
-			System.out.println("Show json tra ve: " + dsspJson + " ");
+			System.out.println("Show diaChi: " + diaChi );
+			System.out.println("Show json tra ve: " + dsspJson );
 
 			// decode Json
 			dsspJson = URLDecoder.decode(dsspJson, "UTF-8");
 
 			System.out.println("Show json tra ve: " + dsspJson + " ");
 
-			String diaChi = ward + ", " + district + ", " + province;
-
 			List<ThanhToanDto> dssp = objectMapper.readValue(dsspJson, new TypeReference<List<ThanhToanDto>>() {
 			});
 			List<Ctpd> ctpd = new ArrayList<Ctpd>();
 
+			HttpSession session = request.getSession();
+			String userEmail = (String) session.getAttribute("loggedInUserEmail");
+
+			
 			Date ngayHienTai = new Date();
-			Khachhang kh = thanhToanDAO.layKhachHangTheoId(3);
+			Khachhang kh = thanhToanDAO.layKhachHangTheoGmail(userEmail);
 
 			Phieudat pd = new Phieudat();
 			pd.setDiachi(diaChi);
@@ -284,7 +341,9 @@ public class UserController {
 				response.addCookie(cookie);
 
 			}
-
+			
+			
+			
 			thanhToanDAO.themCtpd(ctpd);
 
 		} catch (Exception e) {

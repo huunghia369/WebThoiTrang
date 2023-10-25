@@ -49,6 +49,8 @@ public interface INhapHangDao{
 	
 	public void themSPMoi(Mathang mh) ;
 	
+	public void themSizeMoi(Size s) ;
+	
 	
 	
 	

@@ -324,5 +324,20 @@ public class NhapHangDaoImpl implements INhapHangDao {
 			session.close();
 		}
 	}
-
+	
+	
+	public void themSizeMoi(Size s) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.save(s);
+			transaction.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+	}
 }

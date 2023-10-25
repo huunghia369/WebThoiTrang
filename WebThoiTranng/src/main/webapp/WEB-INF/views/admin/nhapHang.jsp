@@ -102,10 +102,12 @@
 									<c:forEach var="size" items="${dsSize}">
 										<option value="${size.getMasize()}">${size.getTensize()}</option>
 									</c:forEach>
-								</select>
-								<button type="button" class="btn btn-primary" id="themSize">
-									<i class="fa fa-plus-square"></i>
-								</button>
+								</select> <span class="ml-2">
+									<button type="button" class="btn btn-primary"
+										id="openAddSizeModal">
+										<i class="fa fa-plus-square"></i>
+									</button>
+								</span>
 							</div>
 						</div>
 						<div class="form-group">
@@ -135,7 +137,6 @@
 		</div>
 
 
-
 		<!-- Modal thêm sp mới  -->
 		<div class="modal fade" id="addProductModal" tabindex="-1"
 			role="dialog" aria-labelledby="addProductModalLabel"
@@ -150,26 +151,19 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form action="/admin/them-sp-moi" method="post" id = "formThemSPMoi">
+					<form action="/admin/them-sp-moi" method="post" id="formThemSPMoi">
 						<div class="modal-body">
 							<!-- Nội dung modal nhập sản phẩm mới -->
-
-
 							<div class="form-group">
 								<label for="tenSPMoi">Tên Sản phẩm mới: </label> <input
 									type="text" class="form-control" id="tenSPMoi" name="tenSPMoi"
 									required />
 							</div>
-
 							<div class="form-group">
 								<label for="loaiSP">Loại Sản phẩm:</label> <select id="loaiSP"
 									name="loaiSP" class="form-control" required>
 									<c:forEach var="lsp" items="${dsLoaiSP}">
-
-
 										<option value="${lsp.getMaloaimh()}">${lsp.getTenloaimh()}</option>
-
-
 									</c:forEach>
 								</select>
 							</div>
@@ -178,38 +172,22 @@
 								<label for="nhanHieu">Nhãn hiệu: </label> <select id="nhanHieu"
 									name="nhanHieu" class="form-control" required>
 									<c:forEach var="nh" items="${dsNhanHieu}">
-
-
 										<option value="${nh.getManh()}">${nh.getTennh()}</option>
-
-
 									</c:forEach>
 								</select>
 							</div>
-
-
-
 							<div class="form-group">
 								<label for="chatLieu">Chất liệu:</label> <select id="chatLieu"
 									name="chatLieu" class="form-control" required>
 									<c:forEach var="cl" items="${dsChatLieu}">
-
-
 										<option value="${cl.getMacl()}">${cl.getTenvai()}</option>
-
-
 									</c:forEach>
 								</select>
 							</div>
-
-
 							<div class="form-group">
 								<label for="moTa">Mô tả: </label> <input type="text"
 									class="form-control" id="moTa" name="moTa" required />
 							</div>
-
-
-
 						</div>
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-success" id="saveProductBtn">Lưu</button>
@@ -233,14 +211,20 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body">
-						<!-- Nội dung modal nhập size mới -->
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-success" id="saveSizeBtn">Lưu</button>
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Đóng</button>
-					</div>
+					<form action="" id = "formThemSizeMoi">
+						<div class="modal-body">
+							<!-- Nội dung modal nhập size mới -->
+							<div class="form-group">
+								<label for="sizeMoi">Tên size mới: </label> <input type="text"
+									class="form-control" id="sizeMoi" name="sizeMoi" required />
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success" id="saveSizeBtn">Lưu</button>
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Đóng</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
