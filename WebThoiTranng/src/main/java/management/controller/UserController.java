@@ -29,12 +29,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import management.dto.ThanhToanDto;
+import management.DTO.ThanhToanDto;
 import management.dao.IDonHangDao;
 import management.dao.IGioHangDAO;
 import management.dao.IThanhToanDAO;
-import management.dto.GioHangDto;
-import management.dto.Product_Paying;
+import management.DTO.GioHangDto;
+import management.DTO.Product_Paying;
 import management.entity.Ctpd;
 import management.entity.CtpdId;
 import management.entity.Ctsize;
@@ -99,64 +99,53 @@ public class UserController {
 
 	}
 
-	@RequestMapping("/giohang")
-	public ModelAndView createGioHangDto(HttpServletRequest request, HttpServletResponse response) {
-
-		List<GioHangDto> gioHangDto = new ArrayList<GioHangDto>();
-		ModelAndView modelAndView = new ModelAndView("user/cart");
-		Cookie[] cookies = request.getCookies();
-
-		if (cookies == null)
-			System.out.println("Cookie null r");
-		if (cookies != null) {
-
-			// Tạo một danh sách lưu trữ các cookie có tên bắt đầu bằng "productID"
-			// và giá trị là chuỗi gồm 2 số nguyên được ngăn cách bởi dấu ","
-
-			for (Cookie cookie : cookies) {
-
-				if (cookie.getName().startsWith("productID")) {
-
-					// Lấy name của cookie là productId
-
-					String cookieName = cookie.getName();
-					// Tìm vị trí của "productID" trong chuỗi
-					int indexOfProductID = cookieName.indexOf("productID");
-					if (indexOfProductID != -1) {
-						try {
-							// Lấy phần từ sau "productID" đến cuối chuỗi
-							String value = cookieName.substring(indexOfProductID + "productID".length()); // Sẽ lấy
-																											// "1+SM"
-							// Bây giờ bạn có thể tách "1" và "SM" từ giá trị này.
-							String[] parts = value.split("\\+");
-							int firstPart = 0; // id
-							String secondPart = ""; // size
-							if (parts.length == 2) {
-								firstPart = Integer.parseInt(parts[0]); // id
-								secondPart = parts[1]; // size
-							}
-
-							GioHangDto gioHangDto2 = new GioHangDto(iGioHangDAO, firstPart, 1, secondPart); // soluong
-																											// auto la 1
-
-							gioHangDto.add(gioHangDto2);
-
-						} catch (NumberFormatException e) {
-							e.printStackTrace();
-							System.out.println("62 - GioHang Controller");
-						}
-
-					}
-
-				}
-
-			}
-
-		}
-
-		modelAndView.addObject("GioHang", gioHangDto);
-		return modelAndView;
-	}
+	/*
+	 * @RequestMapping("/giohang") public ModelAndView
+	 * createGioHangDto(HttpServletRequest request, HttpServletResponse response) {
+	 * 
+	 * List<GioHangDto> gioHangDto = new ArrayList<GioHangDto>(); ModelAndView
+	 * modelAndView = new ModelAndView("user/cart"); Cookie[] cookies =
+	 * request.getCookies();
+	 * 
+	 * if (cookies == null) System.out.println("Cookie null r"); if (cookies !=
+	 * null) {
+	 * 
+	 * // Tạo một danh sách lưu trữ các cookie có tên bắt đầu bằng "productID" // và
+	 * giá trị là chuỗi gồm 2 số nguyên được ngăn cách bởi dấu ","
+	 * 
+	 * for (Cookie cookie : cookies) {
+	 * 
+	 * if (cookie.getName().startsWith("productID")) {
+	 * 
+	 * // Lấy name của cookie là productId
+	 * 
+	 * String cookieName = cookie.getName(); // Tìm vị trí của "productID" trong
+	 * chuỗi int indexOfProductID = cookieName.indexOf("productID"); if
+	 * (indexOfProductID != -1) { try { // Lấy phần từ sau "productID" đến cuối
+	 * chuỗi String value = cookieName.substring(indexOfProductID +
+	 * "productID".length()); // Sẽ lấy // "1+SM" // Bây giờ bạn có thể tách "1" và
+	 * "SM" từ giá trị này. String[] parts = value.split("\\+"); int firstPart = 0;
+	 * // id String secondPart = ""; // size if (parts.length == 2) { firstPart =
+	 * Integer.parseInt(parts[0]); // id secondPart = parts[1]; // size }
+	 * 
+	 * GioHangDto gioHangDto2 = new GioHangDto(iGioHangDAO, firstPart, 1,
+	 * secondPart); // soluong // auto la 1
+	 * 
+	 * gioHangDto.add(gioHangDto2);
+	 * 
+	 * } catch (NumberFormatException e) { e.printStackTrace();
+	 * System.out.println("62 - GioHang Controller"); }
+	 * 
+	 * }
+	 * 
+	 * }
+	 * 
+	 * }
+	 * 
+	 * }
+	 * 
+	 * modelAndView.addObject("GioHang", gioHangDto); return modelAndView; }
+	 */
 
 	// Lấy danh sách id và số lượng được chọn ở giỏ hàng
 	@GetMapping("/paying")

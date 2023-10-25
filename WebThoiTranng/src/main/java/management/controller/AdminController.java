@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import management.dao.INhapHangDao;
-import management.dto.SPNhapDto;
+
 import management.entity.Chatlieu;
+
+import management.dao.IThanhToanDAO;
+import management.DTO.SPNhapDto;
+
 import management.entity.Ctpn;
 import management.entity.CtpnId;
 import management.entity.Loaimh;
