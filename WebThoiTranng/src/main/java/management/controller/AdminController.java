@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import management.dao.INhapHangDao;
 import management.dao.IThanhToanDAO;
-import management.dto.SPNhapDto;
+import management.DTO.SPNhapDto;
 import management.entity.Ctpn;
 import management.entity.CtpnId;
 import management.entity.Ctsize;

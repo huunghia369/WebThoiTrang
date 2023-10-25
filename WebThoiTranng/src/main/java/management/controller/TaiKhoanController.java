@@ -36,6 +36,7 @@ import management.dao.IKhachHangDAO;
 import management.dao.ITaiKhoanDAO;
 import management.entity.Khachhang;
 import management.entity.Mathang;
+import management.entity.Quyen;
 import management.entity.Taikhoan;
 
 @Controller
@@ -70,6 +71,7 @@ public class TaiKhoanController {
 			
 			return "register";
 		}
+		if(taiKhoanDAO.get_MaQuyen_by_email(userEmail)==2) return "/admin/home";
 		// return "redirect:/register/cookie";
 		return "redirect:/user/index";
 	}
@@ -123,7 +125,7 @@ public class TaiKhoanController {
 
 		Taikhoan taikhoan = new Taikhoan();
 		iKhachHangDAO.createCustomer(khachHang, taikhoan, request);
-
+		
 		return "redirect:/user/index";
 	}
 

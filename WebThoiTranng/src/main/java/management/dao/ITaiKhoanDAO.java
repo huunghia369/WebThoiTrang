@@ -13,4 +13,5 @@ public interface ITaiKhoanDAO {
 	boolean check_MailExist(String mail);
 	Taikhoan addTaiKhoan( HttpServletRequest request);
 	public Nhanvien getNhanVien_byEmail(String nv);
+	public int get_MaQuyen_by_email(String email);
 }

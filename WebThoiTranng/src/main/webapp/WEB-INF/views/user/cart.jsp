@@ -29,13 +29,13 @@
     justify-content: center; /* Căn giữa nội dung theo chiều ngang */
 }
 /* Thiết lập chiều cao của row để chiếm toàn bộ màn hình */
-.row {
+/* .row {
     height: 100vh;
     /* background-image: url('your-background-image.jpg'); */ /* Đường dẫn đến hình ảnh nền */
     background-size: cover; /* Để đảm bảo hình ảnh nền trải đều trên toàn bộ row */
     background-repeat: no-repeat; /* Không lặp lại hình ảnh */
     background-attachment: fixed; /* Giữ hình ảnh nền cố định khi cuộn trang */
-    background-color: rgba(15, 106, 120 , 0.3); /* Độ trong suốt 0.3% */
+    background-color: rgba(15, 106, 120 , 0.3); /* Độ trong suốt 0.3% */ */
     /* Các thuộc tính khác của row */
 }
 </style>

@@ -152,7 +152,7 @@
     <a id="loginButton" href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&hl=vi&redirect_uri=http://localhost:8080/login_google/LoginGoogleHandler&response_type=code&client_id=242828357380-bmi9embekgk0pqkcl14jqt35g80letup.apps.googleusercontent.com&approval_prompt=force" class="btn btn-outline-secondary">
     <i class="fas fa-user"></i> Đăng Nhập
 </a>
-    <a id="cartButton" href="/user/cart/giohang" class="btn btn-outline-secondary ml-4"><i class="fas fa-shopping-cart"></i> Giỏ hàng</a>
+    <a id="cartButton" href="/user/giohang" class="btn btn-outline-secondary ml-4"><i class="fas fa-shopping-cart"></i> Giỏ hàng</a>
     <a id="settingButton" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
   <i class="fas fa-bars"></i>
 </a>
