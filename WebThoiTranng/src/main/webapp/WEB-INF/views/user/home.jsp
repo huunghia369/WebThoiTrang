@@ -194,7 +194,7 @@
 
                         <div class="col-md-2 ">
                             <div class="card product-card card-h-set-320 " >
-                                <a href="/product/${product.mathang.mamh}">
+                                <a href="/user/chi-tiet-sp/${product.mathang.mamh}">
                                     <div style="position: relative;">
                                         <!-- Hiển thị mức giảm giá ở đây nếu mucgiamgia > 0 -->
                                         <c:if test="${product.mucgiamgia > 0}">
@@ -279,7 +279,7 @@
 
                                 <div class="col-md-3 mt-4">
                                     <div class="card product-card card-h-set-220" >
-                                        <a href="/product/${product.mathang.mamh}">
+                                        <a href="/user/chi-tiet-sp/${product.mathang.mamh}">
                                             <div style="position: relative;">
                                                 <!-- Hiển thị mức giảm giá ở đây -->
                                                 <span
