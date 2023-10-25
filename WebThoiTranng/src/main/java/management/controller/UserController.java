@@ -258,7 +258,7 @@ public class UserController {
 	@PostMapping("/thanhToan")
 	public ModelAndView thanhToan(@RequestParam("dsspJson") String dsspJson, @RequestParam("hoTen") String hoTen,
 			@RequestParam("sdt") String sdt, @RequestParam("tongTien") int tongTien,
-			HttpServletRequest request, @RequestParam("diaChi") String diaChi,
+			HttpServletRequest request, @RequestParam("diaChi") String diaChi, 
 			HttpServletResponse response) throws JsonProcessingException {
 
 		ModelAndView mav = new ModelAndView("redirect:/user/giohang");
