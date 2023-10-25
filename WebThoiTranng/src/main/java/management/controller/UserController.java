@@ -287,7 +287,7 @@ public class UserController {
 
 			List<ThanhToanDto> dssp = objectMapper.readValue(dsspJson, new TypeReference<List<ThanhToanDto>>() {
 			});
-			List<Ctpd> ctpd = new ArrayList<Ctpd>();
+			List<Ctpd> ctpd = new ArrayList<Ctpd>(); 
 
 			HttpSession session = request.getSession();
 			String userEmail = (String) session.getAttribute("loggedInUserEmail");
