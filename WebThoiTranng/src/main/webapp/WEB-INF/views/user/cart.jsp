@@ -24,19 +24,57 @@
 }
 
 .my-4 {
-    display: flex; /* Sử dụng flexbox để căn giữa nội dung */
-    align-items: center; /* Căn giữa nội dung theo chiều dọc */
-    justify-content: center; /* Căn giữa nội dung theo chiều ngang */
+	display: flex; /* Sử dụng flexbox để căn giữa nội dung */
+	align-items: center; /* Căn giữa nội dung theo chiều dọc */
+	justify-content: center; /* Căn giữa nội dung theo chiều ngang */
 }
 /* Thiết lập chiều cao của row để chiếm toàn bộ màn hình */
 /* .row {
     height: 100vh;
-    /* background-image: url('your-background-image.jpg'); */ /* Đường dẫn đến hình ảnh nền */
-    background-size: cover; /* Để đảm bảo hình ảnh nền trải đều trên toàn bộ row */
-    background-repeat: no-repeat; /* Không lặp lại hình ảnh */
-    background-attachment: fixed; /* Giữ hình ảnh nền cố định khi cuộn trang */
-    background-color: rgba(15, 106, 120 , 0.3); /* Độ trong suốt 0.3% */ */
-    /* Các thuộc tính khác của row */
+    /* background-image: url('your-background-image.jpg'); */
+	/* Đường dẫn đến hình ảnh nền */
+background-size
+:
+ 
+cover
+; /* Để đảm bảo hình ảnh nền trải đều trên toàn bộ row */
+
+    
+background-repeat
+:
+ 
+no-repeat
+; /* Không lặp lại hình ảnh */
+
+    
+background-attachment
+:
+ 
+fixed
+; /* Giữ hình ảnh nền cố định khi cuộn trang */
+
+    
+background-color
+:
+ 
+rgba
+(
+15
+,
+106
+,
+120
+,
+0
+.3
+)
+; /* Độ trong suốt 0.3% */
+ 
+*
+/
+/* Các thuộc tính khác của row */
+
+
 }
 </style>
 
@@ -87,8 +125,10 @@
 								<td style="width: 110px;">
 									<div class="input-group">
 										<input type="number" class="form-control quantity-input"
-											min="1" max="${crt.Max_Quantity()}" name="quantity" value="${crt.getSoLuong()}"
-											oninput="updateTotal(this)" >
+											min="1" max="${crt.Max_Quantity()}" data-max-quantity="${crt.Max_Quantity()}"
+											name="quantity" value="${crt.getSoLuong()}"
+											oninput="updateTotal(this)">
+
 
 									</div>
 								</td>
@@ -169,35 +209,40 @@
 	<script>
 			// Sự kiện xảy ra khi số lượng sản phẩm thay đổi
 		function updateTotal(inputElement) {
-	    var unitPriceElement = inputElement.closest('tr').querySelector('.unit-price');
-	    var totalPriceElement = inputElement.closest('tr').querySelector('.total-price');
-	    var discountElement = inputElement.closest('tr').querySelector('.used-discount');
-	    
-	
-	    // Lấy giá trị unitPrice từ element và loại bỏ ký tự định dạng tiền tệ và khoảng trắng
-	    var unitPriceText = unitPriceElement.textContent.trim();
-	// Loại bỏ tất cả các ký tự không phải số trước khi chuyển đổi
-	
-	unitPriceText = unitPriceText.replace(/[^0-9.-]+/g, ""); // Loại bỏ các ký tự không phải số hoặc dấu chấm
-	unitPriceText = unitPriceText.replaceAll(".", ""); // Loại bỏ dấu chấm
-	var discountText = discountElement.textContent.trim().replace(/[^0-9.-]+/g, "");
+				
+			var checkboxElement = inputElement.closest('tr').querySelector('.select-checkbox');
+    var unitPriceElement = inputElement.closest('tr').querySelector('.unit-price');
+    var totalPriceElement = inputElement.closest('tr').querySelector('.total-price');
+    var discountElement = inputElement.closest('tr').querySelector('.used-discount');
+    var maxQuantity = parseInt(inputElement.getAttribute('data-max-quantity'));
+    
+    var unitPriceText = unitPriceElement.textContent.trim();
+    unitPriceText = unitPriceText.replace(/[^0-9.-]+/g, "");
+    unitPriceText = unitPriceText.replaceAll(".", "");
+    var discountText = discountElement.textContent.trim().replace(/[^0-9.-]+/g, "");
 
+    var unitPrice = parseInt(unitPriceText, 10);
+    var quantity = parseInt(inputElement.value);
+    var discount = parseFloat(discountText) / 100.0;
+    
+    
+    // Kiểm tra số lượng
+    if (maxQuantity === 0 ) {
+    	checkboxElement.disabled = true;
+    } else {
+        checkboxElement.disabled = false;
+    }
 	
-	var unitPrice = parseInt(unitPriceText, 10); // Chuyển đổi chuỗi thành số nguyên
-	
-	
-	
-	    
-	
-	    var quantity = parseInt(inputElement.value);
-	    var discount = parseFloat(discountText ) / 100.0; // Chuyển đổi sang số thực (phần trăm)
+   
+    var totalPrice = (unitPrice * quantity) - (unitPrice * quantity * discount);
 
-	    var totalPrice = (unitPrice * quantity )-(unitPrice * quantity * discount);
-	    console.log("unitPrice sau khi chuyển đổi:", unitPrice);
-	    console.log("totalPrice sau khi chuyển đổi:", totalPrice);
-	    console.log("discount sau khi chuyển đổi:", discount);
-	    totalPriceElement.textContent = formatCurrency(totalPrice);
-	}
+    console.log("unitPrice sau khi chuyển đổi:", unitPrice);
+    console.log("totalPrice sau khi chuyển đổi:", totalPrice);
+    console.log("discount sau khi chuyển đổi:", discount);
+    totalPriceElement.textContent = formatCurrency(totalPrice);
+}
+
+
 	
 		// Hàm định dạng tiền tệ Việt Nam
 		function formatCurrency(number) {
@@ -224,7 +269,9 @@
 			       var isChecked = this.checked;
 			       // Cập nhật trạng thái của tất cả các ô checkbox sản phẩm
 			       productCheckboxes.forEach(function (checkbox) {
-			           checkbox.checked = isChecked;
+			    	   if (!checkbox.disabled) {
+			                checkbox.checked = isChecked;
+			            }
 			       });
 			   });
 	
@@ -247,10 +294,19 @@
 			       var idProduct = $(this).val(); // Lấy giá trị idProduct
 			       // Thực hiện thao tác với giá trị idProduct ở đây
 			       console.log('Đã chọn sản phẩm có idProduct:', idProduct);
+			       
 			   } else {
 			       // Xử lý khi checkbox bị bỏ chọn
 			   }
 			});  
+			
+			
+			var quantityInputs = document.querySelectorAll('.quantity-input');
+
+		    // Kiểm tra trạng thái của mỗi input khi trang tải
+		    quantityInputs.forEach(function (input) {
+		        updateTotal(input);
+		    });
 	
 			// Code thật ở trên
 			
