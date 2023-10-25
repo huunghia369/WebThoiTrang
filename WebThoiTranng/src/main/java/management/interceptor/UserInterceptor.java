@@ -3,22 +3,31 @@ package management.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import management.dao.ITaiKhoanDAO;
+
 public class UserInterceptor extends HandlerInterceptorAdapter {
+	@Autowired
+	ITaiKhoanDAO iTaiKhoanDAO;
+
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
 		String requestURI = request.getRequestURI();
 		
-//		if (requestURI.contains("/user/") && !requestURI.contains("/home")) {
-//			Object user = request.getSession().getAttribute("user");
-//			
-//			if (user == null) {
-//				response.sendRedirect("/login");
-//				return false; // Dừng xử lý yêu cầu hiện tại
-//			}
-//		}
+		String usermail = (String) request.getSession().getAttribute("loggedInUserEmail");
 		
+		// Nếu chứa paying và mã quyền là 2( Ql) hoặc chứa paying và chưa đăng nhập
+		if ((requestURI.contains("paying") && (Boolean) request.getSession().getAttribute("login") == false)
+				|| (requestURI.contains("paying") && iTaiKhoanDAO.get_MaQuyen_by_email(usermail) == 2)) {
+
+			response.sendRedirect("/user/login"); // trả về link đăng nhập
+			return false; // Dừng xử lý yêu cầu hiện tại
+		}
+		
+
 		return true; // Tiếp tục xử lý yêu cầu
 	}
 }

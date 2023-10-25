@@ -59,9 +59,9 @@
 			<div class="col">
 				<div class="card mx-auto khung_inf"
 					style="background-color: #f8f8f8; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);">
-					
+
 					<div class="card-body">
-						<input type="hidden" id ="productId" value="${mh.getMamh()}">
+						<input type="hidden" id="productId" value="${mh.getMamh()}">
 						<ul class="list-group list-group-flush">
 
 							<li class="list-group-item"><strong class="mr-2">Tên
@@ -75,17 +75,18 @@
 							<li class="list-group-item"><strong class="mr-2">Kích
 									thước:</strong> <select id="sizeSelect" class="form-select">
 									<c:forEach var="CTSize" items="${mh.getCtsizes()}">
-										<option value="${CTSize.getSize().getTensize()}">${CTSize.getSize().getTensize()}</option>
+										<option value="${CTSize.getSize().getMasize()}">${CTSize.getSize().getTensize()}</option>
 									</c:forEach>
 							</select></li>
 							<li class="list-group-item"><strong class="mr-2">Mô
 									tả:</strong> <span>${mh.getMota()}</span></li>
-							<li class="list-group-item"><strong class="mr-2">Đánh
+
+							<li class="list-group-item d-flex"><strong class="mr-2">Đánh
 									giá sản phẩm:</strong>
-								<div class="rating">
-									<span class="star">★</span> <span class="star">★</span> <span
-										class="star">★</span> <span class="star">★</span> <span
-										class="star">☆</span> <span>4/5</span>
+								<div id="rating-container">
+									<div id="rating-stars"></div>
+									<input type="hidden" id= "danhGia" value="${danhGia}">
+									<div id="rating-score"></div>
 								</div></li>
 						</ul>
 
@@ -96,7 +97,8 @@
 								<i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
 							</button>
 							<!-- Nút "Mua ngay" -->
-							<button class="btn btn-primary btn-buy-now lg">
+							<button class="btn btn-primary btn-buy-now lg"
+									id = "muaNgay">
 								<i class="fas fa-shopping-bag"></i> Mua ngay
 							</button>
 						</div>
@@ -110,19 +112,7 @@
 
 	</div>
 	<script type="text/javascript">
-		// Lấy phần tử span có id là "giaBan"
-		const giaBanElement = document.getElementById('giaBan');
 
-		//Lấy giá trị của biến gia từ môi trường view
-		const gia = giaBanElement.getAttribute('data-gia');
-		// Tạo đối tượng Intl.NumberFormat và định dạng giá
-		const formatter = new Intl.NumberFormat('vi-VN', {
-			style : 'currency',
-			currency : 'VND',
-		});
-
-		// Định dạng giá và đặt nội dung cho phần tử span
-		giaBanElement.textContent = formatter.format(gia);
 	</script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package management.dto;
+package management.DTO;
 
 public class SPNhapDto {
 

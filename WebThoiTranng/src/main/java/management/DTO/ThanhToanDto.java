@@ -1,64 +1,79 @@
 package management.DTO;
 
-import management.entity.Mathang;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import management.entity.Ctsize;
+import management.entity.CtsizeId;
 
 public class ThanhToanDto {
 
-	private Mathang mathang;
-	private int soluong;
-	public ThanhToanDto(int soluong, String size, int dongia, int thanhtien) {
-		super();
-		this.soluong = soluong;
-		this.size = size;
-		this.dongia = dongia;
-		this.thanhtien = thanhtien;
-	}
-	private String size;
-	private int dongia;
-	private int thanhtien;
-	public Mathang getMathang() {
-		return mathang;
-	}
-	public void setMathang(Mathang mathang) {
-		this.mathang = mathang;
-	}
-	public int getSoluong() {
-		return soluong;
-	}
-	public void setSoluong(int soluong) {
-		this.soluong = soluong;
-	}
-	public String getSize() {
-		return size;
-	}
-	public void setSize(String size) {
-		this.size = size;
-	}
-	public int getDongia() {
-		return dongia;
-	}
-	public void setDongia(int dongia) {
-		this.dongia = dongia;
-	}
-	public int getThanhtien() {
-		return thanhtien;
-	}
-	public void setThanhtien(int thanhtien) {
-		this.thanhtien = thanhtien;
-	}
-	public ThanhToanDto(Mathang mathang, int soluong, String size, int dongia, int thanhtien) {
-		super();
-		this.mathang = mathang;
-		this.soluong = soluong;
-		this.size = size;
-		this.dongia = dongia;
-		this.thanhtien = thanhtien;
-	}
+	private Ctsize CtSize;
+	private int soLuong;
+	private int donGia;
+	private int donGiaKM;
+
 	public ThanhToanDto() {
 		super();
 	}
+
+	public ThanhToanDto(Ctsize ctSize, int soLuong, int donGia, int donGiaKM) {
+		super();
+		CtSize = ctSize;
+		this.soLuong = soLuong;
+		this.donGia = donGia;
+		this.donGiaKM = donGiaKM;
+	}
+
+	@JsonProperty("ctsizeid")
+	public CtsizeId getCtsizeId() {
+		return CtSize.getId();
+	}
+
+	public void setCtsizeId(CtsizeId ctsizeId) {
+	    if (CtSize == null) {
+	        CtSize = new Ctsize(); // Tạo một đối tượng Ctsize nếu nó chưa tồn tại
+	    }
+	    CtSize.setId(ctsizeId); // Gán giá trị ctsizeid cho CtSize
+	}
 	
-	
-	
-	
+	@JsonIgnore
+	public Ctsize getCtSize() {
+		return CtSize;
+	}
+
+	public void setCtSize(Ctsize ctSize) {
+		this.CtSize = ctSize;
+	}
+
+	public int getSoLuong() {
+		return soLuong;
+	}
+
+	public void setSoLuong(int soLuong) {
+		this.soLuong = soLuong;
+	}
+
+	public int getDonGia() {
+		return donGia;
+	}
+
+	public void setDonGia(int donGia) {
+		this.donGia = donGia;
+	}
+
+	public int getDonGiaKM() {
+		return donGiaKM;
+	}
+
+	public void setDonGiaKM(int donGiaKM) {
+		this.donGiaKM = donGiaKM;
+	}
+
+	@Override
+	public String toString() {
+		return "ThanhToanDto [CtSize=" + CtSize + ", soLuong=" + soLuong + ", donGia=" + donGia + ", donGiaKM="
+				+ donGiaKM + "]";
+	}
+
 }
