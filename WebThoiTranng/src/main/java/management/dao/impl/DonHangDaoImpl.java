@@ -24,7 +24,7 @@ import management.entity.Size;
 @Transactional
 public class DonHangDaoImpl implements IDonHangDao {
 
-	@Autowired
+	@Autowired 
 	private SessionFactory sessionFactory;
 
 	@Override
