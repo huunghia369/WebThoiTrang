@@ -18,6 +18,7 @@ import management.dao.IDonHangDao;
 import management.entity.Banggia;
 import management.entity.Ctsize;
 import management.entity.Mathang;
+import management.entity.Size;
 
 @Repository
 @Transactional
@@ -71,6 +72,26 @@ public class DonHangDaoImpl implements IDonHangDao {
           
         }
 	}
+
+	
+	@Override
+	public Size laySize(int maSize) {
+		Session session = sessionFactory.openSession();
+		try {
+			String hql = "FROM Size where masize = :id";
+			Query query = session.createQuery(hql);
+			query.setParameter("id", maSize);
+			Size mh = (Size) query.uniqueResult();
+			return mh;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			session.close();
+		}
+	}
+
 
 }
 
