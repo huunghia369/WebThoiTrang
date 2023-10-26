@@ -188,6 +188,11 @@
 								<label for="moTa">Mô tả: </label> <input type="text"
 									class="form-control" id="moTa" name="moTa" required />
 							</div>
+							<div class="form-group">
+								<label for="themAnh">Hình ảnh: </label> <input type="file"
+									class="form-control" id="themAnh" name="themAnh" required
+									multiple accept=".jpg, .jpeg, .png" />
+							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-success" id="saveProductBtn">Lưu</button>
@@ -211,7 +216,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form action="" id = "formThemSizeMoi">
+					<form action="" id="formThemSizeMoi">
 						<div class="modal-body">
 							<!-- Nội dung modal nhập size mới -->
 							<div class="form-group">

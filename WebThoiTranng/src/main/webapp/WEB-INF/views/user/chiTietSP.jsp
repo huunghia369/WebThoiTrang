@@ -5,6 +5,13 @@
 <html>
 <head>
 
+<!-- Thêm tệp CSS -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+
+<!-- Thêm tệp JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <link rel="stylesheet"
 	href='<c:url value="/templates/user/css/chiTietSP.css"/>'>
 
@@ -22,28 +29,22 @@
 
 		<div class="row khung">
 			<div class="col-5">
-				<div id="myCarousel" class="carousel slide khung_anh "
+
+				<div id="myCarousel" class="carousel slide "
 					data-ride="carousel">
 					<!-- Slides (hình ảnh) -->
 					<div class="carousel-inner">
-						<div class="carousel-item khung_anh">
-							<img
-								src="https://vapa.vn/wp-content/uploads/2022/12/anh-thien-nhien-dep-3d-007.jpg"
-								alt="Hình Ảnh 1" class="d-block w-100 ">
-						</div>
-						<div class="carousel-item active khung_anh">
-							<img
-								src="https://vapa.vn/wp-content/uploads/2022/12/anh-thien-nhien-dep-3d-007.jpg"
-								alt="Hình Ảnh 2" class="d-block w-100 ">
-
-						</div>
-						<div class="carousel-item khung_anh">
-							<img
-								src="https://vapa.vn/wp-content/uploads/2022/12/anh-dep-thien-nhien-3d-007.jpg"
-								alt="Hình Ảnh 3" class="d-block w-100 ">
-
-						</div>
+						<c:forEach var="linkAnh" items="${mh.getHinhanhmhs()}"
+							varStatus="status">
+							<div
+								class="carousel-item khung_anh ${status.first ? 'active' : ''}">
+								<img src="${linkAnh.getDuongdan()}" alt="Hình Ảnh ${status.index + 1}"
+									class="d-block w-100">
+							</div>
+						</c:forEach>
 					</div>
+
+
 
 					<!-- Nút chuyển đổi trước và sau -->
 					<a class="carousel-control-prev" href="#myCarousel"
@@ -57,10 +58,8 @@
 
 			</div>
 			<div class="col">
-				<div class="card mx-auto khung_inf"
-					style="background-color: #f8f8f8; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);">
-
-					<div class="card-body">
+				<div class="card mx-auto khung_inf">
+					<div class="card-body ml-20">
 						<input type="hidden" id="productId" value="${mh.getMamh()}">
 						<ul class="list-group list-group-flush">
 
@@ -81,11 +80,11 @@
 							<li class="list-group-item"><strong class="mr-2">Mô
 									tả:</strong> <span>${mh.getMota()}</span></li>
 
-							<li class="list-group-item d-flex"><strong class="mr-2">Đánh
-									giá sản phẩm:</strong>
+							<li class="list-group-item d-flex"><strong class="mr-2">Điểm đánh
+									giá:</strong>
 								<div id="rating-container">
 									<div id="rating-stars"></div>
-									<input type="hidden" id= "danhGia" value="${danhGia}">
+									<input type="hidden" id="danhGia" value="${danhGia}">
 									<div id="rating-score"></div>
 								</div></li>
 						</ul>
@@ -97,8 +96,7 @@
 								<i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
 							</button>
 							<!-- Nút "Mua ngay" -->
-							<button class="btn btn-primary btn-buy-now lg"
-									id = "muaNgay">
+							<button class="btn btn-primary btn-buy-now lg" id="muaNgay">
 								<i class="fas fa-shopping-bag"></i> Mua ngay
 							</button>
 						</div>
@@ -109,10 +107,16 @@
 
 			</div>
 		</div>
-
+		<div class="row khung">
+		<div class="header">
+			<label>________ Sản phẩm liên quan ________</label>
+		</div>
+		
+		<h1>Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh-Đây là phần cho thông minh</h1>
+		</div>
 	</div>
 	<script type="text/javascript">
-
+		
 	</script>
 </body>
 </html>

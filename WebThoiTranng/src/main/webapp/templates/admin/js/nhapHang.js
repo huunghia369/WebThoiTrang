@@ -6,11 +6,40 @@ $(document).ready(() => {
 	});*/
 
 
+
+
 	//Nút mớ modal thêm sp mới
 	$('#openAddProductModal').click(() => {
 		$('#addProductModal').modal('show');
 	});
-	
+
+
+	function luuAnhVaoDB(mamh, listURLs) {
+		for (var i = 0; i < listURLs.length; i++) {
+			var url = listURLs[i];
+			console.log(url);
+			var tenFile = "";
+			if (i === 0) {
+				tenFile = mamh.toString();
+			} else {
+				tenFile = mamh.toString() + "_" + i;
+			}
+			console.log(url);
+			$.ajax({
+				type: "POST",
+				url: "/admin/them-anh-sp?mamh=" + mamh + "&tenFile="
+					+ tenFile + "&url=" + url,
+				success: function(response) {
+					console.log(response);
+				},
+				error: function() {
+					console.log("Lỗi xảy ra khi lưu ảnh.");
+				}
+			});
+		}
+	}
+
+
 	//Xử lí nút lưu sản phẩm mới 
 	$("#formThemSPMoi").submit(function(e) {
 		e.preventDefault(); // Ngăn chặn nộp lại trang
@@ -29,6 +58,19 @@ $(document).ready(() => {
 
 				console.log(response);
 
+				//Tách id và tên sản phẩm mới từ rp
+				let sp = response.split('_')
+				var mamh = sp[0];
+
+				console.log(sp);
+				//Tạo một option mới để thêm vào ds Sản Phẩm
+				const option = new Option('Mã SP: ' + sp[0] + '_ ' + sp[1], sp[0]);
+				// Thêm option vào phần tử select
+				$('#productName').append(option);
+
+				var inputID = 'themAnh';
+				uploadIMG_firebase(mamh, inputID, luuAnhVaoDB);
+
 				Swal.fire({
 					title: 'Thêm thành công',
 					text: 'Sản phẩm ' + response,
@@ -38,15 +80,6 @@ $(document).ready(() => {
 					timerProgressBar: true,
 					allowEnterKey: false
 				});
-
-				//Tách id và tên sản phẩm mới từ rp
-				let sp = response.split('_')
-				console.log(sp);
-				//Tạo một option mới để thêm vào ds Sản Phẩm
-				const option = new Option('Mã SP: ' + sp[0] + '_ ' + sp[1], sp[0]);
-				// Thêm option vào phần tử select
-				$('#productName').append(option);
-
 			},
 			error: function() {
 				// Xử lý lỗi ở đây
@@ -56,8 +89,8 @@ $(document).ready(() => {
 	});
 
 	// Xử lý modal thêm size mới
-	
-	$('#openAddSizeModal').click(()=>{
+
+	$('#openAddSizeModal').click(() => {
 		$('#addSizeModal').modal('show');
 	})
 
@@ -104,8 +137,8 @@ $(document).ready(() => {
 			},
 		});
 	});
-	
-	
+
+
 
 	// Lấy nút "Thêm Sản Phẩm"
 	const openModalBtn = document.getElementById("openModalBtn");

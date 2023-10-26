@@ -59,6 +59,7 @@ $(document).ready(() => {
 				// Đặt trạng thái đã thêm sản phẩm và thay đổi nội dung của button
 				$("#btnThemGH").html('<i class="fas fa-check"></i> Đã thêm vào giỏ hàng');
 				$("#btnThemGH").attr("disabled", true); // Vô hiệu hóa button
+				Swal.fire('Thành công!', 'Đã thêm sản phẩm vào giỏ hàng.', 'success');
 			},
 			error: () => {
 				// Xử lý lỗi nếu cần	

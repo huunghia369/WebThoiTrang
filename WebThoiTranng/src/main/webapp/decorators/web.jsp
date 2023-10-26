@@ -78,7 +78,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
 <script
 	src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
-	
+
 <script src="/templates/user/product/setting.js"></script>
 <decorator:head></decorator:head>
 <script

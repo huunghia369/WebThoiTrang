@@ -5,6 +5,7 @@ import java.util.List;
 import management.entity.Chatlieu;
 import management.entity.Ctpn;
 import management.entity.Ctsize;
+import management.entity.Hinhanhmh;
 import management.entity.Loaimh;
 import management.entity.Mathang;
 import management.entity.Nhacungcap;
@@ -51,7 +52,7 @@ public interface INhapHangDao{
 	
 	public void themSizeMoi(Size s) ;
 	
-	
+	public void themAnhMoi(Hinhanhmh anh) ;
 	
 	
 }

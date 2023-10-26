@@ -28,22 +28,33 @@
 					</div>
 					<div class="product-list">
 						<!-- Mỗi sản phẩm nằm trong một thẻ riêng biệt -->
-						<input name ='dsspJson' value="${dsspJson}" type="hidden" >
-						
-						<input name ='diaChi' id = "diaChi" value="" type="hidden">
+						<input name='dsspJson' value="${dsspJson}" type="hidden">
+
+						<input name='diaChi' id="diaChi" value="" type="hidden">
 						<c:forEach items="${dssp}" var="sp" varStatus="loop">
+
 							<div class="product-card">
-								<img
-									src="https://vcdn1-dulich.vnecdn.net/2021/07/16/3-1-1626444927.jpg?w=460&amp;h=0&amp;q=100&amp;dpr=2&amp;fit=crop&amp;s=KU8IkmrM5HbtYIyyS5k1qQ"
-									class="img-fluid" alt="Sản phẩm " />
+
+								<c:forEach var="anh" varStatus="l"
+									items="${sp.getCtSize().getMathang().getHinhanhmhs()}">
+									<c:if test="${l.first}">
+										<!-- Hiển thị chỉ khi là phần tử đầu tiên -->
+										<img src="${anh.getDuongdan()}" class="img-fluid"
+											alt="Sản phẩm" />
+									</c:if>
+								</c:forEach>
+
+
+
 								<div class="product-info">
 									<!-- Hàng 1: Tên sản phẩm nổi bật -->
 									<div class="product-row product-name">
 										<h2 class="mt-2" style="text-align: center;">
-											<a href="/user/chi-tiet-sp/7">${loop.index +1}.
+											<a href="/user/chi-tiet-sp/${sp.getCtSize().getMathang().getMamh()}">${loop.index +1}.
 												${sp.getCtSize().getMathang().getTenmh()}</a>
 										</h2>
 									</div>
+
 									<div class="product-row product-details">
 										<p class="card-text product-details">
 											<strong>Thương hiệu: </strong>
@@ -127,8 +138,8 @@
 
 						<div class="form-group tongTien">
 							<label for="tongTien">Tổng tiền: </label> <span class=""
-								id="tongTien" data-tongTien="${tongTien}"></span>
-								<input type="hidden" name="tongTien" value="${tongTien}">
+								id="tongTien" data-tongTien="${tongTien}"></span> <input
+								type="hidden" name="tongTien" value="${tongTien}">
 						</div>
 
 
