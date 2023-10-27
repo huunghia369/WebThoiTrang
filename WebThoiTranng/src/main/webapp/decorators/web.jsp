@@ -34,6 +34,7 @@
 <link rel="stylesheet" href='<c:url value="/templates/user/assets/css/index.css" />'>
 <link rel="stylesheet" href='<c:url value="/templates/user/assets/css/cart.css" />'>
 <link rel="stylesheet" href='<c:url value="/templates/user/assets/css/detailsProduct.css"/>'>
+<link rel="stylesheet" href='<c:url value="/templates/user/css/donhang.css"/>'>
 
 <link rel="stylesheet" href='<c:url value="/templates/user/assets/css/profile.css" />'>
 <link rel="stylesheet" href='<c:url value="/templates/user/assets/css/changePass.css" />'>
@@ -53,13 +54,15 @@
   
   
  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
- <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
 
 <script src="<c:url value='/templates/admin/paging/jquery.twbsPagination.js'/>"></script>
 <script src="<c:url value='/templates/user/product/setting.js'/>"></script>
 <script src="<c:url value='/templates/user/product/product-order.js'/>"></script>
+<script src="<c:url value='/templates/user/product/productDiscount.js'/>"></script>
+<script src="<c:url value='/templates/user/product/productCategory.js'/>"></script>
  
- <decorator:head></decorator:head>
+ 
     
 </head>
 <body>

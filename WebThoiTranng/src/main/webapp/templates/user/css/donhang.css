@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+.listSP {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	justify-content: flex-start;
+}
+
+.SP {
+    background-color: #ffffff; /* Màu nền trắng */
+    border: 1px solid #e0e0e0; /* Đổi màu viền và làm mảnh viền hơn */
+    padding: 20px; /* Giảm khoảng cách lề bên trong */
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Tạo hiệu ứng bóng đổ nhẹ */
+    margin: 10px; /* Tạo khoảng cách giữa các phần tử .SP */
+}
+
+.infoSP {
+	font-size: 16px;
+	margin: 5px 0;
+}
+
+.product-image {
+	/* Tùy chỉnh kích thước hình ảnh */
+	width: 100px;
+	height: 100px;
+	background-color: #ccc;
+}
+
+.priceSP {
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+.priceLabel {
+	color: black; 
+	font-weight: bold; 
+}
+
+.order {
+	font-size: 18px;
+	border: 1px solid #ddd;
+	padding: 20px;
+	margin: 20px 0;
+}
+
+.donhang-summary {
+	font-size: 18px;
+}
+
+/* CSS cho phần hiển thị thông tin đơn hàng */
+.order-info {
+    background-color: #f4f4f4; /* Màu nền */
+    border: 1px solid #ddd; /* Đường viền */
+    padding: 10px; /* Khoảng cách trong phần tử */
+    margin: 10px 0; /* Khoảng cách giữa các phần tử */
+}
+
+/* CSS cho phần hiển thị mỗi dòng thông tin */
+.order-info p {
+    margin: 5px 0; /* Khoảng cách giữa các dòng thông tin */
+}
+
+/* CSS cho phần hiển thị ngày đặt hàng */
+.order-info p strong {
+    color: #2c83e0; /* Màu chữ mạnh */
+}
+
+/* CSS cho phần hiển thị ngày đặt hàng */
+.order-info p fmt\:formatDate {
+    color: #000; /* Màu chữ thông tin ngày đặt hàng */
+}
+
