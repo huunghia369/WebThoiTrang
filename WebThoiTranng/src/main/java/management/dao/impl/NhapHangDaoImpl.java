@@ -12,11 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import management.dao.INhapHangDao;
+import management.entity.Chatlieu;
 import management.entity.Ctpn;
 import management.entity.Ctsize;
 import management.entity.CtsizeId;
+import management.entity.Loaimh;
 import management.entity.Mathang;
 import management.entity.Nhacungcap;
+import management.entity.Nhanhieu;
 import management.entity.Nhanvien;
 import management.entity.Phieunhap;
 import management.entity.Size;
@@ -158,29 +161,28 @@ public class NhapHangDaoImpl implements INhapHangDao {
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-		// |Kiểm tra ctsize tồn tại hay chưa, nếu chưa tồn tại thì tạo mới
-		if (layCtsize(mamh, masize) == null) {
-			
-			CtsizeId id = new CtsizeId();
-			id.setMamh(mamh);
-			id.setMasize(masize);
+			// |Kiểm tra ctsize tồn tại hay chưa, nếu chưa tồn tại thì tạo mới
+			if (layCtsize(mamh, masize) == null) {
 
-			Ctsize ctsize = new Ctsize();
-			ctsize.setId(id);
-			ctsize.setSoluong(0);
+				CtsizeId id = new CtsizeId();
+				id.setMamh(mamh);
+				id.setMasize(masize);
+
+				Ctsize ctsize = new Ctsize();
+				ctsize.setId(id);
+				ctsize.setSoluong(0);
 //			ctsize.setMathang(layMatHang(mamh));
 //			ctsize.setSize(laySize(masize));
-			
-			session.save(ctsize);
-			transaction.commit();
-			System.out.println("Dao them cts: " + ctsize);
-			
-		}
-		}catch (Exception e) {
+
+				session.save(ctsize);
+				transaction.commit();
+				System.out.println("Dao them cts: " + ctsize);
+
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 			transaction.rollback();
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 
@@ -258,4 +260,84 @@ public class NhapHangDaoImpl implements INhapHangDao {
 		}
 	}
 
+	@Override
+	public List<Chatlieu> layDSChatlieu() {
+		Session session = sessionFactory.openSession();
+		try {
+			String hql = "FROM Chatlieu";
+			Query query = session.createQuery(hql);
+			List<Chatlieu> ds = (List<Chatlieu>) query.list();
+			return ds;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			session.close();
+		}
+
+	}
+
+	@Override
+	public List<Loaimh> layDSLoaiSP() {
+		Session session = sessionFactory.openSession();
+		try {
+			String hql = "FROM Loaimh";
+			Query query = session.createQuery(hql);
+			List<Loaimh> ds = (List<Loaimh>) query.list();
+			return ds;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			session.close();
+		}
+	}
+
+	@Override
+	public List<Nhanhieu> layDSNhanHieu() {
+		Session session = sessionFactory.openSession();
+		try {
+			String hql = "FROM Nhanhieu";
+			Query query = session.createQuery(hql);
+			List<Nhanhieu> ds = (List<Nhanhieu>) query.list();
+			return ds;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			session.close();
+		}
+	}
+
+	@Override
+	public void themSPMoi(Mathang mh) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.save(mh);
+			transaction.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+	}
+	
+	
+	public void themSizeMoi(Size s) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.save(s);
+			transaction.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+	}
 }

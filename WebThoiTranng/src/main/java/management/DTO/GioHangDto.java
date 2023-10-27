@@ -18,14 +18,6 @@ public class GioHangDto {
 	private int idProduct;
 	private int soLuong;
 	private String size;
-	private double mucGiamGia;
-	
-	public double getMucGiamGia() {
-		return mucGiamGia;
-	}
-	public void setMucGiamGia(double mucGiamGia) {
-		this.mucGiamGia = mucGiamGia;
-	}
 	public int getIdProduct() {
 		return idProduct;
 	}
@@ -92,9 +84,7 @@ public class GioHangDto {
 	public int totalPrice()
 	{
 		int price_tmp = get_Price_int()*this.getSoLuong();
-		double discount = get_MucGiamGia_Used()/100.0;
-		System.out.println(discount);
-		return  (int) ( price_tmp-(int)(price_tmp*discount));
+		return price_tmp;
 	}
 	
 	public int Max_Quantity()
@@ -107,5 +97,4 @@ public class GioHangDto {
 	{
 		return (int) iGioHangDAO.getDiscount_Product(this.getIdProduct());
 	}
-	
 }
