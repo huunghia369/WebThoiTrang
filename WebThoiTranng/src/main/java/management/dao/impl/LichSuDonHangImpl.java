@@ -155,7 +155,7 @@ public class LichSuDonHangImpl implements ILichSuDonHangDAO {
 	    Session session = sessionFactory.openSession();
 	    try {
 	        // Sử dụng HQL để truy vấn thông tin khuyến mãi
-	        String hql = "SELECT km.mucgiamgia FROM Ctdkm km INNER JOIN km.dotkhuyenmai d WHERE km.id.mamh = :masp AND d.ngaybd <= :ngaydat AND d.ngaykt >= :ngaydat";
+	        String hql = "SELECT max(km.mucgiamgia) FROM Ctdkm km INNER JOIN km.dotkhuyenmai d WHERE km.id.mamh = :masp AND d.ngaybd <= :ngaydat AND d.ngaykt >= :ngaydat";
 	        Query query = session.createQuery(hql);
 	        query.setParameter("masp", masp);
 	        query.setParameter("ngaydat", ngaydat);
