@@ -40,6 +40,7 @@
 	href='<c:url value="/templates/user/home/loading.css" />'>
 
 
+
 <!-- Template CSS -->
 
 <link rel="stylesheet"
@@ -63,6 +64,9 @@
 	src="<c:url value='/templates/admin/paging/jquery.twbsPagination.js'/>"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
+ <!--nghia -->
+  <script src="<c:url value='/templates/user/product/product-order.js'/>"></script>
+  <link rel="stylesheet" href='<c:url value="/templates/user/css/donhang.css"/>'>
 
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -83,6 +87,7 @@
 <decorator:head></decorator:head>
 <script
 	src="<c:url value='/templates/admin/paging/jquery.twbsPagination.js'/>"></script>
+
 
 </head>
 <body>

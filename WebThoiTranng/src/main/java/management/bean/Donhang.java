@@ -7,19 +7,23 @@ public class Donhang {
 	private String tenSP;
 	private int soluong;
 	private Date ngaydat;
-	private int tonggia;
+	private double tonggia;
+	private String size;
+	private double mucgiamgia;
 	
 	public Donhang() {
 		
 	}
 	
-	public Donhang(int mamh, String tenSP, int soluong, Date ngaydat, int tonggia) {
+	public Donhang(int mamh, String tenSP, int soluong, Date ngaydat, double tonggia, String size, double mucgiamgia) {
 		super();
 		this.mamh = mamh;
 		this.tenSP = tenSP;
 		this.soluong = soluong;
 		this.ngaydat = ngaydat;
 		this.tonggia = tonggia;
+		this.size = size;
+		this.mucgiamgia = mucgiamgia;
 	}
 	public int getMamh() {
 		return mamh;
@@ -48,11 +52,27 @@ public class Donhang {
 		this.ngaydat = ngaydat;
 	}
 
-	public int getTonggia() {
+	public double getTonggia() {
 		return tonggia;
 	}
 
-	public void setTonggia(int tonggia) {
+	public void setTonggia(double tonggia) {
 		this.tonggia = tonggia;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public double getMucgiamgia() {
+		return mucgiamgia;
+	}
+
+	public void setMucgiamgia(double mucgiamgia) {
+		this.mucgiamgia = mucgiamgia;
 	}
 }

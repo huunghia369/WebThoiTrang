@@ -3,6 +3,7 @@ package management.bean;
 import java.util.List;
 
 import management.entity.Phieudat;
+import management.entity.Size;
 
 public class DonhangInfo {
 	private Phieudat phieudat;

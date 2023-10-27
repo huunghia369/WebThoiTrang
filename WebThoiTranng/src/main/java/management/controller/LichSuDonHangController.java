@@ -24,77 +24,69 @@ import management.entity.Phieudat;
 @RequestMapping("/user/")
 public class LichSuDonHangController {
 
-	@Autowired
-	private ILichSuDonHangDAO lichSuDonHangDAO;
+    @Autowired
+    private ILichSuDonHangDAO lichSuDonHangDAO;
 
-	@GetMapping("history")
-	public ModelAndView history(HttpServletRequest request, ModelMap model) {
+    @GetMapping("history")
+    public ModelAndView history(HttpServletRequest request, ModelMap model) {
 
-		HttpSession session = request.getSession();
-		String userEmail = (String) session.getAttribute("loggedInUserEmail");
+        // Lấy thông tin phiên đăng nhập của người dùng
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("loggedInUserEmail");
 
-		// Lấy mã khách hàng dựa trên địa chỉ email
-		int makh = lichSuDonHangDAO.getMaKHbyEmail("nghia@gmail.com");		
+        // Lấy mã khách hàng dựa trên địa chỉ email
+        int makh = lichSuDonHangDAO.getMaKHbyEmail("nghianguyenhuu963@gmail.com");
 
-		// Lấy danh sách các mã phiếu đặt dựa trên mã khách hàng
-		List<Integer> listPD = lichSuDonHangDAO.getAllMaPDbyMaKh(makh);
+        // Lấy danh sách các phiếu đặt dựa trên mã khách hàng
+        List<Phieudat> listPhieuDat = lichSuDonHangDAO.getAllPhieuDatByMaKH(makh);
 
-		// Tạo danh sách chứa thông tin đơn hàng
-		List<DonhangInfo> listDonhang = new ArrayList<>();	
+        // Tạo danh sách chứa thông tin đơn hàng
+        List<DonhangInfo> listDonhang = new ArrayList<>();
 
-		int tong = 0; // Biến để tính tổng giá đơn hàng
+        // Duyệt qua các phiếu đặt để lấy thông tin
+        for (Phieudat phieudat : listPhieuDat) {
+            DonhangInfo donhangInfo = new DonhangInfo();
+            donhangInfo.setPhieudat(phieudat);
 
-		for (int pd : listPD) {
-			
-			// Lấy thông tin phiếu đặt dựa trên mã phiếu đặt
-			Phieudat phieudat = lichSuDonHangDAO.getPhieuDatByMaPD(pd);
-			
-			// Tạo danh sách chứa thông tin các đơn hàng cho phiếu đặt
-			List<Donhang> listDonhangForPhieuDat = new ArrayList<>();
-			
-			// Lấy danh sách các mã sản phẩm dựa trên mã phiếu đặt
-			List<Integer> listMaSP = lichSuDonHangDAO.getAllMaSPbyMaPD(pd);
-			
-			for (int masp : listMaSP) {
-				// Lấy thông tin sản phẩm dựa trên mã sản phẩm
-				Mathang mh = lichSuDonHangDAO.layMatHangTheoID(masp);
-				
-				// Lấy số lượng sản phẩm cho mỗi phiếu đặt
-				int sl = lichSuDonHangDAO.getSoluongSp(masp, pd);
-				
-				// Lấy ngày đặt sản phẩm
-				Date nd = lichSuDonHangDAO.getNgaydatByMaMH(pd);
-				
-				// Lấy giá sản phẩm dựa trên mã sản phẩm và ngày đặt
-				int gia = lichSuDonHangDAO.getPriceByMaMH(masp, nd);
-				
-				// Tạo đối tượng Donhang
-				Donhang dh = new Donhang();				
+            List<Donhang> listDonhangForPhieuDat = new ArrayList<>();
 
-				// Gán thông tin cho đối tượng Donhang
-				dh.setMamh(masp);
-				dh.setTenSP(mh.getTenmh());
-				dh.setSoluong(sl);
-				dh.setTonggia(gia * sl);
-				dh.setNgaydat(nd);
+            // Lấy danh sách các mã sản phẩm dựa trên mã phiếu đặt
+            List<Integer> listMaSP = lichSuDonHangDAO.getAllMaSPbyMaPD(phieudat.getMapd());
 
-				// Thêm đơn hàng vào danh sách đơn hàng cho phiếu đặt
-				listDonhangForPhieuDat.add(dh);								
-			}
+            // Duyệt qua danh sách mã sản phẩm
+            for (int masp : listMaSP) {
+                List<Integer> listMaSize = lichSuDonHangDAO.getAllMaSizebyMaSPandMaPD(masp, phieudat.getMapd());
 
-			// Tạo đối tượng DonhangInfo chứa thông tin phiếu đặt và danh sách đơn hàng cho phiếu đặt
-			DonhangInfo donhangInfo = new DonhangInfo();
-			donhangInfo.setPhieudat(phieudat);
-			donhangInfo.setListDonhangForPhieuDat(listDonhangForPhieuDat);
+                // Duyệt qua danh sách mã size
+                for (int masize : listMaSize) {
+                    // Lấy thông tin sản phẩm, ngày đặt, size, giá và khuyến mãi
+                    Mathang mh = lichSuDonHangDAO.layMatHangTheoID(masp);
+                    int sl = lichSuDonHangDAO.getSoluongSp(masp, phieudat.getMapd(), masize);
+                    Date ngaydat = lichSuDonHangDAO.getNgaydatByMaMH(phieudat.getMapd());
+                    int gia = lichSuDonHangDAO.getPriceByMaMH(masp, ngaydat);
+                    String size = lichSuDonHangDAO.getMucSizebyMaSize(masize);
+                    double khuyenmai = lichSuDonHangDAO.getKhuyenMai(masp, ngaydat);
 
-			// Thêm DonhangInfo vào danh sách DonhangInfo
-			listDonhang.add(donhangInfo);
-		}
+                    Donhang dh = new Donhang();
+                    dh.setMamh(masp);
+                    dh.setTenSP(mh.getTenmh());
+                    dh.setSoluong(sl);
+                    dh.setTonggia(gia * sl);
+                    dh.setNgaydat(ngaydat);
+                    dh.setSize(size);
+                    dh.setMucgiamgia(khuyenmai);
 
-		ModelAndView modelAndView = new ModelAndView("user/lichsudonhang");
+                    listDonhangForPhieuDat.add(dh);
+                }
+            }
 
-		modelAndView.addObject("listDonhang", listDonhang);		
+            donhangInfo.setListDonhangForPhieuDat(listDonhangForPhieuDat);
+            listDonhang.add(donhangInfo);
+        }
 
-		return modelAndView;
-	}
+        ModelAndView modelAndView = new ModelAndView("user/lichsudonhang");
+        modelAndView.addObject("listDonhang", listDonhang);
+        return modelAndView;
+    }
 }
+

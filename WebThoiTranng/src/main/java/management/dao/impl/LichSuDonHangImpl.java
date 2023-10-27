@@ -35,19 +35,19 @@ public class LichSuDonHangImpl implements ILichSuDonHangDAO {
 	}
 
 	@Override
-	public List<Integer> getAllMaPDbyMaKh(int makh) {
+	public List<Phieudat> getAllPhieuDatByMaKH(int makh) {
 		Session session = sessionFactory.openSession();
-		String hql = "SELECT pd.mapd FROM Phieudat pd WHERE pd.khachhang.makh =:makh";
+		String hql = "FROM Phieudat pd WHERE pd.khachhang.makh =:makh";
 		Query query = session.createQuery(hql);
 		query.setParameter("makh", makh);
-		List<Integer> list = query.list();
+		List<Phieudat> list = query.list();
 		return list;
 	}
 
 	@Override
 	public List<Integer> getAllMaSPbyMaPD(int mapd) {
 		Session session = sessionFactory.openSession();
-		String hql = "SELECT ctpd.id.mamh FROM Ctpd ctpd WHERE ctpd.id.mapd =:mapd";
+		String hql = "SELECT DISTINCT ctpd.id.mamh FROM Ctpd ctpd WHERE ctpd.id.mapd = :mapd";
 		Query query = session.createQuery(hql);
 		query.setParameter("mapd", mapd);
 		List<Integer> list = query.list();
@@ -55,12 +55,34 @@ public class LichSuDonHangImpl implements ILichSuDonHangDAO {
 	}
 
 	@Override
-	public int getSoluongSp(int mamh, int mapd) {
+	public List<Integer> getAllMaSizebyMaSPandMaPD(int mamh, int mapd) {
 		Session session = sessionFactory.openSession();
-		String hql = "SELECT ctpd.soluong FROM Ctpd ctpd WHERE ctpd.id.mamh = :mamh AND ctpd.id.mapd =:mapd";
+		String hql = "SELECT DISTINCT ctpd.id.masize FROM Ctpd ctpd WHERE ctpd.id.mamh = :mamh AND ctpd.id.mapd = :mapd";
 		Query query = session.createQuery(hql);
 		query.setParameter("mamh", mamh);
 		query.setParameter("mapd", mapd);
+		List<Integer> list = query.list();
+		return list;
+	}
+	
+	@Override
+	public String getMucSizebyMaSize(int masize) {
+		Session session = sessionFactory.openSession();
+		String hql = "SELECT s.tensize FROM Size s WHERE s.masize =:masize";
+		Query query = session.createQuery(hql);
+		query.setParameter("masize", masize);
+		String tensize = (String) query.uniqueResult();
+		return tensize;
+	}
+	
+	@Override
+	public int getSoluongSp(int mamh, int mapd, int masize) {
+		Session session = sessionFactory.openSession();
+		String hql = "SELECT ctpd.soluong FROM Ctpd ctpd WHERE ctpd.id.mamh = :mamh AND ctpd.id.mapd =:mapd AND ctpd.id.masize =:masize";
+		Query query = session.createQuery(hql);
+		query.setParameter("mamh", mamh);
+		query.setParameter("mapd", mapd);
+		query.setParameter("masize", masize);
 		Integer sl = (Integer) query.uniqueResult();
 		int result = (sl != null) ? sl.intValue() : 0; // Set a default value if sl is null
 
@@ -78,20 +100,6 @@ public class LichSuDonHangImpl implements ILichSuDonHangDAO {
 		session.close();
 
 		return nd;
-	}
-
-	@Override
-	public Phieudat getPhieuDatByMaPD(int mapd) {
-		Session session = sessionFactory.openSession();
-		try {
-			String hql = "FROM Phieudat pd WHERE pd.mapd = :mapd";
-			Query query = session.createQuery(hql);
-			query.setParameter("mapd", mapd);
-			Phieudat pd = (Phieudat) query.uniqueResult();
-			return pd;
-		} finally {
-			session.close();
-		}
 	}
 
 	@Override
@@ -140,5 +148,28 @@ public class LichSuDonHangImpl implements ILichSuDonHangDAO {
 		} finally {
 			session.close();
 		}
+	}
+	
+	@Override
+	public double getKhuyenMai(int masp, Date ngaydat) {
+	    Session session = sessionFactory.openSession();
+	    try {
+	        // Sử dụng HQL để truy vấn thông tin khuyến mãi
+	        String hql = "SELECT km.mucgiamgia FROM Ctdkm km INNER JOIN km.dotkhuyenmai d WHERE km.id.mamh = :masp AND d.ngaybd <= :ngaydat AND d.ngaykt >= :ngaydat";
+	        Query query = session.createQuery(hql);
+	        query.setParameter("masp", masp);
+	        query.setParameter("ngaydat", ngaydat);
+	        
+	        // Thực hiện truy vấn
+	        Double khuyenmai = (Double) query.uniqueResult();
+	        if (khuyenmai != null) {
+	            return khuyenmai.doubleValue();
+	        } else {
+	            // Trả về 0.0 nếu không có khuyến mãi hoặc xử lý logic khuyến mãi ở đây
+	            return 0.0;
+	        }
+	    } finally {
+	        session.close();
+	    }
 	}
 }

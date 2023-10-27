@@ -1,4 +1,4 @@
-function displayFirebaseImage(productId, mapd) {
+function displayFirebaseImage(productId, mapd,size,test) {
 	// Cấu hình Firebase SDK
 
 	// Lấy tham chiếu đến Firebase Storage
@@ -11,14 +11,17 @@ function displayFirebaseImage(productId, mapd) {
 		img.src = url;
 		img.classList.add("card-img-top", "picture-h-set-240"); // Thêm class "card-img-top" vào thẻ img
 		img.style.height="60px"
+		img.style.width="50px"
 		
 		img.alt = productId; // Đặt thuộc tính alt từ productId
 
 
 		// Tìm thẻ div chứa ảnh bằng cách sử dụng productId
-		var imageElement = document.getElementById('firebase-image-' + productId +"-"+ mapd);
-		if (imageElement) {
-			imageElement.appendChild(img); // Hiển thị ảnh trong thẻ div tương ứng
+		var imageElement = document.getElementById('firebase-image-' + productId +"-"+ mapd+"-"+ size+"-"+test);
+		console.log(imageElement)
+		// Kiểm tra xem imageElement đã tồn tại hay chưa trước khi thêm ảnh
+		if (imageElement && imageElement.getElementsByTagName('img').length === 0) {
+			imageElement.appendChild(img); // Hiển thị ảnh trong thẻ div tương ứng nếu chưa có ảnh nào
 		}
 	}).catch(function(error) {
 		console.error('Error getting image URL: ', error);
