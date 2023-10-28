@@ -16,6 +16,7 @@ import management.entity.Chatlieu;
 import management.entity.Ctpn;
 import management.entity.Ctsize;
 import management.entity.CtsizeId;
+import management.entity.Hinhanhmh;
 import management.entity.Loaimh;
 import management.entity.Mathang;
 import management.entity.Nhacungcap;
@@ -339,5 +340,22 @@ public class NhapHangDaoImpl implements INhapHangDao {
 		} finally {
 			session.close();
 		}
+	}
+
+	@Override
+	public void themAnhMoi(Hinhanhmh anh) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.save(anh);
+			transaction.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		
 	}
 }

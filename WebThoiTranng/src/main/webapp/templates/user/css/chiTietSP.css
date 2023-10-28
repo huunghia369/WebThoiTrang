@@ -1,46 +1,46 @@
 /* Đảm bảo HTML và BODY chiếm toàn bộ chiều cao màn hình */
-
-
-
-.khung{
+.khung {
 	padding-left: 10%;
 	padding-right: 10%;
-	
 }
 
-.khung_anh{
-	border-bottom-left-radius: 10%;
-	border-top-right-radius: 10%;
+.khung_anh img {
+	border-radius: 3%;
 	position: sticky;
-	
+	height: 475px;
 }
-.khung_inf{
+
+.khung_inf {
 	padding-bottom: 1%;
 	font-size: 22px;
-	border-bottom-left-radius: 10%;
-	border-top-right-radius: 10%;
-	/* #f0d4d4 */
+	border-radius: 3%;
+	height: 475px;
+	background-color: #f8f8f8;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-
-
-.header{
+.header {
 	color: white;
 	margin-left: 12%;
 	margin-top: 10px;
 	font-size: 33px;
 }
 
-
-.lg{
+.lg {
 	font-size: 22px;
 }
-.rating {
-	display: inline-block;
-	vertical-align: middle;
+
+/* Phần hiển thị đánh giá sp */
+#rating-container {
+	display: flex;
+	align-items: center;
 }
 
-.star {
-	color: gold;
-	font-size: 20px;
+.fa {
+	font-size: 24px;
+	margin: 0 5px;
+}
+
+#rating-stars {
+	color: orange;
 }

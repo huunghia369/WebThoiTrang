@@ -115,22 +115,51 @@ keyframes bounce { 0% {
 }
 
 50
+
+
 %
 {
 transform
+
+
 :
-translateY(
--0.25rem
-);
+
+
+translateY
+(
+
+
+-0
+.25rem
+
+
+)
+;
+
+
 }
 100
+
+
 %
 {
 transform
+
+
 :
-translateY(
+
+
+translateY
+(
+
+
 0
-);
+
+
+)
+;
+
+
 }
 }
 .button:hover .button__text span {
@@ -144,8 +173,8 @@ translateY(
 	;
 
 .button {
-	width: 100%; 
-	border : none;
+	width: 100%;
+	border: none;
 	outline: none;
 	background-color: purple;
 	padding: 1rem 90px 1rem 2rem;
