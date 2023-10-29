@@ -21,11 +21,10 @@
 	margin: 5px 0;
 }
 
-.product-image {
-	/* Tùy chỉnh kích thước hình ảnh */
-	width: 100px;
-	height: 100px;
-	background-color: #ccc;
+.nameSP {
+	font-size: 18px;
+	margin: 5px 0;
+	font-style: italic;
 }
 
 .priceSP {
@@ -72,4 +71,19 @@
 .order-info p fmt\:formatDate {
     color: #000; /* Màu chữ thông tin ngày đặt hàng */
 }
+
+/* Màu mặc định cho ngôi sao là xám */
+.star {
+    color: gray;
+}
+
+/* Khi người dùng di chuột qua ngôi sao, thay đổi màu thành vàng */
+.star:hover {
+    color: yellow;
+}
+
+.star-rated {
+	color: yellow;
+}
+
 

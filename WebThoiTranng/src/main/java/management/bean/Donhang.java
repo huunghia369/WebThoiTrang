@@ -10,12 +10,13 @@ public class Donhang {
 	private double tonggia;
 	private String size;
 	private double mucgiamgia;
+	private int danhgia;
 	
 	public Donhang() {
 		
 	}
 	
-	public Donhang(int mamh, String tenSP, int soluong, Date ngaydat, double tonggia, String size, double mucgiamgia) {
+	public Donhang(int mamh, String tenSP, int soluong, Date ngaydat, double tonggia, String size, double mucgiamgia, int danhgia) {
 		super();
 		this.mamh = mamh;
 		this.tenSP = tenSP;
@@ -24,6 +25,7 @@ public class Donhang {
 		this.tonggia = tonggia;
 		this.size = size;
 		this.mucgiamgia = mucgiamgia;
+		this.danhgia = danhgia;
 	}
 	public int getMamh() {
 		return mamh;
@@ -74,5 +76,13 @@ public class Donhang {
 
 	public void setMucgiamgia(double mucgiamgia) {
 		this.mucgiamgia = mucgiamgia;
+	}
+
+	public int getDanhgia() {
+		return danhgia;
+	}
+
+	public void setDanhgia(int danhgia) {
+		this.danhgia = danhgia;
 	}
 }

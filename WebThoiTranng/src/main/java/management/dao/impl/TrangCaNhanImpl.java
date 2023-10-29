@@ -32,7 +32,9 @@ public class TrangCaNhanImpl implements ITrangCaNhanDAO {
 	    } catch (HibernateException ex) {
 	        System.out.println("Lỗi: " + ex.getMessage());
 	        return null;
-	    }
+	    }finally {
+			session.close();
+		}
 	    
 	}
 	

@@ -27,6 +27,14 @@ public interface ILichSuDonHangDAO {
 	Mathang layMatHangTheoID(int id);
 	
 	double getKhuyenMai(int masp, Date ngaydat);
+	
+	boolean saveRating(int mamh, String tentk, int danhgia);
+	
+	boolean updateRating(int mamh, String tentk, int danhgia);
+	
+	boolean isProductRated(int mamh, String tentk);
+	
+	int getDanhgia(int masp, String tentk);
 }
 
 
