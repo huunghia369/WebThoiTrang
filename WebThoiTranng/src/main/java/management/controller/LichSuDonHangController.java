@@ -1,5 +1,9 @@
 package management.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +44,9 @@ public class LichSuDonHangController {
         // Lấy mã khách hàng dựa trên địa chỉ email
         int makh = lichSuDonHangDAO.getMaKHbyEmail("nghianguyenhuu963@gmail.com");
 
+        
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+        
         // Tạo danh sách chứa thông tin đơn hàng
         List<DonhangInfo> listDonhang = new ArrayList<>();
 
@@ -88,6 +95,8 @@ public class LichSuDonHangController {
                 String size = lichSuDonHangDAO.getMucSizebyMaSize(masize);
                 double khuyenmai = lichSuDonHangDAO.getKhuyenMai(masp, ngaydat);
                 int danhgia = lichSuDonHangDAO.getDanhgia(masp, "nghianguyenhuu963@gmail.com");
+                String listRating = makh + "," + masp + "," + danhgia + "," + timeStamp;
+                String tmp = saveRatingRecord(listRating);
 
                 // Tạo đối tượng Donhang và thêm vào danh sách
                 Donhang dh = new Donhang();
@@ -144,5 +153,37 @@ public class LichSuDonHangController {
             return "Không thể đánh giá hoặc cập nhật đánh giá sản phẩm. Vui lòng thử lại sau.";
         }
     }
+    
+    public String saveRatingRecord(String red) {
+		String s = null;
+		String str = null;
+		try {
+
+			// run the Unix "ps -ef" command
+			// using the Runtime exec method:
+		
+			String cmd = "python C:\\Users\\ASUS\\git\\WebThoiTrang\\WebThoiTranng\\src\\main\\java\\python\\add-to-csv.py " + red;
+			Process p = Runtime.getRuntime().exec(cmd);
+
+			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+			BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+
+			// read the output from the command
+			System.out.println("Here is the standard output of the command:\n");
+			while ((s = stdInput.readLine()) != null) {
+				System.out.println(s);
+
+				str = s;
+			}
+
+		} catch (IOException e) {
+			System.out.println("exception happened - here's what I know: ");
+			e.printStackTrace();
+			// System.exit(-1);
+		}
+		return str;
+
+	}
 }
 
