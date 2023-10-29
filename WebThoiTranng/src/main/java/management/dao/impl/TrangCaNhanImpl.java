@@ -46,6 +46,7 @@ public class TrangCaNhanImpl implements ITrangCaNhanDAO {
 			session.update(kh);
 			t.commit();
 		} catch (Exception e) {
+			e.printStackTrace();
 			t.rollback();
 			return 0;
 		} finally {
