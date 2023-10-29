@@ -8,10 +8,13 @@ import javax.transaction.Transactional;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import management.dao.ILichSuDonHangDAO;
+import management.entity.Danhgia;
+import management.entity.DanhgiaId;
 import management.entity.Mathang;
 import management.entity.Phieudat;
 
@@ -41,6 +44,7 @@ public class LichSuDonHangImpl implements ILichSuDonHangDAO {
 		Query query = session.createQuery(hql);
 		query.setParameter("makh", makh);
 		List<Phieudat> list = query.list();
+		session.close();
 		return list;
 	}
 
@@ -51,6 +55,7 @@ public class LichSuDonHangImpl implements ILichSuDonHangDAO {
 		Query query = session.createQuery(hql);
 		query.setParameter("mapd", mapd);
 		List<Integer> list = query.list();
+		session.close();
 		return list;
 	}
 
@@ -62,6 +67,7 @@ public class LichSuDonHangImpl implements ILichSuDonHangDAO {
 		query.setParameter("mamh", mamh);
 		query.setParameter("mapd", mapd);
 		List<Integer> list = query.list();
+		session.close();
 		return list;
 	}
 	
@@ -72,6 +78,7 @@ public class LichSuDonHangImpl implements ILichSuDonHangDAO {
 		Query query = session.createQuery(hql);
 		query.setParameter("masize", masize);
 		String tensize = (String) query.uniqueResult();
+		session.close();
 		return tensize;
 	}
 	
@@ -155,7 +162,7 @@ public class LichSuDonHangImpl implements ILichSuDonHangDAO {
 	    Session session = sessionFactory.openSession();
 	    try {
 	        // Sử dụng HQL để truy vấn thông tin khuyến mãi
-	        String hql = "SELECT km.mucgiamgia FROM Ctdkm km INNER JOIN km.dotkhuyenmai d WHERE km.id.mamh = :masp AND d.ngaybd <= :ngaydat AND d.ngaykt >= :ngaydat";
+	        String hql = "SELECT max(km.mucgiamgia) FROM Ctdkm km INNER JOIN km.dotkhuyenmai d WHERE km.id.mamh = :masp AND d.ngaybd <= :ngaydat AND d.ngaykt >= :ngaydat";
 	        Query query = session.createQuery(hql);
 	        query.setParameter("masp", masp);
 	        query.setParameter("ngaydat", ngaydat);
@@ -167,6 +174,110 @@ public class LichSuDonHangImpl implements ILichSuDonHangDAO {
 	        } else {
 	            // Trả về 0.0 nếu không có khuyến mãi hoặc xử lý logic khuyến mãi ở đây
 	            return 0.0;
+	        }
+	    } finally {
+	        session.close();
+	    }
+	}
+	
+	@Override
+	public boolean saveRating(int mamh, String tentk,  int danhgia) {
+	    Session session = sessionFactory.openSession();
+	    Transaction tx = null;
+	    try {
+	        tx = session.beginTransaction();
+
+	        DanhgiaId danhgiaId = new DanhgiaId(tentk, mamh);
+	        Danhgia danhgiaEntity = new Danhgia();
+	        danhgiaEntity.setId(danhgiaId);
+	        danhgiaEntity.setDanhgia(danhgia);
+
+	        session.save(danhgiaEntity);
+
+	        tx.commit();
+	        return true;
+	    } catch (Exception e) {
+	        if (tx != null) {
+	            tx.rollback();
+	        }
+	        e.printStackTrace();
+	        return false;
+	    } finally {
+	        session.close();
+	    }
+	}
+	
+	@Override
+	public boolean updateRating(int mamh, String tentk, int danhgia) {
+	    Session session = sessionFactory.openSession();
+	    Transaction tx = null;
+	    try {
+	        tx = session.beginTransaction();
+
+	        DanhgiaId danhgiaId = new DanhgiaId(tentk, mamh);
+	        Danhgia danhgiaEntity = (Danhgia) session.get(Danhgia.class, danhgiaId);
+
+	        if (danhgiaEntity != null) {
+	            // Nếu bản ghi danh gia tồn tại, cập nhật đánh giá cho nó
+	            danhgiaEntity.setDanhgia(danhgia);
+	            session.update(danhgiaEntity);
+	        } else {
+	            // Nếu bản ghi danh gia không tồn tại, bạn có thể tạo mới nó hoặc xử lý theo cách phù hợp với bạn.
+	            // Ở đây, tôi chỉ đưa ra ví dụ tạo mới một bản ghi danh gia mới.
+
+	            danhgiaEntity = new Danhgia();
+	            danhgiaEntity.setId(danhgiaId);
+	            danhgiaEntity.setDanhgia(danhgia);
+
+	            session.save(danhgiaEntity);
+	        }
+
+	        tx.commit();
+	        return true;
+	    } catch (Exception e) {
+	        if (tx != null) {
+	            tx.rollback();
+	        }
+	        e.printStackTrace();
+	        return false;
+	    } finally {
+	        session.close();
+	    }
+	}
+
+	@Override
+	public boolean isProductRated(int mamh, String tentk) {
+	    Session session = sessionFactory.openSession();
+	    try {
+	        DanhgiaId danhgiaId = new DanhgiaId(tentk, mamh);
+	        Danhgia danhgiaEntity = (Danhgia) session.get(Danhgia.class, danhgiaId);
+
+	        return danhgiaEntity != null;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    } finally {
+	        session.close();
+	    }
+	}
+
+	@Override
+	public int getDanhgia(int masp, String tentk) {
+	    Session session = sessionFactory.openSession();
+	    try {
+	        // Sử dụng HQL để truy vấn thông tin đánh giá
+	        String hql = "SELECT max(dg.danhgia) FROM Danhgia dg WHERE dg.id.mamh = :masp AND dg.id.tentk =:tentk";
+	        Query query = session.createQuery(hql);
+	        query.setParameter("masp", masp);
+	        query.setParameter("tentk", tentk);
+	        
+	        // Thực hiện truy vấn
+	        Integer danhgia = (Integer) query.uniqueResult();
+	        if (danhgia != null) {
+	            return danhgia.intValue();
+	        } else {
+	            // Trả về 0 nếu không có đánh giá hoặc xử lý logic đánh giá ở đây
+	            return 0;
 	        }
 	    } finally {
 	        session.close();

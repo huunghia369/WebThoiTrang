@@ -10,8 +10,8 @@ function displayFirebaseImage(productId, mapd,size,test) {
 		var img = document.createElement('img');
 		img.src = url;
 		img.classList.add("card-img-top", "picture-h-set-240"); // Thêm class "card-img-top" vào thẻ img
-		img.style.height="60px"
-		img.style.width="50px"
+		img.style.height="200px"
+		img.style.width="190px"
 		
 		img.alt = productId; // Đặt thuộc tính alt từ productId
 
