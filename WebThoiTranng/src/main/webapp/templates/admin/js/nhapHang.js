@@ -275,23 +275,47 @@ $(document).ready(() => {
 		if (invoices.length === 0) {
 			Swal.fire('Cảnh báo!', 'Chưa có sản phẩm nào trong phiếu nhập.', 'warning');
 		} else {
-			if (confirm("Bạn có muốn thêm phiếu nhập không?")) {
-				const ncc = document.getElementById("supplier").value;
-				jQuery.ajax({
-					url: "/admin/them-pn?ncc=" + ncc,
-					method: "POST",
-					data: JSON.stringify(invoices),
-					contentType: "application/json",
-					success: function(response) {
-						console.log(response);
-						Swal.fire('Thành công!', 'Phiếu nhập đã được thêm thành công.', 'success');
-						window.location.href = "/admin/nhap-hang";
-					},
-					error: function() {
-						console.log('loi');
-					},
-				});
-			}
+
+			Swal.fire({
+				title: 'Bạn có chắc chắn muốn thêm phiếu nhập ?',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Xác nhận',
+				confirmButtonColor: 'Green',
+				cancelButtonText: 'Hủy bỏ',
+			}).then((result) => {
+				if (result.isConfirmed) {
+					
+					const ncc = document.getElementById("supplier").value;
+					$.ajax({
+						url: "/admin/them-pn?ncc=" + ncc,
+						method: "POST",
+						data: JSON.stringify(invoices),
+						contentType: "application/json",
+						success: function(response) {
+							console.log(response);
+							Swal.fire('Thành công!', 'Phiếu nhập đã được thêm thành công.', 'success');
+							window.location.href = "/admin/nhap-hang";
+						},
+						error: function() {
+							console.log('loi');
+							Swal.fire('Thất bại!', 'Thêm phiếu nhập hàng thất bại!!.', 'error');
+						},
+					});
+
+					
+				}
+			});
+
+
+
+
+
+
+
+
+
+
 		}
 	});
 
@@ -320,13 +344,13 @@ $(document).ready(() => {
 			giaNhapInput.removeAttribute("readonly");
 		}
 	});
-	Swal.fire('Welcome!', 'Xin chào.', 'success');
+
 });
 
 
 
 //Ví dụ cho các loại SweetAlert
-Swal.fire('Welcome!', 'Xin chào.', 'success');
+
 
 // Hộp thoại Cảnh báo (Alerts)
 /*Swal.fire('Cảnh báo', 'Đây là một cảnh báo.', 'warning');
