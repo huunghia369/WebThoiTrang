@@ -31,138 +31,106 @@ import management.entity.Phieudat;
 @RequestMapping("/user/")
 public class LichSuDonHangController {
 
-    @Autowired
-    private ILichSuDonHangDAO lichSuDonHangDAO;
-    
-    @GetMapping("history")
-    public ModelAndView history(HttpServletRequest request, ModelMap model) {
+	@Autowired
+	private ILichSuDonHangDAO lichSuDonHangDAO;
 
-        // Lấy thông tin phiên đăng nhập của người dùng
-        HttpSession session = request.getSession();
-        String userEmail = (String) session.getAttribute("loggedInUserEmail");
+	@GetMapping("history")
+	public ModelAndView history(HttpServletRequest request, ModelMap model) {
 
-        // Lấy mã khách hàng dựa trên địa chỉ email
-        int makh = lichSuDonHangDAO.getMaKHbyEmail("nghianguyenhuu963@gmail.com");
+		// Lấy thông tin phiên đăng nhập của người dùng
+		HttpSession session = request.getSession();
+		String userEmail = (String) session.getAttribute("loggedInUserEmail");
 
-        
-        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
-        
-        // Tạo danh sách chứa thông tin đơn hàng
-        List<DonhangInfo> listDonhang = new ArrayList<>();
+		// Lấy mã khách hàng dựa trên địa chỉ email
+		int makh = lichSuDonHangDAO.getMaKHbyEmail(userEmail);
 
-        // Lấy danh sách các phiếu đặt dựa trên mã khách hàng
-        List<Phieudat> listPhieuDat = lichSuDonHangDAO.getAllPhieuDatByMaKH(makh);
-        
-        // Duyệt qua các phiếu đặt để lấy thông tin
-        for (Phieudat phieudat : listPhieuDat) {
-            DonhangInfo donhangInfo = new DonhangInfo();
-            donhangInfo.setPhieudat(phieudat);
+		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
 
-            //Tạo danh sách đơn hàng dựa trên phiếu đặt
-            List<Donhang> listDonhangForPhieuDat = new ArrayList<>();
-            
-            List<Integer> mapdList = new ArrayList<>();
-            List<Integer> maspList = new ArrayList<>();
-            List<Integer> masizeList = new ArrayList<>();
+		// Tạo danh sách chứa thông tin đơn hàng
+		List<DonhangInfo> listDonhang = new ArrayList<>();
 
-            // Lấy danh sách các mã sản phẩm dựa trên mã phiếu đặt
-            List<Integer> listMaSP = lichSuDonHangDAO.getAllMaSPbyMaPD(phieudat.getMapd());
+		// Lấy danh sách các phiếu đặt dựa trên mã khách hàng
+		List<Phieudat> listPhieuDat = lichSuDonHangDAO.getAllPhieuDatByMaKH(makh);
 
-            // Duyệt qua danh sách mã sản phẩm
-            for (int masp : listMaSP) {
-                List<Integer> listMaSize = lichSuDonHangDAO.getAllMaSizebyMaSPandMaPD(masp, phieudat.getMapd());
+		// Duyệt qua các phiếu đặt để lấy thông tin
+		for (Phieudat phieudat : listPhieuDat) {
+			DonhangInfo donhangInfo = new DonhangInfo();
+			donhangInfo.setPhieudat(phieudat);
 
-                // Duyệt qua danh sách mã size
-                for (int masize : listMaSize) {
-                	 // Thêm giá trị vào danh sách tương ứng
-                    mapdList.add(phieudat.getMapd());
-                    maspList.add(masp);
-                    masizeList.add(masize);
-                }
-            }
-            
-         // Duyệt qua danh sách 'mapdList', 'maspList', và 'masizeList'
-            for (int i = 0; i < mapdList.size(); i++) {
-                int mapd = mapdList.get(i);
-                int masp = maspList.get(i);
-                int masize = masizeList.get(i);
+			// Tạo danh sách đơn hàng dựa trên phiếu đặt
+			List<Donhang> listDonhangForPhieuDat = new ArrayList<>();
 
-                // Lấy thông tin sản phẩm, ngày đặt, size, giá và khuyến mãi
-                Mathang mh = lichSuDonHangDAO.layMatHangTheoID(masp);
-                int sl = lichSuDonHangDAO.getSoluongSp(masp, mapd, masize);
-                Date ngaydat = lichSuDonHangDAO.getNgaydatByMaMH(mapd);
-                int gia = lichSuDonHangDAO.getPriceByMaMH(masp, ngaydat);
-                String size = lichSuDonHangDAO.getMucSizebyMaSize(masize);
-                double khuyenmai = lichSuDonHangDAO.getKhuyenMai(masp, ngaydat);
-                int danhgia = lichSuDonHangDAO.getDanhgia(masp, "nghianguyenhuu963@gmail.com");
-                String listRating = makh + "," + masp + "," + danhgia + "," + timeStamp;
-                String tmp = saveRatingRecord(listRating);
+			List<Integer> mapdList = new ArrayList<>();
+			List<Integer> maspList = new ArrayList<>();
+			List<Integer> masizeList = new ArrayList<>();
 
-                // Tạo đối tượng Donhang và thêm vào danh sách
-                Donhang dh = new Donhang();
-                dh.setMamh(masp);
-                dh.setTenSP(mh.getTenmh());
-                dh.setSoluong(sl);
-                dh.setTonggia(gia * sl);
-                dh.setNgaydat(ngaydat);
-                dh.setSize(size);
-                dh.setMucgiamgia(khuyenmai);
-                dh.setDanhgia(danhgia);
+			// Lấy danh sách các mã sản phẩm dựa trên mã phiếu đặt
+			List<Integer> listMaSP = lichSuDonHangDAO.getAllMaSPbyMaPD(phieudat.getMapd());
 
-                listDonhangForPhieuDat.add(dh);
-            }
+			// Duyệt qua danh sách mã sản phẩm
+			for (int masp : listMaSP) {
+				List<Integer> listMaSize = lichSuDonHangDAO.getAllMaSizebyMaSPandMaPD(masp, phieudat.getMapd());
+				int danhgia = lichSuDonHangDAO.getDanhgia(masp, userEmail);
+				String listRating = makh + "," + masp + "," + danhgia + "," + timeStamp;
+				String tmp = saveRatingRecord(listRating);
 
-            donhangInfo.setListDonhangForPhieuDat(listDonhangForPhieuDat);
-            listDonhang.add(donhangInfo);
-        }
-     
+				// Duyệt qua danh sách mã size
+				for (int masize : listMaSize) {
+					// Thêm giá trị vào danh sách tương ứng
+					mapdList.add(phieudat.getMapd());
+					maspList.add(masp);
+					masizeList.add(masize);
+				}
+			}
 
-        ModelAndView modelAndView = new ModelAndView("user/lichsudonhang");
-        modelAndView.addObject("listDonhang", listDonhang);
-        return modelAndView;
-    }
-    
-    @PostMapping("rate")
-    @ResponseBody
-    public String rateProduct(HttpServletRequest request, ModelMap model,
-            @RequestParam("mamh") int mamh,
-            @RequestParam("danhgia") int danhgia) {
+			// Duyệt qua danh sách 'mapdList', 'maspList', và 'masizeList'
+			for (int i = 0; i < mapdList.size(); i++) {
+				int mapd = mapdList.get(i);
+				int masp = maspList.get(i);
+				int masize = masizeList.get(i);
 
-        // Lấy thông tin phiên đăng nhập của người dùng
-        HttpSession session = request.getSession();
-        String userEmail = (String) session.getAttribute("loggedInUserEmail");
+				// Lấy thông tin sản phẩm, ngày đặt, size, giá và khuyến mãi
+				Mathang mh = lichSuDonHangDAO.layMatHangTheoID(masp);
+				int sl = lichSuDonHangDAO.getSoluongSp(masp, mapd, masize);
+				Date ngaydat = lichSuDonHangDAO.getNgaydatByMaMH(mapd);
+				int gia = lichSuDonHangDAO.getPriceByMaMH(masp, ngaydat);
+				String size = lichSuDonHangDAO.getMucSizebyMaSize(masize);
+				double khuyenmai = lichSuDonHangDAO.getKhuyenMai(masp, ngaydat);
+				int danhgia = lichSuDonHangDAO.getDanhgia(masp, userEmail);
 
-        // Kiểm tra xem sản phẩm đã được đánh giá chưa bằng cách truy vấn cơ sở dữ liệu
-        boolean isProductRated = lichSuDonHangDAO.isProductRated(mamh, "nghianguyenhuu963@gmail.com");
+				// Tạo đối tượng Donhang và thêm vào danh sách
+				Donhang dh = new Donhang();
+				dh.setMamh(masp);
+				dh.setTenSP(mh.getTenmh());
+				dh.setSoluong(sl);
+				dh.setTonggia(gia * sl);
+				dh.setNgaydat(ngaydat);
+				dh.setSize(size);
+				dh.setMucgiamgia(khuyenmai);
+				dh.setDanhgia(danhgia);
 
-        boolean saveResult;
+				listDonhangForPhieuDat.add(dh);
+			}
 
-        if (isProductRated) {
-            // Nếu sản phẩm đã được đánh giá trước đó, thực hiện cập nhật đánh giá
-            saveResult = lichSuDonHangDAO.updateRating(mamh, "nghianguyenhuu963@gmail.com", danhgia);
-        } else {
-            // Nếu sản phẩm chưa được đánh giá, thực hiện thêm bản ghi mới
-            saveResult = lichSuDonHangDAO.saveRating(mamh, "nghianguyenhuu963@gmail.com", danhgia);
-        }
+			donhangInfo.setListDonhangForPhieuDat(listDonhangForPhieuDat);
+			listDonhang.add(donhangInfo);
+		}
 
-        model.addAttribute("danhgiaStatus", isProductRated);
-        
-        if (saveResult) {
-            return "Đánh giá sản phẩm thành công";
-        } else {
-            return "Không thể đánh giá hoặc cập nhật đánh giá sản phẩm. Vui lòng thử lại sau.";
-        }
-    }
-    
-    public String saveRatingRecord(String red) {
+		ModelAndView modelAndView = new ModelAndView("user/lichsudonhang");
+		modelAndView.addObject("listDonhang", listDonhang);
+		return modelAndView;
+	}
+
+	public String saveRatingRecord(String red) {
 		String s = null;
 		String str = null;
 		try {
 
 			// run the Unix "ps -ef" command
 			// using the Runtime exec method:
-		
-			String cmd = "python C:\\Users\\ASUS\\git\\WebThoiTrang\\WebThoiTranng\\src\\main\\java\\python\\add-to-csv.py " + red;
+
+			String cmd = "python D:\\GitHub\\WebThoiTrang\\WebThoiTranng\\src\\main\\java\\python\\add-to-csv.py "
+					+ red;
 			Process p = Runtime.getRuntime().exec(cmd);
 
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -186,4 +154,3 @@ public class LichSuDonHangController {
 
 	}
 }
-

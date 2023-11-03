@@ -158,6 +158,20 @@ public class LichSuDonHangImpl implements ILichSuDonHangDAO {
 	}
 	
 	@Override
+	public Phieudat getPhieuDat(int mapd) {
+		Session session = sessionFactory.openSession();
+		try {
+			String hql = "FROM Phieudat where mapd = :mapd";
+			Query query = session.createQuery(hql);
+			query.setParameter("mapd", mapd);
+			Phieudat pd = (Phieudat) query.uniqueResult();
+			return pd;
+		} finally {
+			session.close();
+		}
+	}
+	
+	@Override
 	public double getKhuyenMai(int masp, Date ngaydat) {
 	    Session session = sessionFactory.openSession();
 	    try {
