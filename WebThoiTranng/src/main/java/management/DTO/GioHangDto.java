@@ -13,7 +13,7 @@ import management.entity.Mathang;
 public class GioHangDto {
 	
 	@Autowired
-	private IGioHangDAO iGioHangDAO;
+	private IGioHangDAO iGioHangDAO; 
 	
 	private int idProduct;
 	private int soLuong;

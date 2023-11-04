@@ -20,8 +20,8 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 		String usermail = (String) request.getSession().getAttribute("loggedInUserEmail");
 		
 		// Nếu chứa paying và mã quyền là 2( Ql) hoặc chứa paying và chưa đăng nhập
-		if ((requestURI.contains("paying") && (Boolean) request.getSession().getAttribute("login") == false)
-				|| (requestURI.contains("paying") && iTaiKhoanDAO.get_MaQuyen_by_email(usermail) == 2)) {
+		if ((requestURI.contains("paying")||(requestURI.contains("mua-ngay")) &&  (Boolean) request.getSession().getAttribute("login") == false)
+				|| (requestURI.contains("paying")||(requestURI.contains("mua-ngay")) && iTaiKhoanDAO.get_MaQuyen_by_email(usermail) == 2)) {
 
 			response.sendRedirect("/user/login"); // trả về link đăng nhập
 			return false; // Dừng xử lý yêu cầu hiện tại
