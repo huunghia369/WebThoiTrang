@@ -1,6 +1,8 @@
 package management.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -30,8 +32,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import management.DTO.ThanhToanDto;
+import management.bean.ProductWithDiscount;
+import management.dao.IAprioriDao;
 import management.dao.IDonHangDao;
 import management.dao.IGioHangDAO;
+import management.dao.IMatHangDao;
 import management.dao.IThanhToanDAO;
 import management.DTO.GioHangDto;
 import management.DTO.Product_Paying;
@@ -48,7 +53,7 @@ import management.entity.Phieudat;
 @Controller
 @Transactional
 @RequestMapping("/user")
-public class UserController {
+public class ChiTietSPController {
 
 	@Autowired
 	private IDonHangDao donHangDao;
@@ -58,10 +63,55 @@ public class UserController {
 
 	@Autowired
 	private IThanhToanDAO thanhToanDAO;
+	
+	@Autowired
+	private IAprioriDao iAprioriDao;
+	
+	@Autowired
+	IMatHangDao matHangDao;
+	
+	@Autowired
+	Apriori apriori;
+	
+	public String getRecommendation(String maMH) {
+		String s = null;
+		String str = null;
+		try {
 
+			// run the Unix "ps -ef" command
+			// using the Runtime exec method:
+			String cmd = "python D:\\WebThoiTrang\\WebThoiTranng\\src\\main\\java\\python\\test.py " + maMH;
+			Process p = Runtime.getRuntime().exec(cmd);
+
+			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+			BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+
+			// read the output from the command
+			//System.out.println("Here is the standard output of the command:\n");
+			while ((s = stdInput.readLine()) != null) {
+				//System.out.println(s);
+
+				str = s;
+			}
+
+			// read any errors from the attempted command
+//			System.out.println("Here is the standard error of the command (if any):\n");
+//			while ((s = stdError.readLine()) != null) {
+//				System.out.println(s);
+//			}
+
+			// System.exit(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return str;
+
+	}
 	@RequestMapping("/chi-tiet-sp/{id}")
 	public ModelAndView CTSP(@PathVariable("id") int id) throws ServletException, IOException {
-
+		
+		
 		ModelAndView mav = new ModelAndView("user/chiTietSP");
 
 		Mathang mh = donHangDao.layMatHangTheoID(id);
@@ -76,9 +126,10 @@ public class UserController {
 			}
 			danhGia = tongDanhGia / mh.getDanhgias().size();
 		}
-		System.out.println(mh.getDanhgias());
-		System.out.println(tongDanhGia);
-		System.out.println(danhGia);
+		/*
+		 * System.out.println(mh.getDanhgias()); System.out.println(tongDanhGia);
+		 * System.out.println(danhGia);
+		 */
 
 		for (Hinhanhmh anh : mh.getHinhanhmhs()) {
 			anh.getDuongdan();
@@ -89,7 +140,34 @@ public class UserController {
 		mav.addObject("gia", gia);
 		mav.addObject("mh", mh);
 		mav.addObject("danhGia", danhGia);
-
+		String listMHStr = getRecommendation(id+"");
+		String tmp = listMHStr.replace("'", "");
+		tmp = tmp.replace("[", "");
+		tmp = tmp.replace("]", "");
+		tmp = tmp.replace(" ", "");
+		String[] tmp2= tmp.split(",");
+		List<ProductWithDiscount>sptts=new ArrayList<>();
+		for(String s:tmp2) {
+			
+			Mathang mhtmp= iAprioriDao.getMHById(Integer.valueOf(s));
+			//System.out.println(mhtmp.getMamh()+"trieu");
+			ProductWithDiscount temp = new ProductWithDiscount();
+			temp.setMucgiamgia((int)matHangDao.getDiscount_Product(mhtmp));
+			System.out.println(temp.getMucgiamgia()+"trieu");
+			
+			temp.setMathang(mhtmp);
+			//System.out.println(temp.getMathang().getMamh()+"trieu");
+			temp.setGia(matHangDao.getPrice_Product(mhtmp));
+			//System.out.println(s);
+			sptts.add(temp);
+		}
+		/*
+		 * for(ProductWithDiscount mhtmp: sptts) { System.out.println(mhtmp.getGia());
+		 * System.out.println(mhtmp.getGiamoi());
+		 * System.out.println(mhtmp.getMucgiamgia());
+		 * System.out.println(mhtmp.getMathang().getMamh()); }
+		 */
+		mav.addObject("dssptt", sptts);
 		return mav;
 	}
 
@@ -299,6 +377,7 @@ public class UserController {
 
 	@GetMapping("/tmp")
 	public ModelAndView tmp() {
-		return new ModelAndView("/user/tmp");
+		apriori.Apriori(2);
+		return new ModelAndView("/user/home");
 	}
 }
