@@ -126,65 +126,74 @@
                     </div>
                 </div>
             </div>
+          
             <!-- Phần gợi ý sản phẩm -->
-            <section class="container my-5">
+          <section class="container my-5">
                 <h2 style="color: #9ca0a2">Gợi ý hôm nay</h2>
                 <div class="row">
 
-                    <c:forEach var="i" begin="1" end="6">
+                    <c:forEach var="product" items="${listProductSmart}">
 
-                        <div class="col-md-2">
-                            <div class="card product-card card-h-set-280" >
-                                <a href="/product/<%-- ${product.mathang.mamh} --%>">
+                        <div class="col-md-2 ">
+                            <div class="card product-card card-h-set-320 " >
+                                <a href="/user/chi-tiet-sp/${product.mathang.mamh}">
                                     <div style="position: relative;">
                                         <!-- Hiển thị mức giảm giá ở đây nếu mucgiamgia > 0 -->
-                                        <%-- <c:if test="${product.mucgiamgia > 0}"> --%>
+                                        <c:if test="${product.mucgiamgia > 0}">
                                             <span
                                                 style="position: absolute; top: 10px; left: 10px; background-color: red; color: white; padding: 5px;">
                                                 -${product.mucgiamgia}% </span>
-                                            <%-- </c:if> --%>
-
-                                                <!-- Ảnh sản phẩm -->
+                                        </c:if>
+										  <!-- Ảnh sản phẩm -->
                                                 <img src="https://images.unsplash.com/photo-1624687943971-e86af76d57de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80"
                                                     class="card-img-top" alt="Sản phẩm 2">
+                                       <%--  <!-- Ảnh sản phẩm -->
+                                       <div id="firebase-image-${product.mathang.mamh}" ></div>
+								<script>
+								    displayFirebaseImage("${product.mathang.mamh}"); 
+								</script> --%>
                                     </div>
                                 </a>
 
                                 <div class="card-body">
-                                    <h5 class="card-title text-center font-weight-bold">
-                                        <small>
-                                            <%-- ${product.mathang.tenmh} --%>
-                                        </small>
-                                    </h5>
-
+                                   
 
                                 </div>
-                                <p class="card-text text-center mb-4" style="margin-top: -14px">
-                                    <!-- Giá ban đầu bị gạch ngang (màu trắng) -->
-                                    <%-- <c:if test="${product.gia ne product.giamoi}"> --%>
-                                        <del class="mr-3">
-                                            <strong>${product.gia/1000}</strong>
-                                        </del>
-                                        <%-- </c:if> --%>
-                                            <!-- Giá sau khi giảm (màu đỏ) -->
-                                            <%-- <span
-                                                style="color: red;"><strong>${product.giamoi/1000}</strong></span>
-                                </p> --%>
-                            </div>
+						
+							<h5 class="card-title text-center font-weight-bold">
+								<small>${product.mathang.tenmh}</small>
+							</h5>
+							<p class="card-text text-center mb-4" >
+								<!-- Giá ban đầu bị gạch ngang (màu trắng) -->
+								<c:if test="${product.gia ne product.giamoi}">
+									<del class="mr-3">
+										<strong>${product.gia/1000}</strong>
+									</del>
+								</c:if>
+								<!-- Giá sau khi giảm (màu đỏ) -->
+								<span style="color: red;"><strong>${product.giamoi/1000}</strong></span>
+							</p>
+						
+
+
+
+					</div>
                         </div>
 
                     </c:forEach>
 
 
                 </div>
+                
                 <div class="row mt-2">
                     <div class="col-md-6 mx-auto text-center">
-                        <a href="#" class="btn btn-outline-secondary custom-padding" style="width: 60%;"><strong>--Xem
-                                thêm--</strong></a>
+                        <a href="/product/selling" class="btn btn-outline-secondary custom-padding"
+                            style="width: 60%;"><strong>--Xem thêm--</strong></a>
                     </div>
                 </div>
-            </section>
 
+            </section>
+       
             <!-- Bán chạy -->
             <section class="container my-5">
                 <h2 style="color: #9ca0a2">Sản phẩm bán chạy</h2>
@@ -240,6 +249,7 @@
 
 
                 </div>
+                
                 <div class="row mt-2">
                     <div class="col-md-6 mx-auto text-center">
                         <a href="/product/selling" class="btn btn-outline-secondary custom-padding"

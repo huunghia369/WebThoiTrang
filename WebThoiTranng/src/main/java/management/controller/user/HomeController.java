@@ -1,6 +1,9 @@
 package management.controller.user;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +22,12 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import management.bean.ProductWithDiscount;
 import management.bean.RemoveDiacritics;
+import management.controller.Apriori;
+import management.controller.ReadPython;
+import management.dao.IAprioriDao;
 import management.dao.IDanhMucDao;
 import management.dao.IMatHangDao;
+import management.dao.ITaiKhoanDAO;
 import management.entity.Loaimh;
 import management.entity.Mathang;
 import management.login_google.UserGoogleDto;
@@ -38,11 +45,18 @@ public class HomeController {
 	@Autowired
 	private IMatHangDao matHangDao;
 	
+	@Autowired
+	private Apriori apriori;
+	@Autowired
+	private ITaiKhoanDAO taiKhoanDAO;
+	// test
+	private List<Mathang> listmhdanhgia = new ArrayList<Mathang>();
 
 	@GetMapping("/index")
-	public ModelAndView home(ModelMap model,HttpServletRequest request) {
+	public ModelAndView home(ModelMap model,HttpServletRequest request) throws IOException, InterruptedException {
 		HttpSession session = request.getSession();
 		String userEmail = (String) session.getAttribute("loggedInUserEmail");
+		
 		if(userEmail !=null) session.setAttribute("login", true);
 		else session.setAttribute("login", false);
 		
@@ -94,8 +108,51 @@ public class HomeController {
 		
 		
 		ModelAndView modelAndView = new ModelAndView("user/home");
+		
+		//test okok
+		
+		List<ProductWithDiscount>list_P_smarts=new ArrayList<>();
+		
+		System.out.println("email:"+userEmail);
+		try {
+			if (userEmail != null) {
+				int makh = taiKhoanDAO.get_khachHang_byEmail(userEmail).getMakh();
+				System.out.println("mamkh:"+makh);
+				
+				listmhdanhgia = apriori.Apriori(makh);// 1 là ma kh
+				for (Mathang mh : listmhdanhgia) {
+
+					ProductWithDiscount tmp = new ProductWithDiscount();
+					tmp.setMucgiamgia((int) matHangDao.getDiscount_Product(mh));
+
+					tmp.setMathang(mh);
+					tmp.setGia(matHangDao.getPrice_Product(mh));
+					list_P_smarts.add(tmp);
+				}
+			}
+			
+			
+			
+			model.addAttribute("listProductSmart", list_P_smarts);
+			return modelAndView;
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}	
+		
+		/*
+		 * String listMHStr = getRecommendation(1 + ""); String tmp = listMHStr; tmp =
+		 * tmp.replace("[", ""); tmp = tmp.replace("]", ""); String[] elements =
+		 * tmp.split(", "); System.out.println("test cai j nef troiwf :" + elements);
+		 * 
+		 * for (String element : elements) { System.out.println(element); }
+		 */
+		
+		
 		return modelAndView;
 	}
+	
+
 	
 	@RequestMapping("log-out")
 	public String logOut(HttpServletRequest request )

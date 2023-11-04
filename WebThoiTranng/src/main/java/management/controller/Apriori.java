@@ -1,7 +1,9 @@
 package management.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,15 +14,14 @@ import management.entity.Ctpd;
 import management.entity.Mathang;
 import management.entity.Phieudat;
 
-
 //import javax.management.loading.PrivateClassLoader;
 
 @Component
 public class Apriori {
-	
+
 	@Autowired
 	private IAprioriDao aprioriDao;
-	
+
 	private static int numTransactions = 0;
 	private static int minSup = 3;
 	private static double maxConfidence = 65.0;
@@ -39,6 +40,7 @@ public class Apriori {
 		List<Mathang> listmathangAll = aprioriDao.getLayDSSP();
 		List<Mathang> listmathangBuy = aprioriDao.getLayDSSPDAMUA(makh);
 
+		
 		String data[][] = new String[200][200];
 
 		String frequentItemSet[][] = new String[1000][1000];
@@ -49,9 +51,10 @@ public class Apriori {
 		List<String> finaly = new ArrayList<String>();
 		LoadProductAll(itemAll, listmathangAll);
 		LoadProductCustomer(itemHistory, listmathangBuy);
+		// LoadProductCustomer(itemHistory, listmathangAll);
 		LOADDATA(listhoadon, listcthd, data);
 		foundFrequentItemSet(data, frequentItemSet, Location, itemAll);
-		foundLawDetermination(data, frequentItemSet, itemHistory, finaly, Location);
+		finaly= foundLawDetermination(data, frequentItemSet, itemHistory,0.6);
 //		System.out.println(finaly.size());
 //		for (String s : finaly)
 //			System.out.println(s);
@@ -113,7 +116,9 @@ public class Apriori {
 			}
 		} else {
 			if (finaly.size() == 1) {
-				Mathang mathang = aprioriDao.getMHById(Integer.parseInt(finaly.get(0)));
+				String cleanedString = finaly.get(0).trim().replace(",", "");
+
+				Mathang mathang = aprioriDao.getMHById(Integer.parseInt(cleanedString));
 				listmathang.add(mathang);
 				if (sizeCustomer > 4)
 					for (int i = 0; i < 4; i++) {
@@ -152,7 +157,7 @@ public class Apriori {
 	public void LoadProductAll(String itemAll[], List<Mathang> mh) {
 		int i = 0;
 		for (Mathang m : mh) {
-			itemAll[i] = m.getMamh()+"";
+			itemAll[i] = m.getMamh() + "";
 			i++;
 		}
 		sizeAll = i;
@@ -162,7 +167,7 @@ public class Apriori {
 	public void LoadProductCustomer(String itemHistory[], List<Mathang> mh) {
 		int i = 0;
 		for (Mathang m : mh) {
-			itemHistory[i] = m.getMamh()+"";
+			itemHistory[i] = m.getMamh() + "";
 			i++;
 		}
 		sizeCustomer = i;
@@ -174,11 +179,11 @@ public class Apriori {
 		numTransactions = HD.size();
 		int max = 1;
 		for (Phieudat hd : HD) {
-			data[i][j] = hd.getMapd()+"";
+			data[i][j] = hd.getMapd() + "";
 			j++;
 			for (Ctpd ct : cthd) {
 				if (ct.getPhieudat().getMapd() == hd.getMapd()) {
-					data[i][j] = ct.getId().getMamh()+"";
+					data[i][j] = ct.getId().getMamh() + "";
 					j++;
 				}
 			}
@@ -192,176 +197,155 @@ public class Apriori {
 
 	// ok
 	// Tìm tập phổ biến
+
 	public static void foundFrequentItemSet(String data[][], String frequentItemSet[][], int Location[],
 			String itemAll[]) {
-		int count = 0;
-//		int n = 0;
-		String tmp;
-		int rows = 0;
 		int colums = 0;
+		int rows = 0;
+
 		List<String> frequentTmp = new ArrayList<String>();
-		// Tìm tập phổ biến 1 thuộc tính.
-		// String B[] = { "A", "B", "C", "D", "E" };
-		for (int i = 0; i < sizeAll; i++) {
-			tmp = itemAll[i];
-			// tmp = B[i];
+
+		for (int i = 0; i < itemAll.length; i++) {
+			String tmp = itemAll[i];
+			if( tmp==null) break;
+			int count = 0;
 			for (int j = 0; j < numTransactions; j++) {
 				for (int k = 1; k < maxSize; k++) {
-					// if(A[j][k] == null) break;
 					if (tmp.equals(data[j][k])) {
 						count++;
 						break;
 					}
 				}
 			}
-			if (count > 2 || count == 2) {
+
+			if (count >= 2) {
 				frequentItemSet[rows][colums] = tmp;
 				Location[rows] = count;
 				rows++;
-				count = 0;
 				frequentTmp.add(tmp);
 			}
-
 		}
-		colums++;
-		int rowXet = 0;
-		int rowXet1 = 0;
-		boolean cons = true;
-//		for(String s: frequentTmp)
-//			System.out.print(s +" ");
-//		System.out.println();
-		frequentTmp.remove(0);
-//		for(String s: frequentTmp)
-//			System.out.print(s +" ");
-//		int xet = 0;
-//		int daXet = 0;
-		int columsXet = 1;
-		int dem = 0;
-//		int numCol = numTransactions;
-		while (cons) {
-			if (rows == 0)
-				break;
-			// Duyệt hết một phần tử.
+
+		while (!frequentTmp.isEmpty()) {
+			List<String> newFrequentTmp = new ArrayList<String>();
+
 			for (int t = 0; t < frequentTmp.size(); t++) {
-				// Duyệt một phần tử
 				for (int p = t; p < frequentTmp.size(); p++) {
-					count = 0;
-					// Kiểm tra một dòng.
+					int count = 0;
+
 					for (int i = 0; i < numTransactions; i++) {
-						// Kiểm tra A có phải là con của B?
-						for (int k = 0; k < columsXet; k++) {
+						boolean allFound = true;
+
+						for (int k = 0; k < colums; k++) {
+							boolean found = false;
 							for (int j = 1; j < maxSize; j++) {
-								if (frequentItemSet[rowXet][k].equals(data[i][j])) {
-									dem++;
+								if (frequentItemSet[rows - 1][k].equals(data[i][j])) {
+									found = true;
 									break;
 								}
 							}
-
-						}
-						// kiểm tra phần tử mới đã tồn tại chưa
-						for (int j = 1; j < maxSize; j++)
-							if (frequentTmp.get(p).equals(data[i][j])) {
-								dem++;
+							if (!found) {
+								allFound = false;
 								break;
 							}
-						if (dem == columsXet + 1)
-							count++;
-						dem = 0;
+						}
+
+						if (allFound) {
+							for (int j = 1; j < maxSize; j++) {
+								if (frequentTmp.get(p).equals(data[i][j])) {
+									count++;
+									break;
+								}
+							}
+						}
 					}
-					// Kiểm tra mức độ phổ biến
-					if (count > 2 || count == 2) {
-						for (int i = 0; i < columsXet + 1; i++) {
-							if (i == columsXet) {
-								frequentItemSet[rows][i] = frequentTmp.get(p);
-								break;
-							}
-							frequentItemSet[rows][i] = frequentItemSet[rowXet][i];
-						}
-						Location[rows] = count;
-						rows++;
-						columsXet++;
-						rowXet = rows - 1;
-					} else
-						break;
-				}
-				rowXet = rowXet1;
-				columsXet = 1;
-			}
-			rowXet1++;
-			rowXet = rowXet1;
-			columsXet = 1;
-			// xảy ra lỗi!
-			frequentTmp.remove(0);
-//			if(frequentTmp.size() == 1)
-			if (frequentTmp.size() == 0)
-				cons = false;
-		}
 
+					if (count >= 2 && frequentTmp.get(p) != null) {
+					    if (rows < frequentItemSet.length) {
+					        for (int i = 0; i < colums + 1; i++) {
+					            frequentItemSet[rows][i] = (i == colums) ? frequentTmp.get(p) : frequentItemSet[rows - 1][i];
+					        }
+					        Location[rows] = count;
+					        rows++;
+					        newFrequentTmp.add(frequentTmp.get(p));
+					    } else {
+					        // Xử lý trường hợp giới hạn của mảng đã vượt quá
+					        // Có thể tạo một mảng mới hoặc thay đổi kích thước của mảng hiện tại tùy thuộc vào nhu cầu của bạn.
+					    }
+					}
+
+
+				}
+			}
+
+			frequentTmp = newFrequentTmp;
+			colums++;
+		}
+		
+		for( String[] x:frequentItemSet)
+		{
+			 System.out.println(x[0]);
+		}
+		System.out.println("k");
+		
 	}
 
 	// ok
-	// Tìm luận xác định
-	public static void foundLawDetermination(String data[][], String frequentItemSet[][], String itemHistory[],
-			List<String> finaly, int location[]) {
-		int countCheck = 0;
-		int countCheck1 = 0;
-		boolean check = false;
-		for (int i = 0; i < 100; i++) {
-			countCheck = 0;
-			countCheck1 = 0;
-			check = false;
-			for (int j = 0; j < 100; j++) {
-				if (frequentItemSet[i][j] != null)
-					countCheck++;
-				for (int k = 0; k < sizeCustomer; k++) {
-					if (itemHistory[k].equals(frequentItemSet[i][j])) {
-						countCheck1++;
-						break;
-					}
-				}
-			}
-			if (countCheck == countCheck1) {
-				check = true;
-			}
-			if (countCheck1 == 0)
-				continue;
-			if (!check) {
-				// System.out.println(i);
-				int checkConfidence = 0;
-				String tmp[] = new String[100];
-				String notConfidence[] = new String[100];
-				int index = 0;
-				int indexNotConfidence = 0;
-				// Tao ra 2 mang x va y: X là mảng chứa các vật phẩm đã mua, y là các vật phẩm
-				// không mua.
-				for (int j = 0; j < 100; j++) {
-					checkConfidence = 0;
-					if (frequentItemSet[i][j] == null)
-						break;
-					for (int k = 0; k < sizeCustomer; k++) {
-						if (itemHistory[k].equals(frequentItemSet[i][j])) {
-							tmp[index] = itemHistory[k];
-							index++;
-							checkConfidence = 1;
-							break;
-						}
-					}
-					if (checkConfidence == 0) {
-						notConfidence[indexNotConfidence] = frequentItemSet[i][j];
-						indexNotConfidence++;
-					}
-				}
-				// System.out.println(indexNotConfidence);
-				// Tim luật kết hợp của một dòng dữ liệu
-//				System.out.println(index);
-				if (checkElement(data, index, tmp, location[i]) == 1)
-					for (int j = 0; j < indexNotConfidence; j++) {
-						// System.out.println(notConfidence[j]);
-						if (CheckFrequent(finaly, notConfidence[j]) == 0)
-							finaly.add(notConfidence[j]);
-					}
-			}
-		}
+	public List<String> foundLawDetermination(String data[][], String frequentItemSet[][], String itemHistory[], double minConfidence) {
+	    Set<String> finaly = new HashSet<>();
+
+	    for (int i = 0; i < frequentItemSet.length; i++) {
+	        for (int j = 0; j < frequentItemSet[i].length && frequentItemSet[i][j] != null; j++) {
+	            // Tìm tất cả các luật kết hợp với frequentItemSet[i][j] như là "X" (antecedent)
+	            String antecedent = frequentItemSet[i][j];
+	            
+	            for (int k = 0; k < frequentItemSet[i].length; k++) {
+	                if (k != j && frequentItemSet[k][j] != null) {
+	                    String consequent = frequentItemSet[k][j];
+	                    
+	                    double supportAntecedent = calculateSupport(antecedent, itemHistory);
+	                    double supportConsequent = calculateSupport(consequent, itemHistory);
+	                    double supportBoth = calculateSupportForBoth(antecedent, consequent, itemHistory);
+
+	                    double confidence = supportBoth / supportAntecedent;
+
+	                    if (confidence >= minConfidence) {
+	                        String rule = antecedent + " -> " + consequent + " (Confidence: " + confidence + ")";
+	                       
+	                        finaly.add(consequent);
+	                    }
+	                }
+	            }
+	        }
+	    }
+	    
+	    
+	    return new ArrayList<>(finaly);
+	}
+
+	public static double calculateSupport(String item, String itemHistory[]) {
+	    int count = 0;
+	    for (String historyItem : itemHistory) {
+	        if (historyItem != null && historyItem.equals(item)) {
+	            count++;
+	        }
+	    }
+	    return (double) count / itemHistory.length;
+	}
+
+	public static double calculateSupportForBoth(String antecedent, String consequent, String itemHistory[]) {
+	    int count = 0;
+	    boolean foundAntecedent = false;
+	    for (String historyItem : itemHistory) {
+	        if (historyItem != null) {
+	            if (historyItem.equals(antecedent)) {
+	                foundAntecedent = true;
+	            } else if (foundAntecedent && historyItem.equals(consequent)) {
+	                count++;
+	            }
+	        }
+	    }
+	    return (double) count / itemHistory.length;
 	}
 
 	// Tính confidence
@@ -471,7 +455,7 @@ public class Apriori {
 		String tmp;
 		int i, j;
 		boolean swapped;
-		if(sizeCustomer == 0)
+		if (sizeCustomer == 0)
 			return;
 		for (i = 0; i < sizeCustomer - 1; i++) {
 			swapped = false;
