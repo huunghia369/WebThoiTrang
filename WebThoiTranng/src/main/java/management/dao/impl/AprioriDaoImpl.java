@@ -32,7 +32,7 @@ public class AprioriDaoImpl implements IAprioriDao {
 	public List<Mathang> getLayDSSPDAMUA(int makh) {
 		Session session = sessionFactory.openSession();
 		List<Mathang> list = null;
-		String hql = "SELECT DISTINCT  ctpd.ctsize.mathang FROM Ctpd ctpd WHERE ctpd.phieudat.khachhang.makh = :customerId";
+		String hql = "SELECT   ctpd.ctsize.mathang FROM Ctpd ctpd WHERE ctpd.phieudat.khachhang.makh = :customerId";
 		Query query = session.createQuery(hql);
 		 query.setParameter("customerId", makh);
 

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import management.dao.ITaiKhoanDAO;
+import management.entity.Khachhang;
 import management.entity.Nhanvien;
 import management.entity.Quyen;
 import management.entity.Taikhoan;
@@ -124,6 +125,24 @@ public class TaiKhoanImpl implements ITaiKhoanDAO{
 			session.close();
 		}
 		return maquyen;
+	}
+
+
+
+	@Override
+	public Khachhang get_khachHang_byEmail(String email) {
+		Khachhang khachhang = new Khachhang();
+		Session s = sessionFactory.openSession();
+		String hql = "from Khachhang kh  where kh.taikhoan.email = :email";
+		Query query = s.createQuery(hql);
+		try {
+			query.setParameter("email", email);
+			
+			khachhang = (Khachhang) query.uniqueResult();
+		} finally {
+			s.close();
+		}
+		return khachhang;
 	}
 	
 	

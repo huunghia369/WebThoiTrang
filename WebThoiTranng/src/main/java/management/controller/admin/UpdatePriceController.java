@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,10 +23,12 @@ import org.springframework.web.servlet.ModelAndView;
 import management.bean.ProductWithDiscount;
 import management.dao.IDanhMucDao;
 import management.dao.IMatHangDao;
+import management.dao.ITaiKhoanDAO;
 import management.entity.Banggia;
 import management.entity.BanggiaId;
 import management.entity.Loaimh;
 import management.entity.Mathang;
+import management.entity.Nhanvien;
 
 @Controller
 @RequestMapping("/admin/update/")
@@ -34,6 +39,8 @@ public class UpdatePriceController {
 	IMatHangDao matHangDao;
 	@Autowired
 	IDanhMucDao danhMucDao;
+	@Autowired 
+	ITaiKhoanDAO taiKhoanDAO;
 	
 	
 	
@@ -74,40 +81,60 @@ public class UpdatePriceController {
 	}
 	
 	@PostMapping("{priceType}/successful")
-    public ModelAndView updateSuccessful(@RequestParam(name = "productID",  required = false) String[] productIDs,
+    public ModelAndView updateSuccessful(HttpServletRequest request,
+    		@RequestParam(name = "productID",  required = false) String[] productIDs,
     									 @PathVariable(required = false) String priceType,
     									 @RequestParam(name = "productList", required = false) String[] productoOfCate,
                                          @RequestParam(name = "newPrice",required = false) Integer  newPrice,
                                          @RequestParam(name= "newPriceList",required = false) Integer  newPriceList ) {
         
 		 Date currentDate = new Date();
-		 
+		 ModelAndView modelAndView = new ModelAndView("admin/updatePrice");
+		HttpSession session = request.getSession();
+		String userEmail = (String) session.getAttribute("loggedInUserEmail");
+		System.out.println("email:"+userEmail);
+		Nhanvien nv=taiKhoanDAO.getNhanVien_byEmail(userEmail);
 		
-		 
-		 if(priceType.equals("price"))
-		 {
-			
-			 extracted(currentDate, productIDs, newPrice);
-		 }
-		 else if(priceType.equals("pricelist")) {
-			extracted(productoOfCate, newPriceList, currentDate);
-		 }
-		 
-       
-       
-        
-        ModelAndView modelAndView = new ModelAndView("admin/updatePrice");
+		String tbCOLOR="alert alert-danger";
+		String tb="Vui lòng đang nhập vào hệ thống";
+	    String tbCOLOR1="alert alert-success";
+	    String tb1="CẬP NHẬT THÀNH CÔNG";
+	    
         modelAndView.addObject("listProduct", listPro());
         modelAndView.addObject("listCategory", listCategory());
-        String tbCOLOR="alert alert-success";
-        String tb="CẬP NHẬT THÀNH CÔNG";
-        modelAndView.addObject("tbC", tbCOLOR);
-        modelAndView.addObject("tb", tb);
+		if(nv!=null) {
+			Integer manv=nv.getManv();
+			 if(priceType.equals("price"))
+			 {
+				
+				 extracted(currentDate, productIDs, newPrice,manv);
+				 	modelAndView.addObject("tbC", tbCOLOR1);
+			        modelAndView.addObject("tb", tb1);
+			 }
+			 else if(priceType.equals("pricelist")) {
+				extracted(productoOfCate, newPriceList, currentDate,manv);
+				 modelAndView.addObject("tbC", tbCOLOR1);
+			     modelAndView.addObject("tb", tb1);
+			 }
+			  return modelAndView;
+		}
+		
+		 
+		 modelAndView.addObject("tbC", tbCOLOR);
+	     modelAndView.addObject("tb", tb);
+		
+       
+		  return modelAndView;
+        
+       
+      
+        
+       
 
-        return modelAndView;
+      
     }
 
-	private void extracted(String[] productoOfCate, int newPriceList, Date currentDate) {
+	private void extracted(String[] productoOfCate, int newPriceList, Date currentDate,int manv) {
 		for(String idCategory:productoOfCate)
 		{
 			List<Mathang> listP = matHangDao.getProductOfCategory(idCategory);
@@ -117,7 +144,7 @@ public class UpdatePriceController {
 		            BanggiaId tbpi= new BanggiaId();
 		            
 		            tbpi.setMamh(product.getMamh());
-		            tbpi.setManv(2);
+		            tbpi.setManv(manv);
 		            tbpi.setNgayapdung(currentDate);
 		            
 		            tbp.setId(tbpi);
@@ -129,14 +156,14 @@ public class UpdatePriceController {
 		}
 	}
 
-	private void extracted(Date currentDate, String[] listUpdate, int price) {
+	private void extracted(Date currentDate, String[] listUpdate, int price,int manv) {
 		for (String productID : listUpdate) {
         	
         	Banggia tbp= new Banggia();
             BanggiaId tbpi= new BanggiaId();
             
             tbpi.setMamh(Integer.parseInt(productID));
-            tbpi.setManv(2);
+            tbpi.setManv(manv);
             tbpi.setNgayapdung(currentDate);
             
             tbp.setId(tbpi);
