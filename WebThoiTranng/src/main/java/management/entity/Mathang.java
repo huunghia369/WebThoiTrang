@@ -1,6 +1,6 @@
 package management.entity;
 // Generated Dec 14, 2022, 9:49:56 PM by Hibernate Tools 4.3.5.Final
-
+ 
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -33,7 +33,7 @@ public class Mathang implements java.io.Serializable {
 	private String mota;
 	private int trangthai;
 	private String nhan;
-	
+	private String cachlam;
 	
 	
 	private Set<Hinhanhmh> hinhanhmhs = new HashSet<Hinhanhmh>(0);
@@ -135,12 +135,21 @@ public class Mathang implements java.io.Serializable {
 	}
 	
 	
+	@Column(name = "CACHLAM", nullable = true)
+	public String getCachlam() {
+		return cachlam;
+	}
+
+	public void setCachlam(String cachlam) {
+		this.cachlam = cachlam;
+	}
+
+	
+	
 	@Column(name = "MOTA", nullable = true, columnDefinition = "nvarchar(3000)")
 	public String getMota() {
 		return this.mota;
 	}
-
-	
 
 	public void setMota(String mota) {
 		this.mota = mota;
