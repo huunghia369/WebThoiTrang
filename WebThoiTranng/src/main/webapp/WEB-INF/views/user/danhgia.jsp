@@ -64,7 +64,7 @@
 																<p class="infoSP">
 																	<strong>Mã SP:</strong> ${donhang.id.mamh}
 																</p>
-																<div class="rating"">
+																<div class="rating">
 																	<span
 																		class="star ${donhang.danhgia >= 1 ? 'star-rated' : ''}"
 																		data-mamh="${donhang.id.mamh}" data-danhgia="1">&#9733;</span>
@@ -125,7 +125,7 @@
 																<p class="infoSP">
 																	<strong>Mã SP:</strong> ${donhang.id.mamh}
 																</p>
-																<div class="rating"">
+																<div class="rating">
 																	<span
 																		class="star ${donhang.danhgia >= 1 ? 'star-rated' : ''}"
 																		data-mamh="${donhang.id.mamh}" data-danhgia="1">&#9733;</span>

@@ -57,7 +57,7 @@
 																		<div class="promotion-icon">
 																			<div class="diagonal-rectangle">
 																				<div class="promotion-text">
-																					<fmt:formatNumber value="${khuyenmai * 100}"
+																					<fmt:formatNumber value="${khuyenmai}"
 																						pattern="#'%'" />
 																				</div>
 																			</div>
@@ -88,12 +88,12 @@
 																		</span>
 																	</c:if>
 																	<fmt:formatNumber
-																		value="${donhang.tonggia - (donhang.tonggia * khuyenmai)}"
+																		value="${donhang.tonggia - (donhang.tonggia * khuyenmai)/100}"
 																		pattern="#,##0 đ" />
 																</p>
 																<%-- Tính tổng giá của sản phẩm và cộng vào tổng giá của phiếu đặt --%>
 																<c:set var="phieuDatTotalPrice"
-																	value="${phieuDatTotalPrice + (donhang.tonggia - (donhang.tonggia * khuyenmai))}" />
+																	value="${phieuDatTotalPrice + (donhang.tonggia - (donhang.tonggia * khuyenmai)/100)}" />
 
 																<div class="modal fade"
 																	id="modal-${donhangInfo.phieudat.mapd}">
@@ -219,7 +219,7 @@
 																															<div class="diagonal-rectangle">
 																																<div class="promotion-text">
 																																	<fmt:formatNumber
-																																		value="${khuyenmai * 100}"
+																																		value="${khuyenmai}"
 																																		pattern="#'%'" />
 																																</div>
 																															</div>
@@ -254,13 +254,13 @@
 																														</span>
 																													</c:if>
 																													<fmt:formatNumber
-																														value="${donhang.tonggia - (donhang.tonggia * khuyenmai)}"
+																														value="${donhang.tonggia - (donhang.tonggia * khuyenmai)/100}"
 																														pattern="#,##0 đ" />
 																												</p>
 																												<c:set var="phieuDatTotalPrice"
-																													value="${phieuDatTotalPrice + (donhang.tonggia - (donhang.tonggia * khuyenmai))}" />
+																													value="${phieuDatTotalPrice + (donhang.tonggia - (donhang.tonggia * khuyenmai)/100)}" />
 																												<c:set var="khuyenmaiTotalPrice"
-																													value="${khuyenmaiTotalPrice + (donhang.tonggia * khuyenmai)}" />
+																													value="${khuyenmaiTotalPrice + (donhang.tonggia * khuyenmai)/100}" />
 																											</div>
 																										</c:forEach>
 																									</div>
