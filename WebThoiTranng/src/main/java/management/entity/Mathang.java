@@ -165,7 +165,7 @@ public class Mathang implements java.io.Serializable {
 	}
 
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mathang")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mathang")
 	public Set<Hinhanhmh> getHinhanhmhs() {
 		return this.hinhanhmhs;
 	}
