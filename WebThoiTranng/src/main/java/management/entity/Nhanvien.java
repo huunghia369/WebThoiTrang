@@ -49,7 +49,7 @@ public class Nhanvien implements java.io.Serializable {
     @JoinColumn(name = "EMAIL", referencedColumnName = "EMAIL", nullable = false)
     private Taikhoan taikhoan;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "nhanvien")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "nhanvien")
     private Set<Hoadon> cthds = new HashSet<Hoadon>(0);
    
 

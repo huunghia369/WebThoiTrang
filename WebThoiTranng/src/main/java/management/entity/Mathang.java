@@ -165,7 +165,7 @@ public class Mathang implements java.io.Serializable {
 	}
 
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mathang")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mathang")
 	public Set<Hinhanhmh> getHinhanhmhs() {
 		return this.hinhanhmhs;
 	}
@@ -174,7 +174,7 @@ public class Mathang implements java.io.Serializable {
 		this.hinhanhmhs = hinhanhmhs;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mathang")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mathang")
 	public Set<Banggia> getBanggias() {
 		return this.banggias;
 	}
@@ -198,7 +198,7 @@ public class Mathang implements java.io.Serializable {
 
   
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mathang")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mathang")
 	public Set<Ctdkm> getCtdkms() {
 		return this.ctdkms;
 	}
@@ -211,7 +211,7 @@ public class Mathang implements java.io.Serializable {
 
 	
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "mathang")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mathang")
 	public Set<Danhgia> getDanhgias() {
 		return this.danhgias;
 	}

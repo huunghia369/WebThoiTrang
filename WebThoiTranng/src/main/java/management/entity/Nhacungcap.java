@@ -97,7 +97,7 @@ public class Nhacungcap implements java.io.Serializable {
 		this.sdt = sdt;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "nhacungcap")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nhacungcap")
 	public Set<Phieunhap> getphieunhaps() {
 		return this.phieunhaps;
 	}

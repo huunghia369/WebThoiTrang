@@ -225,6 +225,7 @@ public class NhapHangDaoImpl implements INhapHangDao {
             }
             transaction.commit();
         } catch (Exception e) {
+        	System.out.println("ở đây");
             e.printStackTrace();
             transaction.rollback();
         }finally {

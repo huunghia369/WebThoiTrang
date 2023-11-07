@@ -84,7 +84,7 @@ public class Phieunhap implements java.io.Serializable {
 		this.ngaynhap = ngaynhap;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "phieunhap")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "phieunhap")
 	public Set<Ctpn> getCtpns() {
 		return this.ctpns;
 	}

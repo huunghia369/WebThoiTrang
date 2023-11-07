@@ -51,7 +51,7 @@ public class Khachhang implements java.io.Serializable {
     @Column(name = "SDT", unique = true, nullable = true, length = 15)
     private String sdt;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "khachhang")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "khachhang")
     private Set<Phieudat> phieudats = new HashSet<Phieudat>(0);
 
     @OneToOne(fetch = FetchType.EAGER)

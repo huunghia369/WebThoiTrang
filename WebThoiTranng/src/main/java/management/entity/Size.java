@@ -57,7 +57,7 @@ public class Size implements java.io.Serializable {
 	public void setTensize(String tensize) {
 		this.tensize = tensize;
 	}
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "size")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "size")
 	public Set<Ctsize> getCtsizes() {
 		return this.ctsizes;
 	}

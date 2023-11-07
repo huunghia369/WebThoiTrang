@@ -80,7 +80,7 @@ public class ChiTietSPController {
 
 			// run the Unix "ps -ef" command
 			// using the Runtime exec method:
-			String cmd = "python D:\\WebThoiTrang\\WebThoiTranng\\src\\main\\java\\python\\test.py " + maMH;
+			String cmd = "python D:\\HK7\\PhatTrienHeThongThongMinh\\WebThoiTrang_final\\WebThoiTranng\\src\\main\\java\\python\\test.py " + maMH;
 			Process p = Runtime.getRuntime().exec(cmd);
 
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
