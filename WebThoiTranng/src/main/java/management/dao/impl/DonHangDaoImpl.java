@@ -1,6 +1,7 @@
 package management.dao.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import management.dao.IDonHangDao;
-
+import management.entity.Ctpd;
 import management.entity.Mathang;
 import management.entity.Size;
 
@@ -86,5 +87,27 @@ public class DonHangDaoImpl implements IDonHangDao {
 		}finally {
 			session.close();
 		}
+	}
+
+	@Override
+	public List<Ctpd> layDSSPCuaPD(int mapd) {
+		
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			String hql = "FROM Ctpd where id.mapd = :mapd";
+			Query query = session.createQuery(hql);
+			query.setParameter("mapd", mapd);
+			List<Ctpd> dssp = (List<Ctpd>) query.list();
+			transaction.commit();
+			return dssp;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			session.close();
+		}
+		
 	}
 }
