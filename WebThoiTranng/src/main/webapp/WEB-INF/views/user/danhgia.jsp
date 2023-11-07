@@ -306,7 +306,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     // Lấy ngày đặt hàng từ donhangInfo
-    const ngayDatString = '${donhangInfo.phieudat.ngaydat}';
+    const ngayDatString = '${phieudat.ngaydat}';
 
     // Chuyển đổi ngày đặt từ chuỗi datetime thành đối tượng Date
     const ngayDat = new Date(ngayDatString);
