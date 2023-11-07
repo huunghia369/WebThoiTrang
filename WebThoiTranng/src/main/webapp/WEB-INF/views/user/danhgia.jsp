@@ -64,18 +64,23 @@
 																<p class="infoSP">
 																	<strong>Mã SP:</strong> ${donhang.id.mamh}
 																</p>
-																<div class="rating" data-mamh="${donhang.id.mamh}">
+																<div class="rating"">
 																	<span
 																		class="star ${donhang.danhgia >= 1 ? 'star-rated' : ''}"
-																		data-danhgia="1">&#9733;</span> <span
+																		data-mamh="${donhang.id.mamh}" data-danhgia="1">&#9733;</span>
+																	<span
 																		class="star ${donhang.danhgia >= 2 ? 'star-rated' : ''}"
-																		data-danhgia="2">&#9733;</span> <span
+																		data-mamh="${donhang.id.mamh}" data-danhgia="2">&#9733;</span>
+																	<span
 																		class="star ${donhang.danhgia >= 3 ? 'star-rated' : ''}"
-																		data-danhgia="3">&#9733;</span> <span
+																		data-mamh="${donhang.id.mamh}" data-danhgia="3">&#9733;</span>
+																	<span
 																		class="star ${donhang.danhgia >= 4 ? 'star-rated' : ''}"
-																		data-danhgia="4">&#9733;</span> <span
+																		data-mamh="${donhang.id.mamh}" data-danhgia="4">&#9733;</span>
+																	<span
 																		class="star ${donhang.danhgia >= 5 ? 'star-rated' : ''}"
-																		data-danhgia="5">&#9733;</span> <span
+																		data-mamh="${donhang.id.mamh}" data-danhgia="5">&#9733;</span>
+																	<span
 																		class="rating-text 
     <c:choose>
         <c:when test="${donhang.danhgia == 5}">ratetext-5</c:when>
@@ -303,10 +308,10 @@
 	    return null;
 	}
 </script>
-<script>
+	<script>
 document.addEventListener('DOMContentLoaded', function () {
     // Lấy ngày đặt hàng từ donhangInfo
-    const ngayDatString = '${donhangInfo.phieudat.ngaydat}';
+    const ngayDatString = '${phieudat.ngaydat}';
 
     // Chuyển đổi ngày đặt từ chuỗi datetime thành đối tượng Date
     const ngayDat = new Date(ngayDatString);

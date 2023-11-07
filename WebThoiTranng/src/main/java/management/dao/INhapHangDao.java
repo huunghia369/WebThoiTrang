@@ -58,7 +58,7 @@ public interface INhapHangDao{
 	
 	public String layTenChatLieu(int macl) ;
 	
-	
+	public Nhanvien layNhanVien(String email) ;
 
 	
 }

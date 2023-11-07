@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.valves.rewrite.InternalRewriteMap.UpperCase;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -80,8 +82,9 @@ public class ChiTietSPController {
 
 			// run the Unix "ps -ef" command
 			// using the Runtime exec method:
-			String cmd = "python D:\\HK7\\PhatTrienHeThongThongMinh\\WebThoiTrang_final\\WebThoiTranng\\src\\main\\java\\python\\test.py "
-					+ maMH;
+
+			String cmd = "python D:\\WebThoiTrang\\WebThoiTranng\\src\\main\\java\\python\\test.py " + maMH;
+
 			Process p = Runtime.getRuntime().exec(cmd);
 
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -298,6 +301,48 @@ public class ChiTietSPController {
 		return mav;
 	}
 
+	@GetMapping("mua-lai/{mapd}")
+	public ModelAndView muaLai(@PathVariable("mapd") int mapd) {
+		
+		ModelAndView mav = new ModelAndView("/user/thanhToan");
+		try {
+			
+			List<Ctpd> ctpds = donHangDao.layDSSPCuaPD(mapd);			
+			
+			int soLuongSP = 0;
+			int tongTien = 0;
+			List<ThanhToanDto> DSSP = new ArrayList<ThanhToanDto>();
+			
+			for(Ctpd ctpd: ctpds) {
+
+//				System.out.println(ctpd);
+				
+				ThanhToanDto sp = new ThanhToanDto();
+				sp.setCtSize(ctpd.getCtsize());
+				sp.setDonGia(donHangDao.LayGiaSP(ctpd.getId().getMamh()));
+				sp.setDonGiaKM(0);
+				sp.setSoLuong(ctpd.getSoluong());
+
+				DSSP.add(sp);
+				soLuongSP += ctpd.getSoluong();
+				tongTien += ctpd.getSoluong() * donHangDao.LayGiaSP(ctpd.getId().getMamh());
+			}
+
+			ObjectMapper o = new ObjectMapper();
+			String dsspJson = o.writeValueAsString(DSSP);
+			dsspJson = URLEncoder.encode(dsspJson, "UTF-8");
+
+			mav.addObject("dssp", DSSP);
+			mav.addObject("dsspJson", dsspJson);
+			mav.addObject("tongTien", tongTien);
+			mav.addObject("soLuongSP", soLuongSP);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	
 	@PostMapping("/thanhToan")
 	public ModelAndView thanhToan(@RequestParam("dsspJson") String dsspJson, @RequestParam("hoTen") String hoTen,
 			@RequestParam("sdt") String sdt, @RequestParam("tongTien") int tongTien, HttpServletRequest request,
@@ -384,7 +429,9 @@ public class ChiTietSPController {
 
 	@GetMapping("/tmp")
 	public ModelAndView tmp() {
-		apriori.Apriori(2);
+		
+		String tmp = "Xuân Thịnh";
+		System.out.println(tmp.contains("uân"));
 		return new ModelAndView("/user/home");
 	}
 }

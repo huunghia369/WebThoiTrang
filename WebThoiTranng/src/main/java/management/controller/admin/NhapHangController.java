@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,7 +107,8 @@ public class NhapHangController {
 	}
 
 	@PostMapping("/them-pn")
-	public ModelAndView themPN(@RequestBody List<SPNhapDto> dsSPNhap, @RequestParam("ncc") int maNCC) {
+	public ModelAndView themPN(@RequestBody List<SPNhapDto> dsSPNhap, @RequestParam("ncc") int maNCC,
+			HttpServletRequest request) {
 
 		System.out.println("Ma ncc: " + maNCC);
 
@@ -113,9 +116,12 @@ public class NhapHangController {
 
 		Phieunhap pn = new Phieunhap();
 
+		HttpSession session = request.getSession();
+		String userEmail = (String) session.getAttribute("loggedInUserEmail");
+		
 		pn.setNgaynhap(ngayHienTai);
 		pn.setNhacungcap(nhapHangDao.layNCC(maNCC));
-		pn.setNhanvien(nhapHangDao.layNhanVien(1));// Còn chưa hoàn thiện
+		pn.setNhanvien(nhapHangDao.layNhanVien(userEmail));
 		nhapHangDao.themPhieuNhap(pn);
 
 		List<Ctpn> ctpns = new ArrayList<Ctpn>();

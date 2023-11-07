@@ -115,27 +115,34 @@ public class HomeController {
 		List<ProductWithDiscount>list_P_smarts=new ArrayList<>();
 		
 		System.out.println("email:"+userEmail);
-		/*
-		 * try { if (userEmail != null) { int makh =
-		 * taiKhoanDAO.get_khachHang_byEmail(userEmail).getMakh();
-		 * System.out.println("mamkh:"+makh);
-		 * 
-		 * listmhdanhgia = apriori.Apriori(makh);// 1 là ma kh for (Mathang mh :
-		 * listmhdanhgia) {
-		 * 
-		 * ProductWithDiscount tmp = new ProductWithDiscount(); tmp.setMucgiamgia((int)
-		 * matHangDao.getDiscount_Product(mh));
-		 * 
-		 * tmp.setMathang(mh); tmp.setGia(matHangDao.getPrice_Product(mh));
-		 * list_P_smarts.add(tmp); } }
-		 * 
-		 * 
-		 * 
-		 * model.addAttribute("listProductSmart", list_P_smarts); return modelAndView; }
-		 * catch (Exception e) {
-		 * 
-		 * e.printStackTrace(); }
-		 */
+
+		
+		try {
+			if (userEmail != null) {
+				int makh = taiKhoanDAO.get_khachHang_byEmail(userEmail).getMakh();
+				System.out.println("mamkh:"+makh);
+				
+				listmhdanhgia = apriori.Apriori(makh);// 1 là ma kh
+				for (Mathang mh : listmhdanhgia) {
+
+					ProductWithDiscount tmp = new ProductWithDiscount();
+					tmp.setMucgiamgia((int) matHangDao.getDiscount_Product(mh));
+
+					tmp.setMathang(mh);
+					tmp.setGia(matHangDao.getPrice_Product(mh));
+					list_P_smarts.add(tmp);
+				}
+			}
+			
+			
+			
+			model.addAttribute("listProductSmart", list_P_smarts);
+			return modelAndView;
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}	
+
 		
 		/*
 		 * String listMHStr = getRecommendation(1 + ""); String tmp = listMHStr; tmp =

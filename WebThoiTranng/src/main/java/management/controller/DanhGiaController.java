@@ -97,7 +97,7 @@ public class DanhGiaController {
 			for (DanhGiaDto danhgia : danhGiaData) {
 				int mamh = danhgia.getMamh();
 				int danhgiaValue = danhgia.getDanhgia();
-				String listRating = makh + "," + mamh + "," + danhgia + "," + timeStamp;
+				String listRating = makh + "," + mamh + "," + danhgiaValue + "," + timeStamp;
 				
 				// Kiểm tra xem sản phẩm đã được đánh giá chưa bằng cách truy vấn cơ sở dữ liệu
 				boolean isProductRated = lichSuDonHangDAO.isProductRated(mamh, userEmail);
@@ -129,7 +129,7 @@ public class DanhGiaController {
 			// run the Unix "ps -ef" command
 			// using the Runtime exec method:
 
-			String cmd = "python D:\\HK7\\PhatTrienHeThongThongMinh\\WebThoiTrang_final\\WebThoiTranng\\src\\main\\java\\python\\add-to-csv.py "
+			String cmd = "python D:\\GitHub\\WebThoiTrang\\WebThoiTranng\\src\\main\\java\\python\\add-to-csv.py "
 					+ red;
 			Process p = Runtime.getRuntime().exec(cmd);
 
