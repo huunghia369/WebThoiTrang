@@ -54,5 +54,11 @@ public interface INhapHangDao{
 	
 	public void themAnhMoi(Hinhanhmh anh) ;
 	
+	public String layTenNhanHieu(int manh) ;
+	
+	public String layTenChatLieu(int macl) ;
+	
+	public Nhanvien layNhanVien(String email) ;
+
 	
 }

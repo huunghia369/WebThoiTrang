@@ -55,7 +55,7 @@ public class Phieudat implements java.io.Serializable {
 	@OneToOne(mappedBy = "phieudat", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Hoadon hoadon;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "phieudat")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "phieudat")
 	private Set<Ctpd> ctpds = new HashSet<Ctpd>(0);
 
 	public Phieudat() {

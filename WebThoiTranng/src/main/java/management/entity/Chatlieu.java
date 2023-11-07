@@ -56,7 +56,7 @@ public class Chatlieu implements java.io.Serializable {
 		this.tenvai = tenvai;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "chatlieu")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "chatlieu")
 	public Set<Mathang> getMathangs() {
 		return this.mathangs;
 	}

@@ -184,6 +184,16 @@
 									</c:forEach>
 								</select>
 							</div>
+							
+							<div class="form-group">
+								<label for="cachLam">Cách làm: </label> <select id="cachLam"
+									name="cachLam" class="form-control" required>					
+										<option value="Machine Made">Machine Made</option>
+										<option value="Handmade">Handmade</option> 
+								</select>
+
+							</div>
+							
 							<div class="form-group">
 								<label for="moTa">Mô tả: </label> <input type="text"
 									class="form-control" id="moTa" name="moTa" required />
@@ -191,7 +201,7 @@
 							<div class="form-group">
 								<label for="themAnh">Hình ảnh: </label> <input type="file"
 									class="form-control" id="themAnh" name="themAnh" required
-									multiple accept=".jpg, .jpeg, .png" />
+									multiple accept=".jpg, .png" />
 							</div>
 						</div>
 						<div class="modal-footer">

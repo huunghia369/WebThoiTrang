@@ -1,11 +1,15 @@
-package management.controller;
+package management.controller.admin;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import management.DTO.SPNhapDto;
 import management.bean.ProductWithDiscount;
+import management.controller.ReadPython;
 import management.dao.IMatHangDao;
 import management.dao.INhapHangDao;
 
@@ -40,8 +45,9 @@ import management.entity.Phieunhap;
 import management.entity.Size;
 
 @Controller
+@Transactional
 @RequestMapping("/admin")
-public class AdminController {
+public class NhapHangController {
 
 	@Autowired
 	private INhapHangDao nhapHangDao;
@@ -49,6 +55,9 @@ public class AdminController {
 	@Autowired
 	private IMatHangDao matHangDao;
 
+	@Autowired
+	private ReadPython readPython;
+	
 	@GetMapping("/")
 	public ModelAndView showhome(ModelMap model) {
 		List<Mathang> listtmp = matHangDao.getMathangAndTotalSoluongTop(6);
@@ -98,7 +107,8 @@ public class AdminController {
 	}
 
 	@PostMapping("/them-pn")
-	public ModelAndView themPN(@RequestBody List<SPNhapDto> dsSPNhap, @RequestParam("ncc") int maNCC) {
+	public ModelAndView themPN(@RequestBody List<SPNhapDto> dsSPNhap, @RequestParam("ncc") int maNCC,
+			HttpServletRequest request) {
 
 		System.out.println("Ma ncc: " + maNCC);
 
@@ -106,9 +116,12 @@ public class AdminController {
 
 		Phieunhap pn = new Phieunhap();
 
+		HttpSession session = request.getSession();
+		String userEmail = (String) session.getAttribute("loggedInUserEmail");
+		
 		pn.setNgaynhap(ngayHienTai);
 		pn.setNhacungcap(nhapHangDao.layNCC(maNCC));
-		pn.setNhanvien(nhapHangDao.layNhanVien(1));// Còn chưa hoàn thiện
+		pn.setNhanvien(nhapHangDao.layNhanVien(userEmail));
 		nhapHangDao.themPhieuNhap(pn);
 
 		List<Ctpn> ctpns = new ArrayList<Ctpn>();
@@ -148,8 +161,8 @@ public class AdminController {
 	@PostMapping("them-sp-moi")
 	public ResponseEntity<String> themSPMoi(@RequestParam("tenSPMoi") String tenSPMoi,
 			@RequestParam("loaiSP") int maLSP, @RequestParam("nhanHieu") int maNH, @RequestParam("chatLieu") int maCL,
-			@RequestParam("moTa") String moTa) {
-		System.out.println(tenSPMoi);
+			@RequestParam("moTa") String moTa, @RequestParam("cachLam") String cachLam) throws IOException, InterruptedException {
+
 		Mathang mh = new Mathang();
 
 		Loaimh lmh = new Loaimh();
@@ -161,11 +174,22 @@ public class AdminController {
 		Chatlieu cl = new Chatlieu();
 		cl.setMacl(maCL);
 
+		String tenNH = nhapHangDao.layTenNhanHieu(maNH);
+		String tenCL = nhapHangDao.layTenChatLieu(maCL);
+
+		System.out.println(tenCL + " " + tenNH + " " + cachLam);
+		
+		String nhan = readPython.layNhanSP(nhanHieu_to_double(tenNH), chatLieu_to_double(tenCL), cachLam_to_double(cachLam));
+
+		System.out.println(tenCL + " " + tenNH + " " + cachLam+ " " + nhan);
+		
 		mh.setTenmh(tenSPMoi);
 		mh.setLoaimh(lmh);
 		mh.setNhanhieu(nh);
 		mh.setChatlieu(cl);
 		mh.setMota(moTa);
+		mh.setCachlam(cachLam);
+		mh.setNhan(nhan);
 
 		nhapHangDao.themSPMoi(mh);
 
@@ -195,25 +219,23 @@ public class AdminController {
 	}
 
 	@PostMapping("/them-anh-sp")
-	public ResponseEntity<String> themAnhMoi(@RequestParam("mamh") int mamh, 
-			@RequestParam("url") String url,@RequestParam("tenFile") String tenFile,
-			@RequestParam("token") String token) throws UnsupportedEncodingException {
+	public ResponseEntity<String> themAnhMoi(@RequestParam("mamh") int mamh, @RequestParam("url") String url,
+			@RequestParam("tenFile") String tenFile, @RequestParam("token") String token)
+			throws UnsupportedEncodingException {
 
 		Mathang mh = new Mathang();
 		mh.setMamh(mamh);
-		
+
 		String url_fb = "https://firebasestorage.googleapis.com/v0/b/webthoitrang-cfe5c.appspot.com/o/images%2Fproducts%2F";
-		url = url_fb +tenFile + "?alt=media&token="+ token;
-		
-		
-		
+		url = url_fb + tenFile + "?alt=media&token=" + token;
+
 		Hinhanhmh anh = new Hinhanhmh();
 		anh.setMathang(mh);
 		anh.setDuongdan(url);
-		
+
 		nhapHangDao.themAnhMoi(anh);
-		
-		return ResponseEntity.ok("Thành công thêm ảnh mới: "+url);
+
+		return ResponseEntity.ok("Thành công thêm ảnh mới: " + url);
 	}
 
 	@GetMapping("/tmp")
@@ -221,4 +243,72 @@ public class AdminController {
 		return new ModelAndView("/admin/tmp");
 	}
 
+	public double chatLieu_to_double(String tenChatLieu) {
+		Double Material = 0D;
+		switch (tenChatLieu) {
+
+		case "COTTON":
+			Material = 1D;
+			break;
+		case "KAKI":
+			Material = 2/3D;
+			break;
+		case "JEAN":
+			Material = 1/3D;
+			break;
+		
+		default:
+
+			break;
+		}
+
+		return Material;
+	}
+
+	public double nhanHieu_to_double(String tenNhanHieu) {
+
+		Double ProductBrand = 0D;
+
+		switch (tenNhanHieu) {
+
+		case "LOUIS VUITTON":
+			ProductBrand = 1D;
+			break;
+		case "GUCCI":
+			ProductBrand = 0.8D;
+			break;
+		case "HERMES":
+			ProductBrand = 0.6D;
+			break;
+		case "PRADA":
+			ProductBrand = 0.4D;
+			break;
+		case "CHANEL":
+			ProductBrand = 0.2D;
+			break;
+		default:
+
+			break;
+		}
+		return ProductBrand;
+	}
+
+	public double cachLam_to_double(String cachLam) {
+		Double ProductionWay = 0D;
+		switch (cachLam) {
+
+		case "Handmade":
+			ProductionWay = 1D;
+			break;
+		case "Machine Made":
+			ProductionWay = 0D;
+			break;
+		default:
+
+			break;
+		}
+
+		return ProductionWay;
+
+	}
 }

@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -38,6 +39,7 @@ public class ThanhToanImpl implements IThanhToanDAO {
 			query.setParameter("mamh", mamh);
 			query.setParameter("size", size);
 			Ctsize ctSize = (Ctsize) query.uniqueResult();
+			Hibernate.initialize(ctSize.getMathang().getHinhanhmhs());
 			System.out.println("Dao: " + ctSize.toString());
 			return ctSize;
 		} finally {

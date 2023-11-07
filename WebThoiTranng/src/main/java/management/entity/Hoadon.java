@@ -39,7 +39,7 @@ public class Hoadon implements java.io.Serializable {
     @Column(name = "NGAYIN", length = 10)
     private Date ngayin;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "hoadon")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hoadon")
     private Set<Cthd> cthds = new HashSet<Cthd>(0);
 
     public Hoadon() {

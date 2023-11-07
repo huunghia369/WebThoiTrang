@@ -27,7 +27,7 @@
 												data-toggle="modal"
 												data-target="#modal-${donhangInfo.phieudat.mapd}">
 												<!-- Hiển thị thông tin đơn hàng -->
-												<div>
+												<div class="infoPD">
 													<p>
 														<strong>Mã đơn hàng:</strong> ${donhangInfo.phieudat.mapd}
 													</p>
@@ -41,131 +41,257 @@
 												<c:set var="phieuDatTotalPrice" value="0" />
 												<div class="listSP">
 													<c:forEach var="donhang"
-														items="${donhangInfo.listDonhangForPhieuDat}">
-														<div class="SP" id="product-${donhang.mamh}">
-															<p class="infoSP">
-																<strong>Tên sản phẩm:</strong> ${donhang.tenSP}
-															</p>
-															<p class="infoSP">
-																<strong>Hình ảnh:</strong><div id="firebase-image-${donhang.mamh}-${donhangInfo.phieudat.mapd}-${donhang.size}-" ></div>
-																		 <script>displayFirebaseImage("${donhang.mamh}", "${donhangInfo.phieudat.mapd}","${donhang.size}","")</script>
-															</p>
-															<p class="infoSP">
-																<strong>Size:</strong> ${donhang.size}
-															</p>
-															<p class="infoSP">
-																<strong>Số lượng:</strong> ${donhang.soluong}
-															</p>
-															<c:set var="khuyenmai" value="${donhang.mucgiamgia}" />
-															<p class="priceSP">
-																<strong class="priceLabel">Giá bán:</strong>
+														items="${donhangInfo.listDonhangForPhieuDat}"
+														varStatus="loop">
+														<c:if test="${loop.index < 3}">
+															<div class="SP" id="product-${donhang.mamh}">
+																<c:set var="khuyenmai" value="${donhang.mucgiamgia}" />
 																<c:if test="${khuyenmai > 0}">
-																	<span
-																		style="text-decoration: line-through; color: red;">
-																		<fmt:formatNumber value="${donhang.tonggia}"
-																			pattern="#,##0 đ" />
-																	</span>
-																</c:if>
-																<fmt:formatNumber
-																	value="${donhang.tonggia - (donhang.tonggia * khuyenmai / 100)}"
-																	pattern="#,##0 đ" />
-															</p>
-															<%-- Tính tổng giá của sản phẩm và cộng vào tổng giá của phiếu đặt --%>
-															<c:set var="phieuDatTotalPrice"
-																value="${phieuDatTotalPrice + (donhang.tonggia - (donhang.tonggia * khuyenmai / 100))}" />
-
-															<div class="modal fade"
-																id="modal-${donhangInfo.phieudat.mapd}">
-																<div class="modal-dialog modal-lg">
-																	<div class="modal-content ">
-																		<div class="  modal-header "
-																			style="background: #2c83e0; color: white;">
-																			<h4 class="modal-title ">Thông Tin Đơn hàng</h4>
-																			<button type="button" class="close"
-																				data-dismiss="modal" aria-label="Close">
-																				<span aria-hidden="true">&times;</span>
-																			</button>
+																	<div class="image-container">
+																		<a
+																			href="http://localhost:8080/user/chi-tiet-sp/${donhang.mamh}"
+																			id="firebase-image-${donhang.mamh}-${donhangInfo.phieudat.mapd}-${donhang.size}-"></a>
+																		<script>
+                                                displayFirebaseImage("${donhang.mamh}", "${donhangInfo.phieudat.mapd}", "${donhang.size}", "")
+                                            </script>
+																		<div class="promotion-icon">
+																			<div class="diagonal-rectangle">
+																				<div class="promotion-text">
+																					<fmt:formatNumber value="${khuyenmai * 100}"
+																						pattern="#'%'" />
+																				</div>
+																			</div>
 																		</div>
-																		<div class="modal-body">
-																			<div class="container">
-																				<div class="row">
-																					<div class="col col-sm-6" style="margin-top: 35px;">
-																						<!-- Hiển thị thông tin đơn hàng -->
-																						<div class="order-info">
+																	</div>
+																</c:if>
+																<a
+																	href="http://localhost:8080/user/chi-tiet-sp/${donhang.mamh}"
+																	id="firebase-image-${donhang.mamh}-${donhangInfo.phieudat.mapd}-${donhang.size}-"></a>
+																<script>
+                                                displayFirebaseImage("${donhang.mamh}", "${donhangInfo.phieudat.mapd}", "${donhang.size}", "")
+                                            </script>
+																<p class="nameSP">${donhang.tenSP}</p>
+																<hr>
+																<p class="infoSP">
+																	<strong>Size:</strong> ${donhang.size}
+																</p>
+																<p class="infoSP">
+																	<strong>Số lượng:</strong> ${donhang.soluong}
+																</p>
+																<p class="priceSP">
+																	<strong class="priceLabel">Giá bán:</strong>
+																	<c:if test="${khuyenmai > 0}">
+																		<span
+																			style="text-decoration: line-through; color: red;">
+																			<fmt:formatNumber value="${donhang.tonggia}"
+																				pattern="#,##0 đ" />
+																		</span>
+																	</c:if>
+																	<fmt:formatNumber
+																		value="${donhang.tonggia - (donhang.tonggia * khuyenmai)}"
+																		pattern="#,##0 đ" />
+																</p>
+																<%-- Tính tổng giá của sản phẩm và cộng vào tổng giá của phiếu đặt --%>
+																<c:set var="phieuDatTotalPrice"
+																	value="${phieuDatTotalPrice + (donhang.tonggia - (donhang.tonggia * khuyenmai))}" />
+
+																<div class="modal fade"
+																	id="modal-${donhangInfo.phieudat.mapd}">
+																	<div class="modal-dialog modal-lg">
+																		<div class="modal-content">
+																			<div class="modal-header"
+																				style="background: #2c83e0; color: white;">
+																				<h3 class="modaltitle">Thông Tin Đơn hàng</h3>
+																				<button type="button" class="close"
+																					data-dismiss="modal" aria-label="Close">
+																					<span aria-hidden="true">&times;</span>
+																				</button>
+																			</div>
+																			<div class="modal-body">
+																				<div class="container">
+																					<div class="row">
+																						<div class="col col-sm-6">
 																							<p>
-																								<strong>Người nhận:</strong>
-																								${donhangInfo.phieudat.hotennguoinhan}
-																							</p>
-																							<p>
-																								<strong>Địa chỉ nhận hàng:</strong>
-																								${donhangInfo.phieudat.diachi}
-																							</p>
-																							<p>
-																								<strong>Ngày đặt:</strong>
-																								<fmt:formatDate
-																									value="${donhangInfo.phieudat.ngaydat}"
-																									pattern="dd-MM-yyyy" />
-																							</p>
-																						</div>
-																					</div>
-																					<div class="col col-sm-6">
-																						<form class="invoice-form" style="display: none;">
-																							<p>
-																								<strong>Mã đơn hàng:</strong>
+																								<strong>Mã đơn hàng: </strong>
 																								${donhangInfo.phieudat.mapd}
 																							</p>
-																							<%-- Thêm biến để tính tổng giá --%>
-																							<c:set var="phieuDatTotalPrice" value="0" />
-																							<div class="listSP">
-																								<c:forEach var="donhang"
-																									items="${donhangInfo.listDonhangForPhieuDat}" varStatus="loop">
-																									<div class="SP" id="product-${donhang.mamh}">
-																										<p class="infoSP">
-																											<strong>Tên sản phẩm:</strong>
-																											${donhang.tenSP}
-																										</p>
-																										<p class="infoSP">
-																											<strong>Hình ảnh:</strong><div id="firebase-image-${donhang.mamh}-${donhangInfo.phieudat.mapd}-${donhang.size}-${loop.index + 1}" ></div>
-																		 <script>displayFirebaseImage("${donhang.mamh}", "${donhangInfo.phieudat.mapd}","${donhang.size}","${loop.index + 1}")</script>
-																										</p>
-																										<p class="infoSP">
-																											<strong>Size:</strong> ${donhang.size}
-																										</p>
-																										<p class="infoSP">
-																											<strong>Số lượng:</strong> ${donhang.soluong}
-																										</p>
-																										<c:set var="khuyenmai"
-																											value="${donhang.mucgiamgia}" />
-																										<p class="priceSP">
-																											<strong class="priceLabel">Giá bán:</strong>
-																											<c:if test="${khuyenmai > 0}">
-																												<span
-																													style="text-decoration: line-through; color: red;">
-																													<fmt:formatNumber
-																														value="${donhang.tonggia}"
-																														pattern="#,##0 đ" />
-																												</span>
-																											</c:if>
-																											<fmt:formatNumber
-																												value="${donhang.tonggia - (donhang.tonggia * khuyenmai / 100)}"
-																												pattern="#,##0 đ" />
-																										</p>
-																										<%-- Tính tổng giá của sản phẩm và cộng vào tổng giá của phiếu đặt --%>
-																										<c:set var="phieuDatTotalPrice"
-																											value="${phieuDatTotalPrice + (donhang.tonggia - (donhang.tonggia * khuyenmai / 100))}" />
-																									</div>
-																								</c:forEach>
-																							</div>
-																							<!-- Hiển thị tổng giá của phiếu đặt -->
-																							<div class="donhang-summary">
+																							<!-- Hiển thị thông tin đơn hàng -->
+																							<div class="order-info">
 																								<p>
-																									<br> <strong style="font-weight: bold;">Tổng
-																										cộng:</strong>
+																									<strong>Người nhận:</strong>
+																									${donhangInfo.phieudat.hotennguoinhan}
+																								</p>
+																								<p>
+																									<strong>Địa chỉ nhận hàng:</strong>
+																									${donhangInfo.phieudat.diachi}
+																								</p>
+																								<p>
+																									<strong>SĐT:</strong>
+																									${donhangInfo.phieudat.sdt}
+																								</p>
+																							</div>
+																							<div class="order-info">
+																								<div class="timeline">
+																									<div class="timeline-item">
+																										<div class="timeline-marker">
+																											<i class="fa fa-clock-o"></i>
+																										</div>
+																										<div class="timeline-content">
+																											<p>
+																												<strong>Thời gian đặt hàng</strong><br>
+																												<fmt:formatDate
+																													value="${donhangInfo.phieudat.ngaydat}"
+																													pattern="dd-MM-yyyy HH:mm" />
+																											</p>
+																										</div>
+																									</div>
+																									<div class="timeline-item">
+																										<div class="timeline-marker">
+																											<i class="fa fa-truck"></i>
+																										</div>
+																										<div class="timeline-content">
+																											<p>
+																												<strong>Thời gian giao hàng</strong><br>
+																												<fmt:formatDate
+																													value="${donhangInfo.phieudat.ngaygiogiao}"
+																													pattern="dd-MM-yyyy HH:mm" />
+																											</p>
+																										</div>
+																									</div>
+																									<div class="timeline-item">
+																										<div class="timeline-marker">
+																											<i class="fa fa-check"></i>
+																										</div>
+																										<div class="timeline-content">
+																											<p>
+																												<strong>Thời gian thanh toán</strong><br>
+																												<fmt:formatDate
+																													value="${donhangInfo.phieudat.ngaydat}"
+																													pattern="dd-MM-yyyy HH:mm" />
+																											</p>
+																										</div>
+																									</div>
+																									<div class="timeline-item">
+																										<div class="timeline-marker">
+																											<i class="fa fa-check-circle"></i>
+																										</div>
+																										<div class="timeline-content">
+																											<p>
+																												<strong>Thời gian hoàn thành</strong><br>
+																												<fmt:formatDate
+																													value="${donhangInfo.phieudat.ngaygiogiao}"
+																													pattern="dd-MM-yyyy HH:mm" />
+																											</p>
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																							<div class="order-info">
+																								<p>
+																									<i class="fa fa-money" aria-hidden="true"></i><strong>
+																										Phương thức thanh toán</strong><br> Thanh toán khi
+																									nhận hàng
+																								</p>
+																							</div>
+																						</div>
+																						<div class="col col-sm-6"
+																							style="margin-top: 36px;">
+																							<div class="form-container">
+																								<form>
+																									<c:set var="phieuDatTotalPrice" value="0" />
+																									<c:set var="khuyenmaiTotalPrice" value="0" />
+																									<div class="listSP">
+																										<c:forEach var="donhang"
+																											items="${donhangInfo.listDonhangForPhieuDat}"
+																											varStatus="loop">
+																											<div class="SP" id="product-${donhang.mamh}">
+																												<c:set var="khuyenmai"
+																													value="${donhang.mucgiamgia}" />
+																												<c:if test="${khuyenmai > 0}">
+																													<div class="image-container">
+																														<a
+																															href="http://localhost:8080/user/chi-tiet-sp/${donhang.mamh}"
+																															id="firebase-image-${donhang.mamh}-${donhangInfo.phieudat.mapd}-${donhang.size}-${loop.index + 1}"></a>
+																														<script>
+                                                displayFirebaseImage("${donhang.mamh}", "${donhangInfo.phieudat.mapd}", "${donhang.size}", "${loop.index + 1}")
+                                            </script>
+																														<div class="promotion-icon">
+																															<div class="diagonal-rectangle">
+																																<div class="promotion-text">
+																																	<fmt:formatNumber
+																																		value="${khuyenmai * 100}"
+																																		pattern="#'%'" />
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																												</c:if>
+																												<a
+																													href="http://localhost:8080/user/chi-tiet-sp/${donhang.mamh}"
+																													id="firebase-image-${donhang.mamh}-${donhangInfo.phieudat.mapd}-${donhang.size}-${loop.index + 1}"></a>
+																												<script>
+                                                displayFirebaseImage("${donhang.mamh}", "${donhangInfo.phieudat.mapd}", "${donhang.size}", "${loop.index + 1}")
+                                            </script>
+																												<p class="nameSP">${donhang.tenSP}</p>
+																												<hr>
+																												<p class="infoSP">
+																													<strong>Size:</strong> ${donhang.size}
+																												</p>
+																												<p class="infoSP">
+																													<strong>Số lượng:</strong>
+																													${donhang.soluong}
+																												</p>
+
+																												<p class="priceSP">
+																													<strong class="priceLabel">Giá
+																														bán:</strong>
+																													<c:if test="${khuyenmai > 0}">
+																														<span
+																															style="text-decoration: line-through; color: red;">
+																															<fmt:formatNumber
+																																value="${donhang.tonggia}"
+																																pattern="#,##0 đ" />
+																														</span>
+																													</c:if>
+																													<fmt:formatNumber
+																														value="${donhang.tonggia - (donhang.tonggia * khuyenmai)}"
+																														pattern="#,##0 đ" />
+																												</p>
+																												<c:set var="phieuDatTotalPrice"
+																													value="${phieuDatTotalPrice + (donhang.tonggia - (donhang.tonggia * khuyenmai))}" />
+																												<c:set var="khuyenmaiTotalPrice"
+																													value="${khuyenmaiTotalPrice + (donhang.tonggia * khuyenmai)}" />
+																											</div>
+																										</c:forEach>
+																									</div>
+																								</form>
+																							</div>
+																							<div class="order-info">
+																								<p>
+																									<strong
+																										style="font-weight: bold; color: #2c83e0;">Giảm
+																										giá:</strong>
+																									<fmt:formatNumber
+																										value="${khuyenmaiTotalPrice}"
+																										pattern="#,##0 đ" />
+																								</p>
+																								<p>
+																									<strong
+																										style="font-weight: bold; color: #2c83e0;">Thành
+																										tiền:</strong>
 																									<fmt:formatNumber value="${phieuDatTotalPrice}"
 																										pattern="#,##0 đ" />
 																								</p>
 																							</div>
-																						</form>
+																							<button class="xem-danh-gia-button"
+																								onclick="danhGia(${donhangInfo.phieudat.mapd})">
+																								Xem đánh giá <span>&#9733;</span>
+																							</button>
+																							<button class="mua-lai-button"
+																								onclick="buyAgain(${donhangInfo.phieudat.mapd})">
+																								Mua lại <i class="fas fa-redo"></i>
+																							</button>
+																						</div>
 																					</div>
 																				</div>
 																			</div>
@@ -173,30 +299,27 @@
 																	</div>
 																</div>
 															</div>
-														</div>
+														</c:if>
+														<c:if test="${loop.index >= 3}">
+															<span
+																style="font-size: 14px; color: #007bff; cursor: pointer;">Hiển
+																thị nhiều hơn nữa</span>
+														</c:if>
 													</c:forEach>
 												</div>
 												<!-- Hiển thị tổng giá của phiếu đặt -->
 												<div class="donhang-summary">
 													<p>
-														<br> <strong style="font-weight: bold;">Tổng
+														<br> <strong
+															style="font-weight: bold; color: #2c83e0;">Tổng
 															cộng:</strong>
 														<fmt:formatNumber value="${phieuDatTotalPrice}"
 															pattern="#,##0 đ" />
 													</p>
 												</div>
-												<c:choose>
-													<c:when test="${danhgiaStatus}">
-														<button class="btn btn-primary" data-toggle="collapse"
-															data-target="#products-${donhangInfo.phieudat.mapd}">Xem
-															đánh giá</button>
-													</c:when>
-													<c:otherwise>
-														<button class="btn btn-primary" data-toggle="collapse"
-															data-target="#products-${donhangInfo.phieudat.mapd}">Đánh
-															giá</button>
-													</c:otherwise>
-												</c:choose>
+												<button class="btn btn-primary" id="danhGiaButton"
+													onclick="danhGia(${donhangInfo.phieudat.mapd})">Đánh
+													giá</button>
 
 												<button class="btn btn-danger"
 													onclick="buyAgain(${donhangInfo.phieudat.mapd})">Mua
@@ -221,100 +344,84 @@
 		</div>
 	</div>
 	<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const productsPerPage = 2;
-        let visibleProductCount = productsPerPage;
-        const productContainer = document.getElementById('order-container');
-        const orders = document.querySelectorAll('#order-container .order');
+	document.addEventListener('DOMContentLoaded', function () {
+	    const productsPerPage = 2;
+	    let visibleProductCount = productsPerPage;
+	    const productContainer = document.getElementById('order-container');
+	    const orders = document.querySelectorAll('#order-container .order');
 
-        function hideExcessOrders() {
-            orders.forEach((order, index) => {
-                if (index < visibleProductCount) {
-                    order.style.display = 'block';
-                } else {
-                    order.style.display = 'none';
-                }
-            });
-        }
+	    function hideExcessOrders() {
+	        orders.forEach((order, index) => {
+	            if (index < visibleProductCount) {
+	                order.style.display = 'block';
+	            } else {
+	                order.style.display = 'none';
+	            }
+	        });
+	    }
 
-        const loadMoreButton = document.getElementById('load-more-button');
-        const collapseButton = document.getElementById('collapse-button');
+	    const loadMoreButton = document.getElementById('load-more-button');
+	    const collapseButton = document.getElementById('collapse-button');
 
-        loadMoreButton.addEventListener('click', function () {
-            visibleProductCount += productsPerPage;
-            hideExcessOrders();
-            if (visibleProductCount >= orders.length) {
-                loadMoreButton.style.display = 'none';
-                collapseButton.classList.remove('d-none');
-            }
-        });
-        collapseButton.addEventListener('click', function () {
-            visibleProductCount = productsPerPage;
-            hideExcessOrders();
-            collapseButton.classList.add('d-none');
-            loadMoreButton.style.display = 'block';
-        });
-        if (visibleProductCount >= orders.length) {
-            loadMoreButton.style.display = 'none';
-            collapseButton.classList.remove('d-none');
-        }
-        hideExcessOrders();
-    });
+	    loadMoreButton.addEventListener('click', function (event) {
+	        event.stopPropagation(); // Ngăn sự kiện click trên nút "Xem thêm" lan đến modal
+	        visibleProductCount += productsPerPage;
+	        hideExcessOrders();
+	        if (visibleProductCount >= orders.length) {
+	            loadMoreButton.style.display = 'none';
+	            collapseButton.classList.remove('d-none');
+	        }
+	    });
+	    collapseButton.addEventListener('click', function (event) {
+	        event.stopPropagation(); // Ngăn sự kiện click trên nút "Rút gọn" lan đến modal
+	        visibleProductCount = productsPerPage;
+	        hideExcessOrders();
+	        collapseButton.classList.add('d-none');
+	        loadMoreButton.style.display = 'block';
+	    });
+	    if (visibleProductCount >= orders.length) {
+	        loadMoreButton.style.display = 'none';
+	        collapseButton.classList.remove('d-none');
+	    }
+	    hideExcessOrders();
+	});
+
 </script>
 	<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Lấy danh sách tất cả các thẻ div sản phẩm
-        const productDivs = document.querySelectorAll('.SP');
+document.addEventListener('DOMContentLoaded', function () {
+    // Lấy ngày đặt hàng từ donhangInfo
+    const ngayDatString = '${donhangInfo.phieudat.ngaydat}';
 
-        // Gán sự kiện nhấn vào từng thẻ div sản phẩm
-        productDivs.forEach(function (productDiv) {
-            productDiv.addEventListener('click', function () {
-                // Thực hiện hành động khi thẻ div sản phẩm được nhấn
-                // Ví dụ: Hiển thị thông tin chi tiết sản phẩm, chuyển đến trang sản phẩm, v.v.
-            });
-        });
-    });
-</script>
-	<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Lấy danh sách tất cả các thẻ div "order"
-        const orderDivs = document.querySelectorAll('.order');
+    // Chuyển đổi ngày đặt từ chuỗi datetime thành đối tượng Date
+    const ngayDat = new Date(ngayDatString);
 
-        orderDivs.forEach(function (orderDiv) {
-            const invoiceForm = orderDiv.querySelector('.invoice-form');
-            
-            // Thêm sự kiện click vào div "order"
-            orderDiv.addEventListener('click', function () {
-                // Toggle hiển thị/ẩn form hóa đơn
-                if (invoiceForm.style.display === 'none' || invoiceForm.style.display === '') {
-                    invoiceForm.style.display = 'block';
-                } else {
-                    invoiceForm.style.display = 'none';
-                }
-            });
+    // Lấy nút "Đánh giá" bằng ID
+    const danhGiaButton = document.querySelector('#danhGiaButton');
 
-            // Lấy nút "Đánh giá" hoặc "Xem đánh giá" trong thẻ "order"
-            const reviewButton = orderDiv.querySelector('.btn-primary');
+    // Lấy ngày hiện tại
+    const ngayHienTai = new Date();
 
-            // Thêm sự kiện click vào nút "Đánh giá" / "Xem đánh giá"
-            reviewButton.addEventListener('click', function () {
-                // Xác định trạng thái đánh giá dựa trên nội dung của nút
-                const danhgiaStatus = reviewButton.textContent === 'Xem đánh giá';
+    // Tính thời gian chênh lệch
+    const thoiGianChenhLech = ngayHienTai - ngayDat;
 
-                if (danhgiaStatus) {
-                    // Đã đánh giá, thực hiện hành động khi xem đánh giá
-                    // Ví dụ: Hiển thị đánh giá sản phẩm
-                } else {
-                    // Chưa đánh giá, thực hiện hành động khi đánh giá sản phẩm
-                    // Ví dụ: Mở một cửa sổ hoặc trang để đánh giá sản phẩm
-                }
-            });
-        });
-    });
+    // Kiểm tra điều kiện và điều chỉnh hiển thị nút "Đánh giá"
+    if (thoiGianChenhLech < 30 * 24 * 60 * 60 * 1000) {
+        // Hiển thị nút "Đánh giá" nếu điều kiện đúng
+        danhGiaButton.style.display = 'block';
+    } else {
+        // Ẩn nút "Đánh giá" nếu điều kiện sai
+        danhGiaButton.style.display = 'none';
+    }
+});
 </script>
 	<script>
     function buyAgain(mapd) {
         window.location.href = "http://localhost:8080/user/history?mapd=" + mapd;
+    }
+</script>
+	<script>
+    function danhGia(mapd) {
+        window.location.href = "http://localhost:8080/user/danhGia/" + mapd;
     }
 </script>
 </body>

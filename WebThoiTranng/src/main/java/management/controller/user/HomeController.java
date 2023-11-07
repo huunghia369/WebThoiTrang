@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,7 @@ import management.login_google.UserGoogleDto;
 
 
 
-
+@Transactional
 @Controller
 @RequestMapping("/user")
 public class HomeController {
@@ -114,6 +115,7 @@ public class HomeController {
 		List<ProductWithDiscount>list_P_smarts=new ArrayList<>();
 		
 		System.out.println("email:"+userEmail);
+
 		
 		try {
 			if (userEmail != null) {
@@ -140,6 +142,7 @@ public class HomeController {
 			
 			e.printStackTrace();
 		}	
+
 		
 		/*
 		 * String listMHStr = getRecommendation(1 + ""); String tmp = listMHStr; tmp =

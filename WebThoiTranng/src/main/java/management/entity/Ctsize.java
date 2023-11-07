@@ -43,13 +43,13 @@ public class Ctsize implements java.io.Serializable {
     @JoinColumn(name = "MAMH", nullable = false, insertable = false, updatable = false)
     private Mathang mathang;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "ctsize")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ctsize")
     private Set<Ctpd> ctpds = new HashSet<Ctpd>(0);
     
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "ctsize")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ctsize")
     private Set<Ctpn> ctpns = new HashSet<Ctpn>(0);
     
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "ctsize")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ctsize")
     private Set<Cthd> cthds = new HashSet<Cthd>(0);
     
     @Column(name = "SOLUONG")

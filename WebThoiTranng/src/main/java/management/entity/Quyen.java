@@ -58,7 +58,7 @@ public class Quyen implements java.io.Serializable {
 		this.tenquyen = tenquyen;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "quyen")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quyen")
 	public Set<Taikhoan> getTaikhoans() {
 		return this.taikhoans;
 	}
