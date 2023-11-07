@@ -63,16 +63,16 @@ public class ChiTietSPController {
 
 	@Autowired
 	private IThanhToanDAO thanhToanDAO;
-	
+
 	@Autowired
 	private IAprioriDao iAprioriDao;
-	
+
 	@Autowired
 	IMatHangDao matHangDao;
-	
+
 	@Autowired
 	Apriori apriori;
-	
+
 	public String getRecommendation(String maMH) {
 		String s = null;
 		String str = null;
@@ -80,7 +80,8 @@ public class ChiTietSPController {
 
 			// run the Unix "ps -ef" command
 			// using the Runtime exec method:
-			String cmd = "python D:\\HK7\\PhatTrienHeThongThongMinh\\WebThoiTrang_final\\WebThoiTranng\\src\\main\\java\\python\\test.py " + maMH;
+			String cmd = "python D:\\HK7\\PhatTrienHeThongThongMinh\\WebThoiTrang_final\\WebThoiTranng\\src\\main\\java\\python\\test.py "
+					+ maMH;
 			Process p = Runtime.getRuntime().exec(cmd);
 
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -88,9 +89,9 @@ public class ChiTietSPController {
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 
 			// read the output from the command
-			//System.out.println("Here is the standard output of the command:\n");
+			// System.out.println("Here is the standard output of the command:\n");
 			while ((s = stdInput.readLine()) != null) {
-				//System.out.println(s);
+				// System.out.println(s);
 
 				str = s;
 			}
@@ -108,10 +109,10 @@ public class ChiTietSPController {
 		return str;
 
 	}
+
 	@RequestMapping("/chi-tiet-sp/{id}")
 	public ModelAndView CTSP(@PathVariable("id") int id) throws ServletException, IOException {
-		
-		
+
 		ModelAndView mav = new ModelAndView("user/chiTietSP");
 
 		Mathang mh = donHangDao.layMatHangTheoID(id);
@@ -120,7 +121,7 @@ public class ChiTietSPController {
 
 		float tongDanhGia = 0;
 		float danhGia = 0;
-		if (!mh.getDanhgias().isEmpty() ) {
+		if (!mh.getDanhgias().isEmpty()) {
 			for (Danhgia dg : mh.getDanhgias()) {
 				tongDanhGia += dg.getDanhgia();
 			}
@@ -140,34 +141,40 @@ public class ChiTietSPController {
 		mav.addObject("gia", gia);
 		mav.addObject("mh", mh);
 		mav.addObject("danhGia", danhGia);
-		String listMHStr = getRecommendation(id+"");
-		String tmp = listMHStr.replace("'", "");
-		tmp = tmp.replace("[", "");
-		tmp = tmp.replace("]", "");
-		tmp = tmp.replace(" ", "");
-		String[] tmp2= tmp.split(",");
-		List<ProductWithDiscount>sptts=new ArrayList<>();
-		for(String s:tmp2) {
+		String listMHStr = getRecommendation(id + "");
+		
+			System.out.println("List gợi ý: "+ listMHStr);
 			
-			Mathang mhtmp= iAprioriDao.getMHById(Integer.valueOf(s));
-			//System.out.println(mhtmp.getMamh()+"trieu");
-			ProductWithDiscount temp = new ProductWithDiscount();
-			temp.setMucgiamgia((int)matHangDao.getDiscount_Product(mhtmp));
-			System.out.println(temp.getMucgiamgia()+"trieu");
-			
-			temp.setMathang(mhtmp);
-			//System.out.println(temp.getMathang().getMamh()+"trieu");
-			temp.setGia(matHangDao.getPrice_Product(mhtmp));
-			//System.out.println(s);
-			sptts.add(temp);
+			String tmp = listMHStr.replace("'", "");
+			tmp = tmp.replace("[", "");
+			tmp = tmp.replace("]", "");
+			tmp = tmp.replace(" ", "");
+			System.out.println("Tmp: "+tmp);
+			if(tmp!="")
+			{String[] tmp2 = tmp.split(",");
+			List<ProductWithDiscount> sptts = new ArrayList<>();
+			for (String s : tmp2) {
+
+				Mathang mhtmp = iAprioriDao.getMHById(Integer.valueOf(s));
+				// System.out.println(mhtmp.getMamh()+"trieu");
+				ProductWithDiscount temp = new ProductWithDiscount();
+				temp.setMucgiamgia((int) matHangDao.getDiscount_Product(mhtmp));
+				System.out.println(temp.getMucgiamgia() + "trieu");
+
+				temp.setMathang(mhtmp);
+				// System.out.println(temp.getMathang().getMamh()+"trieu");
+				temp.setGia(matHangDao.getPrice_Product(mhtmp));
+				// System.out.println(s);
+				sptts.add(temp);
+			}
+			/*
+			 * for(ProductWithDiscount mhtmp: sptts) { System.out.println(mhtmp.getGia());
+			 * System.out.println(mhtmp.getGiamoi());
+			 * System.out.println(mhtmp.getMucgiamgia());
+			 * System.out.println(mhtmp.getMathang().getMamh()); }
+			 */
+			mav.addObject("dssptt", sptts);
 		}
-		/*
-		 * for(ProductWithDiscount mhtmp: sptts) { System.out.println(mhtmp.getGia());
-		 * System.out.println(mhtmp.getGiamoi());
-		 * System.out.println(mhtmp.getMucgiamgia());
-		 * System.out.println(mhtmp.getMathang().getMamh()); }
-		 */
-		mav.addObject("dssptt", sptts);
 		return mav;
 	}
 
