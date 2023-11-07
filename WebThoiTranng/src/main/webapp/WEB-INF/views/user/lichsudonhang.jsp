@@ -318,13 +318,42 @@
 													</p>
 												</div>
 												<button class="btn btn-primary" id="danhGiaButton"
-													onclick="danhGia(${donhangInfo.phieudat.mapd})">Đánh
-													giá</button>
-
+													onclick="danhGia(${donhangInfo.phieudat.mapd})"
+													style="float: left;">Đánh giá</button>
 												<button class="btn btn-danger"
-													onclick="buyAgain(${donhangInfo.phieudat.mapd})">Mua
-													lại</button>
+													onclick="buyAgain(${donhangInfo.phieudat.mapd})"
+													style="float: left;">Mua lại</button>
+												<br>
 											</div>
+											<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Lấy ngày đặt hàng từ donhangInfo
+    const ngayDatString = '${donhangInfo.phieudat.ngaydat}';
+    console.log(ngayDatString);
+
+    // Chuyển đổi ngày đặt từ chuỗi datetime thành đối tượng Date
+    const ngayDat = new Date(ngayDatString);
+
+    // Lấy nút "Đánh giá" bằng ID
+    const danhGiaButton = document.querySelector('#danhGiaButton');
+
+    // Lấy ngày hiện tại
+    const ngayHienTai = new Date();
+    console.log(ngayHienTai);
+
+    // Tính thời gian chênh lệch
+    const thoiGianChenhLech = ngayHienTai - ngayDat;
+
+    // Kiểm tra điều kiện và điều chỉnh hiển thị nút "Đánh giá"
+    if (thoiGianChenhLech < 30 * 24 * 60 * 60 * 1000) {
+        // Hiển thị nút "Đánh giá" nếu điều kiện đúng
+        danhGiaButton.style.display = 'block';
+    } else {
+        // Ẩn nút "Đánh giá" nếu điều kiện sai
+        danhGiaButton.style.display = 'none';
+    }
+});
+</script>
 										</c:forEach>
 									</div>
 									<br>
@@ -386,33 +415,6 @@
 	    hideExcessOrders();
 	});
 
-</script>
-	<script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Lấy ngày đặt hàng từ donhangInfo
-    const ngayDatString = '${donhangInfo.phieudat.ngaydat}';
-
-    // Chuyển đổi ngày đặt từ chuỗi datetime thành đối tượng Date
-    const ngayDat = new Date(ngayDatString);
-
-    // Lấy nút "Đánh giá" bằng ID
-    const danhGiaButton = document.querySelector('#danhGiaButton');
-
-    // Lấy ngày hiện tại
-    const ngayHienTai = new Date();
-
-    // Tính thời gian chênh lệch
-    const thoiGianChenhLech = ngayHienTai - ngayDat;
-
-    // Kiểm tra điều kiện và điều chỉnh hiển thị nút "Đánh giá"
-    if (thoiGianChenhLech < 30 * 24 * 60 * 60 * 1000) {
-        // Hiển thị nút "Đánh giá" nếu điều kiện đúng
-        danhGiaButton.style.display = 'block';
-    } else {
-        // Ẩn nút "Đánh giá" nếu điều kiện sai
-        danhGiaButton.style.display = 'none';
-    }
-});
 </script>
 	<script>
     function buyAgain(mapd) {
