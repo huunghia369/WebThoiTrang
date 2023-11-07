@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log(ngayHienTai);
 
     // Tính thời gian chênh lệch
-    const thoiGianChenhLech = ngayHienTai - ngayDat;
+    const thoiGianChenhLech = ngayHienTai - ngayDat;  
 
     // Kiểm tra điều kiện và điều chỉnh hiển thị nút "Đánh giá"
     if (thoiGianChenhLech < 30 * 24 * 60 * 60 * 1000) {

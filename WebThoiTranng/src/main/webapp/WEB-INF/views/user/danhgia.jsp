@@ -23,7 +23,7 @@
 										giá sản phẩm</h1>
 									<br>
 									<div class="row">
-										<div class="col-6">
+										<div class="col-6"> 
 											<ul class="nav nav-tabs" id="myTab" role="tablist">
 												<li class="nav-item" role="presentation"><a
 													class="nav-link active" id="chua-danh-gia-tab"
