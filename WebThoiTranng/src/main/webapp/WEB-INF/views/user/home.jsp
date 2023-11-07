@@ -129,70 +129,59 @@
             </div>
           
             <!-- Phần gợi ý sản phẩm -->
-          <section class="container my-5">
-                <h2 style="color: #9ca0a2">Gợi ý hôm nay</h2>
-                <div class="row">
+             <c:if test="${not empty listProductSmart}">
+     <section class="container my-5">
+    <h2 style="color: #9ca0a2">Gợi ý hôm nay</h2>
+    <div class="row">
+       
+            <c:forEach var="product" items="${listProductSmart}">
+                <div class="col-md-2">
+                    <div class="card product-card card-h-set-320">
+                        <a href="/user/chi-tiet-sp/${product.mathang.mamh}">
+                            <div style="position: relative;">
+                                <!-- Hiển thị mức giảm giá ở đây nếu mucgiamgia > 0 -->
+                                <c:if test="${product.mucgiamgia > 0}">
+                                    <span
+                                        style="position: absolute; top: 10px; left: 10px; background-color: red; color: white; padding: 5px;">
+                                        -${product.mucgiamgia}% </span>
+                                </c:if>
 
-                    <c:forEach var="product" items="${listProductSmart}">
-
-                        <div class="col-md-2 ">
-                            <div class="card product-card card-h-set-320 " >
-                                <a href="/user/chi-tiet-sp/${product.mathang.mamh}">
-                                    <div style="position: relative;">
-                                        <!-- Hiển thị mức giảm giá ở đây nếu mucgiamgia > 0 -->
-                                        <c:if test="${product.mucgiamgia > 0}">
-                                            <span
-                                                style="position: absolute; top: 10px; left: 10px; background-color: red; color: white; padding: 5px;">
-                                                -${product.mucgiamgia}% </span>
-                                        </c:if>
-										 
-                                         <!-- Ảnh sản phẩm -->
-                                       <div id="firebase-image-smart${product.mathang.mamh}" ></div>
-								<script>
-								displayFirebaseImageSmarts("${product.mathang.mamh}"); 
-								</script>
-                                    </div>
-                                </a>
-
-                                <div class="card-body">
-                                   
-
-                                </div>
-						
-							<h5 class="card-title text-center font-weight-bold">
-								<small>${product.mathang.tenmh}</small>
-							</h5>
-							<p class="card-text text-center mb-4" >
-								<!-- Giá ban đầu bị gạch ngang (màu trắng) -->
-								<c:if test="${product.gia ne product.giamoi}">
-									<del class="mr-3">
-										<strong>${product.gia/1000}</strong>
-									</del>
-								</c:if>
-								<!-- Giá sau khi giảm (màu đỏ) -->
-								<span style="color: red;"><strong>${product.giamoi/1000}</strong></span>
-							</p>
-						
-
-
-
-					</div>
-                        </div>
-
-                    </c:forEach>
-
-
-                </div>
-                
-                <div class="row mt-2">
-                    <div class="col-md-6 mx-auto text-center">
-                        <a href="/product/selling" class="btn btn-outline-secondary custom-padding"
-                            style="width: 60%;"><strong>--Xem thêm--</strong></a>
+                                <!-- Ảnh sản phẩm -->
+                                <div id="firebase-image-smart${product.mathang.mamh}"></div>
+                                <script>
+                                    displayFirebaseImageSmarts("${product.mathang.mamh}");
+                                </script>
+                            </div>
+                        </a>
+                        <div class="card-body"></div>
+                        <h5 class="card-title text-center font-weight-bold">
+                            <small>${product.mathang.tenmh}</small>
+                        </h5>
+                        <p class="card-text text-center mb-4">
+                            <!-- Giá ban đầu bị gạch ngang (màu trắng) -->
+                            <c:if test="${product.gia ne product.giamoi}">
+                                <del class="mr-3">
+                                    <strong>${product.gia/1000}</strong>
+                                </del>
+                            </c:if>
+                            <!-- Giá sau khi giảm (màu đỏ) -->
+                            <span style="color: red;"><strong>${product.giamoi/1000}</strong></span>
+                        </p>
                     </div>
                 </div>
-
-            </section>
+            </c:forEach>
        
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-6 mx-auto text-center">
+            <a href="/product/selling" class="btn btn-outline-secondary custom-padding" style="width: 60%;">
+                <strong>--Xem thêm--</strong>
+            </a>
+        </div>
+    </div>
+</section>
+ </c:if>
+     
             <!-- Bán chạy -->
             <section class="container my-5">
                 <h2 style="color: #9ca0a2">Sản phẩm bán chạy</h2>

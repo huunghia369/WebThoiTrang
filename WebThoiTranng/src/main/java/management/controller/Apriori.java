@@ -2,6 +2,7 @@ package management.controller;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -47,28 +48,14 @@ public class Apriori {
 		int Location[] = new int[1000];
 		String itemHistory[] = new String[1000];
 		String itemAll[] = new String[1000];
-//		String itemAll[] = new String[100];
+
 		List<String> finaly = new ArrayList<String>();
 		LoadProductAll(itemAll, listmathangAll);
 		LoadProductCustomer(itemHistory, listmathangBuy);
-		// LoadProductCustomer(itemHistory, listmathangAll);
 		LOADDATA(listhoadon, listcthd, data);
 		foundFrequentItemSet(data, frequentItemSet, Location, itemAll);
-		finaly= foundLawDetermination(data, frequentItemSet, itemHistory,0.6);
-//		System.out.println(finaly.size());
-//		for (String s : finaly)
-//			System.out.println(s);
-		// System.out.println("Phong");
-//		for(int i = 0; i < 100; i++)
-//		{
-//			if(frequentItemSet[i][0] == null) break;
-//			for (int j  = 0; j < 100; j++) {
-//				if(frequentItemSet[i][j] == null)
-//					break;
-//				System.out.println(frequentItemSet[i][j]);
-//			}
-//			System.out.println("Phong");
-//		}
+	    foundLawDetermination(frequentItemSet,data,finaly,0.6);
+
 
 		List<Mathang> listmathang = new ArrayList<Mathang>();
 		List<Double> avgList = new ArrayList<Double>();
@@ -200,234 +187,199 @@ public class Apriori {
 
 	public static void foundFrequentItemSet(String data[][], String frequentItemSet[][], int Location[],
 			String itemAll[]) {
-		int colums = 0;
+		int count = 0;
+//		int n = 0;
+		String tmp;
 		int rows = 0;
-
+		int colums = 0;
 		List<String> frequentTmp = new ArrayList<String>();
-
-		for (int i = 0; i < itemAll.length; i++) {
-			String tmp = itemAll[i];
-			if( tmp==null) break;
-			int count = 0;
+		// Tìm tập phổ biến 1 thuộc tính.
+		// String B[] = { "A", "B", "C", "D", "E" };
+		for (int i = 0; i < sizeAll; i++) {
+			tmp = itemAll[i];
+			// tmp = B[i];
 			for (int j = 0; j < numTransactions; j++) {
 				for (int k = 1; k < maxSize; k++) {
+					// if(A[j][k] == null) break;
 					if (tmp.equals(data[j][k])) {
 						count++;
 						break;
 					}
 				}
 			}
-
-			if (count >= 2) {
+			if (count > minSup || count == minSup) {
 				frequentItemSet[rows][colums] = tmp;
 				Location[rows] = count;
 				rows++;
+				count = 0;
 				frequentTmp.add(tmp);
 			}
+
 		}
-
-		while (!frequentTmp.isEmpty()) {
-			List<String> newFrequentTmp = new ArrayList<String>();
-
+		colums++;
+		int rowXet = 0;
+		int rowXet1 = 0;
+		boolean cons = true;
+//		for(String s: frequentTmp)
+//			System.out.print(s +" ");
+//		System.out.println();
+		frequentTmp.remove(0);
+//		for(String s: frequentTmp)
+//			System.out.print(s +" ");
+//		int xet = 0;
+//		int daXet = 0;
+		int columsXet = 1;
+		int dem = 0;
+//		int numCol = numTransactions;
+		while (cons) {
+			if (rows == 0)
+				break;
+			// Duyệt hết một phần tử.
 			for (int t = 0; t < frequentTmp.size(); t++) {
+				// Duyệt một phần tử
 				for (int p = t; p < frequentTmp.size(); p++) {
-					int count = 0;
-
+					count = 0;
+					// Kiểm tra một dòng.
 					for (int i = 0; i < numTransactions; i++) {
-						boolean allFound = true;
-
-						for (int k = 0; k < colums; k++) {
-							boolean found = false;
+						// Kiểm tra A có phải là con của B?
+						for (int k = 0; k < columsXet; k++) {
 							for (int j = 1; j < maxSize; j++) {
-								if (frequentItemSet[rows - 1][k].equals(data[i][j])) {
-									found = true;
+								if (frequentItemSet[rowXet][k].equals(data[i][j])) {
+									dem++;
 									break;
 								}
 							}
-							if (!found) {
-								allFound = false;
+
+						}
+						// kiểm tra phần tử mới đã tồn tại chưa
+						for (int j = 1; j < maxSize; j++)
+							if (frequentTmp.get(p).equals(data[i][j])) {
+								dem++;
 								break;
 							}
-						}
-
-						if (allFound) {
-							for (int j = 1; j < maxSize; j++) {
-								if (frequentTmp.get(p).equals(data[i][j])) {
-									count++;
-									break;
-								}
+						if (dem == columsXet + 1)
+							count++;
+						dem = 0;
+					}
+					// Kiểm tra mức độ phổ biến
+					if (count > minSup || count == minSup) {
+						for (int i = 0; i < columsXet + 1; i++) {
+							if (i == columsXet) {
+								frequentItemSet[rows][i] = frequentTmp.get(p);
+								break;
 							}
+							frequentItemSet[rows][i] = frequentItemSet[rowXet][i];
 						}
-					}
-
-					if (count >= 2 && frequentTmp.get(p) != null) {
-					    if (rows < frequentItemSet.length) {
-					        for (int i = 0; i < colums + 1; i++) {
-					            frequentItemSet[rows][i] = (i == colums) ? frequentTmp.get(p) : frequentItemSet[rows - 1][i];
-					        }
-					        Location[rows] = count;
-					        rows++;
-					        newFrequentTmp.add(frequentTmp.get(p));
-					    } else {
-					        // Xử lý trường hợp giới hạn của mảng đã vượt quá
-					        // Có thể tạo một mảng mới hoặc thay đổi kích thước của mảng hiện tại tùy thuộc vào nhu cầu của bạn.
-					    }
-					}
-
-
+						Location[rows] = count;
+						rows++;
+						columsXet++;
+						rowXet = rows - 1;
+					} else
+						break;
 				}
+				rowXet = rowXet1;
+				columsXet = 1;
 			}
+			rowXet1++;
+			rowXet = rowXet1;
+			columsXet = 1;
+			// xảy ra lỗi!
+			frequentTmp.remove(0);
+//			if(frequentTmp.size() == 1)
+			if (frequentTmp.size() == 0)
+				cons = false;
+		}
+		System.out.println("hello");
 
-			frequentTmp = newFrequentTmp;
-			colums++;
-		}
-		
-		for( String[] x:frequentItemSet)
-		{
-			 System.out.println(x[0]);
-		}
-		System.out.println("k");
-		
 	}
+	 public static void foundLawDetermination(String frequentItemSet[][], String data[][],List<String> finaly, double minConfidence) {
+	        int numRows = data.length;
+	        Set<String>locfinaly= new HashSet<>();
+	        for (int i = 0; i < frequentItemSet.length; i++) {
+	            List<String> items = new ArrayList<>();
+	            for (int j = 0; j < frequentItemSet[i].length; j++) {
+	                if (frequentItemSet[i][j] != null) {
+	                    items.add(frequentItemSet[i][j]);
+	                }
+	            }
 
-	// ok
-	public List<String> foundLawDetermination(String data[][], String frequentItemSet[][], String itemHistory[], double minConfidence) {
-	    Set<String> finaly = new HashSet<>();
+	            if (items.size() >= 2) {
+	                generateAssociationRules(items, frequentItemSet, data, numRows, minConfidence,locfinaly);
+	            }
+	        }
+	        finaly= new ArrayList<>(locfinaly);
+	        System.out.println("Tập kết quả:");
+	        for( String x: finaly)
+	        {
+	        	System.out.println(x);
+	        }
+	        System.out.println("Tập kết quả:");
+	        System.out.println("hello");
+	    }
 
-	    for (int i = 0; i < frequentItemSet.length; i++) {
-	        for (int j = 0; j < frequentItemSet[i].length && frequentItemSet[i][j] != null; j++) {
-	            // Tìm tất cả các luật kết hợp với frequentItemSet[i][j] như là "X" (antecedent)
-	            String antecedent = frequentItemSet[i][j];
-	            
-	            for (int k = 0; k < frequentItemSet[i].length; k++) {
-	                if (k != j && frequentItemSet[k][j] != null) {
-	                    String consequent = frequentItemSet[k][j];
-	                    
-	                    double supportAntecedent = calculateSupport(antecedent, itemHistory);
-	                    double supportConsequent = calculateSupport(consequent, itemHistory);
-	                    double supportBoth = calculateSupportForBoth(antecedent, consequent, itemHistory);
+	    private static void generateAssociationRules(List<String> items, String frequentItemSet[][], String data[][], int numRows, double minConfidence,Set<String> finaly) {
+	        
+	    	
+	    	
+	    	int n = items.size();
+	        for (int i = 1; i < (1 << n) - 1; i++) {
+	            List<String> antecedent = new ArrayList<>();
+	            List<String> consequent = new ArrayList<>();
 
-	                    double confidence = supportBoth / supportAntecedent;
+	            for (int j = 0; j < n; j++) {
+	                if ((i & (1 << j)) > 0) {
+	                    antecedent.add(items.get(j));
+	                } else {
+	                    consequent.add(items.get(j));
+	                }
+	            }
 
-	                    if (confidence >= minConfidence) {
-	                        String rule = antecedent + " -> " + consequent + " (Confidence: " + confidence + ")";
-	                       
-	                        finaly.add(consequent);
-	                    }
+	            double supportAntecedent = calculateSupport(antecedent, frequentItemSet, data, numRows);
+	            double supportTotal = calculateSupport(items, frequentItemSet, data, numRows);
+
+	            if (supportTotal > 0) {
+	                double confidence = supportTotal / supportAntecedent;
+	                if (confidence >= minConfidence) {
+	                	for( String x:consequent) {
+	                		finaly.add(x);
+	                	}
+	                    System.out.print(antecedent + " => " + consequent);
+	                    System.out.println(" (Confidence: " + confidence + ")=("+supportAntecedent+"/"+supportTotal+")");
 	                }
 	            }
 	        }
+	      
+	       
 	    }
-	    
-	    
-	    return new ArrayList<>(finaly);
-	}
 
-	public static double calculateSupport(String item, String itemHistory[]) {
-	    int count = 0;
-	    for (String historyItem : itemHistory) {
-	        if (historyItem != null && historyItem.equals(item)) {
-	            count++;
-	        }
-	    }
-	    return (double) count / itemHistory.length;
-	}
-
-	public static double calculateSupportForBoth(String antecedent, String consequent, String itemHistory[]) {
-	    int count = 0;
-	    boolean foundAntecedent = false;
-	    for (String historyItem : itemHistory) {
-	        if (historyItem != null) {
-	            if (historyItem.equals(antecedent)) {
-	                foundAntecedent = true;
-	            } else if (foundAntecedent && historyItem.equals(consequent)) {
+	    private static double calculateSupport(List<String> items, String frequentItemSet[][], String data[][], int numRows) {
+	        int count = 0;
+	        for (int i = 0; i < numRows; i++) {
+	            boolean containsAll = true;
+	            for (String item : items) {
+	                if (!containsItem(data[i], item)) {
+	                    containsAll = false;
+	                    break;
+	                }
+	            }
+	            if (containsAll) {
 	                count++;
 	            }
 	        }
+	        return (double) count / numRows;
 	    }
-	    return (double) count / itemHistory.length;
-	}
 
-	// Tính confidence
-	// 1: add 0: duyệt dòng mới
-	public static int checkElement(String data[][], int n, String confidence[], int dangXet) {
-		int count = 0;
-//		System.out.println(dangXet);
-		double maxCon = 60.0;
-//		boolean revise = true;
-		// Duyệt kiểm tra với vt là một mặt hàng có xác định được không?
-//		for(int i = 0; i < n; i++)
-//			System.out.print(confidence[i]);
-//		System.out.println(" phong");
-		for (int i = 0; i < n; i++) {
-			count = 0;
-			for (int j = 0; j < numTransactions; j++)
-				for (int k = 0; k < maxSize; k++)
-					if (confidence[i].equals(data[j][k])) {
-						count++;
-						break;
-					}
+	    private static boolean containsItem(String row[], String item) {
+	        for (int i = 1; i < row.length; i++) {
+	            if (item.equals(row[i])) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
+	
 
-			double con = (dangXet * 1.0 / count) * 100;
-//			System.out.println(count);
-			if (con > maxCon || con == maxCon) {
-				return 1;
-//				revise = false;
-			}
-		}
-		if (n == 1)
-			return 0;
-		// chưa xác định được duyệt tiếp
-		int columsXet = 1;
-		int dem = 0;
-
-		// Kiểm tra đoạn này nếu sảy ra lỗi
-		// Duyệt từng phần tử.
-		for (int i = 0; i < n; i++) {
-			// Duyệt theo dòng
-			for (int k = 0; k < numTransactions; k++) {
-				dem = 0;
-				// Kiểm tra a có phải là con của b không?
-				for (int j = i + 1; j < columsXet + 1; j++) {
-					for (int p = 0; p < maxSize; p++)
-						if (data[k][p].equals(confidence[j])) {
-							dem++;
-							// p = 0;
-							break;
-						}
-					for (int p = 0; p < maxSize; p++)
-						if (data[k][p].equals(confidence[i])) {
-							dem++;
-							break;
-						}
-				}
-				if (dem == columsXet + 1)
-					count++;
-			}
-			double con = (dangXet * 1.0 / count) * 100;
-			if (con > maxCon || con == maxCon)
-				return 1;
-			columsXet++;
-			// Nếu chưa xét theo phẩn tử đầu thì tiếp tục duyệt tiếp.
-			if (columsXet < n)
-				i--;
-		}
-		return 0;
-	}
-
-	// 0: ko ton tai, 1: co ton tai
-	public static int CheckFrequent(List<String> S, String s) {
-		if (S.size() == 0)
-			return 0;
-		for (String tmp : S) {
-			if (s.equals(tmp))
-				return 1;
-		}
-		return 0;
-
-	}
-
-	public void bubbleSort(List<String> finaly, List<Double> avg) {
+		public void bubbleSort(List<String> finaly, List<Double> avg) {
 		Double tmp1;
 		String tmp;
 		int i, j;

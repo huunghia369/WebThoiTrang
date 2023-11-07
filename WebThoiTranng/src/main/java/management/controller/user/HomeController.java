@@ -114,6 +114,7 @@ public class HomeController {
 		List<ProductWithDiscount>list_P_smarts=new ArrayList<>();
 		
 		System.out.println("email:"+userEmail);
+		
 		try {
 			if (userEmail != null) {
 				int makh = taiKhoanDAO.get_khachHang_byEmail(userEmail).getMakh();
@@ -161,7 +162,7 @@ public class HomeController {
 		Boolean userEmail = (Boolean) session.getAttribute("login");
 		
 		if (userEmail != null) {
-			
+			 session.setAttribute("loggedInUserEmail", null);
 	        // Nếu userEmail là null, bạn có thể xóa nó khỏi session như sau:
 	        session.setAttribute("login", false);
 	    }
