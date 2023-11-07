@@ -2,6 +2,7 @@ package management.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,7 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+@Transactional
 @Controller
 @RequestMapping("/user")
 public class DanhGiaController {
@@ -128,7 +129,7 @@ public class DanhGiaController {
 			// run the Unix "ps -ef" command
 			// using the Runtime exec method:
 
-			String cmd = "python D:\\GitHub\\WebThoiTrang\\WebThoiTranng\\src\\main\\java\\python\\add-to-csv.py "
+			String cmd = "python D:\\HK7\\PhatTrienHeThongThongMinh\\WebThoiTrang_final\\WebThoiTranng\\src\\main\\java\\python\\add-to-csv.py "
 					+ red;
 			Process p = Runtime.getRuntime().exec(cmd);
 

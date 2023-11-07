@@ -157,7 +157,7 @@ rgba
 					</div>
 					<div class="text-right" style="float: right;">
 						<!-- Đặt text-right và float: right cho các nút -->
-						<a href="/WebBanKinh/user/product/home" type="button"
+						<a href="/user/index" type="button"
 							class="btn btn-primary">Tiếp tục mua hàng</a>
 						<button id="btnThanhToan" class="btn btn-success">Thanh
 							toán</button>

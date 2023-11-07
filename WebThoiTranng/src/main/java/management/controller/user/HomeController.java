@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,7 @@ import management.login_google.UserGoogleDto;
 
 
 
-
+@Transactional
 @Controller
 @RequestMapping("/user")
 public class HomeController {
@@ -114,31 +115,27 @@ public class HomeController {
 		List<ProductWithDiscount>list_P_smarts=new ArrayList<>();
 		
 		System.out.println("email:"+userEmail);
-		try {
-			if (userEmail != null) {
-				int makh = taiKhoanDAO.get_khachHang_byEmail(userEmail).getMakh();
-				System.out.println("mamkh:"+makh);
-				
-				listmhdanhgia = apriori.Apriori(makh);// 1 là ma kh
-				for (Mathang mh : listmhdanhgia) {
-
-					ProductWithDiscount tmp = new ProductWithDiscount();
-					tmp.setMucgiamgia((int) matHangDao.getDiscount_Product(mh));
-
-					tmp.setMathang(mh);
-					tmp.setGia(matHangDao.getPrice_Product(mh));
-					list_P_smarts.add(tmp);
-				}
-			}
-			
-			
-			
-			model.addAttribute("listProductSmart", list_P_smarts);
-			return modelAndView;
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}	
+		/*
+		 * try { if (userEmail != null) { int makh =
+		 * taiKhoanDAO.get_khachHang_byEmail(userEmail).getMakh();
+		 * System.out.println("mamkh:"+makh);
+		 * 
+		 * listmhdanhgia = apriori.Apriori(makh);// 1 là ma kh for (Mathang mh :
+		 * listmhdanhgia) {
+		 * 
+		 * ProductWithDiscount tmp = new ProductWithDiscount(); tmp.setMucgiamgia((int)
+		 * matHangDao.getDiscount_Product(mh));
+		 * 
+		 * tmp.setMathang(mh); tmp.setGia(matHangDao.getPrice_Product(mh));
+		 * list_P_smarts.add(tmp); } }
+		 * 
+		 * 
+		 * 
+		 * model.addAttribute("listProductSmart", list_P_smarts); return modelAndView; }
+		 * catch (Exception e) {
+		 * 
+		 * e.printStackTrace(); }
+		 */
 		
 		/*
 		 * String listMHStr = getRecommendation(1 + ""); String tmp = listMHStr; tmp =
@@ -161,7 +158,7 @@ public class HomeController {
 		Boolean userEmail = (Boolean) session.getAttribute("login");
 		
 		if (userEmail != null) {
-			
+			 session.setAttribute("loggedInUserEmail", null);
 	        // Nếu userEmail là null, bạn có thể xóa nó khỏi session như sau:
 	        session.setAttribute("login", false);
 	    }

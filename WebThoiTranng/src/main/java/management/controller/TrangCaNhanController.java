@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import management.dao.ITrangCaNhanDAO;
 import management.entity.Khachhang;
-
+@Transactional
 @Controller
 @RequestMapping("/user/")
 public class TrangCaNhanController {
@@ -30,10 +31,10 @@ public class TrangCaNhanController {
 
 	@PostMapping(value = "profile/Edit")
     public String editKH(HttpServletRequest request, ModelMap model) throws ParseException {
-//        HttpSession session = request.getSession();
-//        String userEmail = (String) session.getAttribute("loggedInUserEmail");
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("loggedInUserEmail");
 
-        Khachhang khachhang = trangCaNhanDAO.getKhachhangByEmail("nghianguyenhuu963@gmail.com");
+        Khachhang khachhang = trangCaNhanDAO.getKhachhangByEmail(userEmail);
         String hotenkh = request.getParameter("hoten"); 
         System.out.println(hotenkh);
         String ngaysinhkh = request.getParameter("ngaysinh");
@@ -95,10 +96,10 @@ public class TrangCaNhanController {
 	@GetMapping("profile")
 	public ModelAndView LoadTTCaNhan(HttpServletRequest request, ModelMap model) {
 		
-//	    HttpSession session = request.getSession();
-//	    String userEmail = (String) session.getAttribute("loggedInUserEmail");
+	    HttpSession session = request.getSession();
+	    String userEmail = (String) session.getAttribute("loggedInUserEmail");
 				
-		Khachhang khachhang = trangCaNhanDAO.getKhachhangByEmail("nghianguyenhuu963@gmail.com");
+		Khachhang khachhang = trangCaNhanDAO.getKhachhangByEmail(userEmail);
 		model.addAttribute("khachhang", khachhang);
 		ModelAndView modelAndView = new ModelAndView("user/trangcanhan");
 

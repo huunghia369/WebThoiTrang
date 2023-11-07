@@ -20,7 +20,7 @@ import org.hibernate.jpa.criteria.predicate.ImplicitNumericExpressionTypeDetermi
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
-
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -38,7 +38,7 @@ import management.entity.Khachhang;
 import management.entity.Mathang;
 import management.entity.Quyen;
 import management.entity.Taikhoan;
-
+@Transactional
 @Controller
 @RequestMapping("/register/")
 public class TaiKhoanController {
@@ -71,9 +71,10 @@ public class TaiKhoanController {
 			
 			return "register";
 		}
-		if(taiKhoanDAO.get_MaQuyen_by_email(userEmail)==2) return "/admin/home";
+		if(taiKhoanDAO.get_MaQuyen_by_email(userEmail)==2) return "redirect:/admin/";
 		// return "redirect:/register/cookie";
-		return "redirect:/user/index";
+		else return "redirect:/user/index";
+		//return "user/home";
 	}
 
 	// Method Post để xử lý dữ liệu của view "register" từ biểu mẫu
@@ -108,10 +109,11 @@ public class TaiKhoanController {
 			errors.rejectValue("name", "KhachHang", "Họ và tên không được để trống!");
 			kt = false;
 		}
-		if (khachHang.getDiachi().trim().isEmpty()) {
-			errors.rejectValue("account.password", "KhachHang", "Địa chỉ không được để trống!");
-			kt = false;
-		}
+		/*
+		 * if (khachHang.getDiachi().trim().isEmpty()) {
+		 * errors.rejectValue("account.password", "KhachHang",
+		 * "Địa chỉ không được để trống!"); kt = false; }
+		 */
 		if (khachHang.getSdt().trim().isEmpty()) {
 			errors.rejectValue("phoneNumber", "KhachHang", "Số điện thoại không được để trống!");
 			kt = false;

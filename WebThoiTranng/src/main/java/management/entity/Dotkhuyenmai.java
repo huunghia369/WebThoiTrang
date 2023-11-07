@@ -70,7 +70,7 @@ public class Dotkhuyenmai implements java.io.Serializable {
 		this.madkm = madkm;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MANV", nullable = false)
 	public Nhanvien getNhanvien() {
 		return this.nhanvien;

@@ -33,7 +33,7 @@ public class Taikhoan implements java.io.Serializable {
 	@Column(name = "TRANGTHAI")
 	private int trangthai;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "taikhoan")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "taikhoan")
 	private Set<Danhgia> danhgias = new HashSet<Danhgia>(0);
 
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "taikhoan")

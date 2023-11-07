@@ -18,7 +18,10 @@
 <script src="<c:url value='/templates/user/js/chiTietSP.js'/>"
 	type="text/javascript"></script>
 
-
+<script src="<c:url value='/templates/user/product/product.js'/>"></script>
+			<script src="<c:url value='/templates/user/product/productDiscount.js'/>"></script>
+			<script src="<c:url value='/templates/user/product/productCategory.js'/>"></script>
+			<script src="<c:url value='/templates/user/product/ProductSlide.js'/>"></script>
 </head>
 <body>
 	<div class="container-fluid ">
@@ -131,9 +134,15 @@
 												id="priceSpan">
 												${i.giamoi}</span>
 											<!-- Ảnh sản phẩm -->
-											<img
-												src="https://images.unsplash.com/photo-1624687943971-e86af76d57de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80"
-												class="card-img-top" alt="Sản phẩm 2">
+											<div id="firebase-image-${i.mathang.mamh}" ></div>
+											<script>
+											displayFirebaseImage("${i.mathang.mamh}");
+								</script>
+											<!-- <img
+												src="https://images.unsplash.com/photo-1624687943971-e86af76d57de?ixlib=rb-4.0.3
+												&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80"
+												
+												class="card-img-top" > -->
 										</div>
 									</a>
 
