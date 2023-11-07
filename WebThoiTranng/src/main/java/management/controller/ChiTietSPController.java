@@ -317,20 +317,13 @@ public class ChiTietSPController {
 
 				DSSP.add(sp);
 				soLuongSP += ctpd.getSoluong();
-				tongTien = ctpd.getSoluong() * donHangDao.LayGiaSP(ctpd.getId().getMamh());
+				tongTien += ctpd.getSoluong() * donHangDao.LayGiaSP(ctpd.getId().getMamh());
 			}
-			
-			
-
-			
 
 			ObjectMapper o = new ObjectMapper();
 			String dsspJson = o.writeValueAsString(DSSP);
 			dsspJson = URLEncoder.encode(dsspJson, "UTF-8");
-//
-//			int tongTien = soLuong * sp.getDonGia();
-//			int soLuongSP = soLuong;
-//
+
 			mav.addObject("dssp", DSSP);
 			mav.addObject("dsspJson", dsspJson);
 			mav.addObject("tongTien", tongTien);
@@ -428,7 +421,9 @@ public class ChiTietSPController {
 
 	@GetMapping("/tmp")
 	public ModelAndView tmp() {
-
+		
+		String tmp = "Xuân Thịnh";
+		System.out.println(tmp.contains("uân"));
 		return new ModelAndView("/user/home");
 	}
 }
