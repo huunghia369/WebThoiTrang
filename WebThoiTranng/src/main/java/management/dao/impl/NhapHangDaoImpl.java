@@ -398,5 +398,21 @@ public class NhapHangDaoImpl implements INhapHangDao {
         }
 	}
     
+	@Override
+	public Nhanvien layNhanVien(String email) {
+		Session session = sessionFactory.openSession(); // Sử dụng openSession() thay vì openSession()
+        try {
+            String hql = " FROM Nhanvien where taikhoan.email =:email";
+            Query query = session.createQuery(hql);
+            query.setParameter("email", email);
+            Nhanvien nv =  (Nhanvien) query.uniqueResult();
+            return nv;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }finally {
+        	session.close();
+        }
+	}
     
 }
