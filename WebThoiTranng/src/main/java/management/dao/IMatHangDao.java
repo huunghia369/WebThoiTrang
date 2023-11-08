@@ -17,6 +17,7 @@ public interface IMatHangDao {
 	public boolean updatePrice(Banggia banggia);
 	public List<Mathang> getMathangByPage(int pageNumber,String title,String search, String category);
 	
+	public List<Mathang> getMathangByPage_Nhan(int pageNumber,String title,String search, String category, String nhan);
 	
 	
 }
