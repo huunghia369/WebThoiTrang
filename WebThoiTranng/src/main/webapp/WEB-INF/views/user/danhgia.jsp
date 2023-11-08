@@ -23,7 +23,7 @@
 										giá sản phẩm</h1>
 									<br>
 									<div class="row">
-										<div class="col-6">
+										<div class="col-6"> 
 											<ul class="nav nav-tabs" id="myTab" role="tablist">
 												<li class="nav-item" role="presentation"><a
 													class="nav-link active" id="chua-danh-gia-tab"
@@ -64,7 +64,7 @@
 																<p class="infoSP">
 																	<strong>Mã SP:</strong> ${donhang.id.mamh}
 																</p>
-																<div class="rating"">
+																<div class="rating">
 																	<span
 																		class="star ${donhang.danhgia >= 1 ? 'star-rated' : ''}"
 																		data-mamh="${donhang.id.mamh}" data-danhgia="1">&#9733;</span>
@@ -125,7 +125,7 @@
 																<p class="infoSP">
 																	<strong>Mã SP:</strong> ${donhang.id.mamh}
 																</p>
-																<div class="rating"">
+																<div class="rating">
 																	<span
 																		class="star ${donhang.danhgia >= 1 ? 'star-rated' : ''}"
 																		data-mamh="${donhang.id.mamh}" data-danhgia="1">&#9733;</span>
