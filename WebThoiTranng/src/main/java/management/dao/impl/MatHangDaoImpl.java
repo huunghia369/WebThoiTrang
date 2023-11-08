@@ -275,6 +275,72 @@ public class MatHangDaoImpl implements IMatHangDao {
 		}
 	}
 
+	@Override
+	public List<Mathang> getMathangByPage_Nhan(int pageNumber, String title, String input, String category, String nhan) {
+		Session session = sessionFactory.openSession();
+		int itemsPerPage = 4;
+		int startIndex = (pageNumber - 1) * itemsPerPage;
+		Date currentDate = new Date();
+		String hql = "";
+		Query query = null;
+		if (title.equals("search")) {
+			if (input == null) {
+				input = "";
+			} else {
+				hql = "FROM Mathang M WHERE "+ "M.nhan = :nhan " 
+						+"AND (M.tenmh LIKE :partialTenmh "
+					    + "OR M.loaimh.tenloaimh LIKE :partialTenloaimh " 
+					    + "OR M.chatlieu.tenvai LIKE :partialtenvai "
+					    + "OR M.nhanhieu.tennh LIKE :partialtennhanhieu " 
+					    + "OR M.mota LIKE :partialmota) ";
+
+				query = session.createQuery(hql);
+				query.setParameter("partialTenmh", "%" + input + "%");
+				query.setParameter("partialTenloaimh", "%" + input + "%");
+				query.setParameter("partialtenvai", "%" + input + "%");
+				query.setParameter("partialmota", "%" + input + "%");
+				query.setParameter("partialtennhanhieu", "%" + input + "%");
+				query.setParameter("nhan",nhan );
+				System.out.println("Thịnh đã tới đấy");
+			}
+		}
+		if (title.equals("all")) {
+			hql = "FROM Mathang";
+			query = session.createQuery(hql);
+		}
+		if (title.equals("discount")) {
+			hql = "SELECT M FROM Mathang M " + "INNER JOIN M.ctdkms C " + "INNER JOIN C.dotkhuyenmai D "
+					+ "WHERE D.ngaykt >= :currentDate ";
+
+			query = session.createQuery(hql);
+			query.setParameter("currentDate", currentDate);
+		}
+
+		if (title.equals("selling")) {
+			hql = "SELECT  M.* " + "FROM mathang M " + "INNER JOIN ("
+					+ "    SELECT C.MAMH, SUM(C.soluong) AS TongSoLuong " + "    FROM Ctpd C " + "    GROUP BY C.MAMH "
+					+ ") AS SubQuery ON M.MAMH = SubQuery.MAMH " + "ORDER BY SubQuery.TongSoLuong DESC";
+			query = session.createSQLQuery(hql).addEntity(Mathang.class);
+
+		}
+		if (title.equals("category")) {
+			hql = "FROM Mathang M WHERE M.loaimh.slug = :slug ";
+			query = session.createQuery(hql);
+			query.setParameter("slug", category);
+
+		}
+
+		try {
+
+			List<Mathang> pageData = extracted(itemsPerPage, startIndex, query);
+			return pageData;
+		} finally {
+			session.close();
+		}
+	}
+	
+	
+	
 	private List<Mathang> extracted(int itemsPerPage, int startIndex, Query query) {
 		query.setFirstResult(startIndex);
 		query.setMaxResults(itemsPerPage);

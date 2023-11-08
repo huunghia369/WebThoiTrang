@@ -43,18 +43,47 @@ public class Product_H_S_Controller {
 		String urlText = "";
 		String key = "";
 		String value = "";
-
+		
+		System.out.println(input);
+		
 		if (a.equals("") == false) {
 
 			List<Mathang> listProduct = new ArrayList<>();
 
-			if (a.equals("search")) {
+			if (a.equals("search") && (input.toLowerCase().contains("cao cấp")
+					|| input.toLowerCase().contains("tầm trung") || input.toLowerCase().contains("bình dân"))) {
+				if (input.toLowerCase().contains("cao cấp")) {
+					System.out.println("cao cấp");
+					input = input.replace("cao cấp", "");
+					input = input.replace("Cao Cấp", "");
+					input = input.replace("CAO CẤP", "");
+					listProduct = matHangDao.getMathangByPage_Nhan(page, "search", input, "", "Cao cap");
+				} else if (input.toLowerCase().contains("tầm trung")) {
+					System.out.println("tầm trung");
+					input = input.replace("tầm trung", "");
+					input = input.replace("Tầm Trung", "");
+					input = input.replace("TẦM TRUNG", "");
+					input = input.replace(" ", "");
+					System.out.println(input);
+					listProduct = matHangDao.getMathangByPage_Nhan(page, "search", input, "", "Tam trung");
+				} else if (input.toLowerCase().contains("bình dân")) {
+					System.out.println("bình dân");
+					input = input.replace("bình dân", "");
+					input = input.replace("Bình Dân", "");
+					input = input.replace("BÌNH DÂN", "");
+					input = input.replace(" ", "");
+					listProduct = matHangDao.getMathangByPage_Nhan(page, "search", input, "", "Binh dan");
+				}
+				urlText = "Tìm Kiếm";
+				key = "search";
+				value = input;
+
+			} else if (a.equals("search")) {
 
 				listProduct = matHangDao.getMathangByPage(page, "search", input, "");
 				urlText = "Tìm Kiếm";
 				key = "search";
 				value = input;
-
 			}
 
 			if (a.equals("all")) {
